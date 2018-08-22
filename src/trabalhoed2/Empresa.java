@@ -17,6 +17,9 @@ public class Empresa {
     private String tipo;
     private ArrayList <Gasto> gastos;
 
+    public Empresa() {
+    } 
+
     public Empresa(String nome, String cnpj, String tipo) {
         this.nome = nome;
         this.cnpj = cnpj;
@@ -54,6 +57,10 @@ public class Empresa {
 
     public void setGastos(ArrayList <Gasto> gastos) {
         this.gastos = gastos;
+    }
+    
+    public void addGastos(Gasto gasto){
+        this.gastos.add(gasto);
     }
     
     
