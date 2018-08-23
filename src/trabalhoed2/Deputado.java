@@ -16,20 +16,24 @@ public class Deputado {
     private String partido;
     private String estado;
     private int id;
-    private ArrayList<Empresa>empresas;
+    private ArrayList<Recibo> recibos;
+    
+    //Não utilizado
+    //private ArrayList<Empresa>empresas;
 
     public Deputado() {
-        this.empresas = new ArrayList<>();
+        this.recibos = new ArrayList<>();
+        //this.empresas = new ArrayList<>();
     }
     
-    
-
     public Deputado(String nome, String partido, String estado, int id) {
         this.nome = nome;
         this.partido = partido;
         this.estado = estado;
         this.id = id;
-        this.empresas = new ArrayList<>();
+        this.recibos = new ArrayList<>();
+        
+        //this.empresas = new ArrayList<>();
     }
 
     public int getId() {
@@ -67,7 +71,24 @@ public class Deputado {
     public void imprimeDeputado(){
         System.out.println("Nome: " + this.nome + " Partido: " + this.partido + " " + this.estado + " ID: " + this.id);
     }
+    
+    public ArrayList<Recibo> getRecibos() {
+        return recibos;
+    }
 
+    public void setRecibos(ArrayList<Recibo> recibos) {
+        this.recibos = recibos;
+    }
+    
+    public void addRecibo (Recibo recibo){
+        this.recibos.add(recibo);
+    }
+    
+    
+    
+    
+    //Não utilizados
+/*
     public ArrayList<Empresa> getEmpresas() {
         return empresas;
     }
@@ -83,7 +104,8 @@ public class Deputado {
     public void addGastoEmpresa (int indexEmpresa, Gasto gasto){
         this.empresas.get(indexEmpresa).addGastos(gasto);
     }
-    
-    
+   */ 
+
+   
     
 }
