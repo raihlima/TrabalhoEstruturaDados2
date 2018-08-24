@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import static java.lang.System.exit;
 import java.util.ArrayList;
 
 /**
@@ -20,26 +21,40 @@ import java.util.ArrayList;
  * @author ice
  */
 public class TrabalhoED2 {
-    static int conta =0;
+
+    static int conta = 0;
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Algoritmo algoritmo = new Algoritmo();
         ArrayList<Deputado> deputados;
         deputados = new ArrayList<>();
+        clearConsole();
         leDados(deputados);
-
-        imprimeDeputados(deputados);
-        System.out.println("Número de deputados: " + deputados.size());
+        
+        //imprimeDeputados(deputados);    
+        algoritmo.bubbleSortDeputados(deputados);
+        //imprimeDeputados(deputados);
+        algoritmo.bubbleSortRecibos(deputados.get(0));
+        deputados.get(0).imprimeRecibos();
+        
+        
+        //System.out.println("Número de deputados: " + deputados.size());
         clearConsole();
 
     }
 
     public static void leDados(ArrayList<Deputado> deputados) {
         //File arquivo = new File("texto.txt");
-        File arquivo = new File("deputies_dataset.csv");
-        double cont = 0;
+        File arquivo = new File("deputies_dataset_tratado.csv");
+        int cont = 0;
+
+        long start = System.currentTimeMillis();
+        // faz o trabalho a ser medido
+        
 
         try (FileInputStream fi = new FileInputStream(arquivo)) {
             System.out.println("Tentando ler o arquivo");
@@ -49,11 +64,10 @@ public class TrabalhoED2 {
             String linha = linha = reader.readLine();
 
             //Saber a quantidade de linhas          
-            //LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
-            //linhaLeitura.skip(arquivo.length());
-            //int qtdLinha = linhaLeitura.getLineNumber();
-            //System.out.println(qtdLinha);
-
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int qtdLinha = linhaLeitura.getLineNumber();
+            System.out.println(qtdLinha);
             //String
             String[] partes;
             String aux;
@@ -80,8 +94,11 @@ public class TrabalhoED2 {
                 }
                 //System.out.println(linha);
                 linha = reader.readLine();
-                partes = linha.split(",");
-                preencheDeputados(deputados, partes);
+                partes = linha.split(";");
+                if (partes[0].equals("0") || partes[0].equals("1")) {
+                    preencheDeputados(deputados, partes);
+                }
+
                 //System.out.println(cont);
             }//*/
 
@@ -94,7 +111,9 @@ public class TrabalhoED2 {
             if (cont < 3014904) {
                 System.err.println("Erro ao ler o arquivo na linha " + cont);
             } else {
+                long elapsed = System.currentTimeMillis() - start;
                 System.out.println("Arquivo lido com sucesso!");
+                System.out.println(elapsed);
             }
 
         }
@@ -107,48 +126,44 @@ public class TrabalhoED2 {
     }
 
     private static void preencheDeputados(ArrayList<Deputado> deputados, String[] partes) {
-        int padrao = 10;
-        conta++;
-        if (partes.length == padrao) {
-            Deputado deputado = new Deputado(partes[5], partes[3], partes[4], Integer.parseInt(partes[2]));
-            Recibo recibo = new Recibo(partes[8], partes[6], partes[7], Float.parseFloat(partes[9]));
-            //Não utilizado
-            /*
+        Deputado deputado = new Deputado(partes[5], partes[3], partes[4], Integer.parseInt(partes[2]));
+        Recibo recibo = new Recibo(partes[8], partes[6], partes[7], Float.parseFloat(partes[9]));
+        //Não utilizado
+        /*
         Gasto gasto = new Gasto();
         Empresa empresa = new Empresa(partes[8], partes[6], partes[7]);
-             */
+         */
 
-            //Preenchendo a hora no recibo
-            if (partes[0].equals("0")) {
-               //String[] div = partes[1].split(" ");
-               //recibo.setData(div[0]);
-               //recibo.setHora(div[1]);
-                //System.out.println(conta);
-                //System.out.println(div[0]+div[1]);
-            } else if (partes[0].equals("1")) {
-                recibo.setData(partes[1] + "-01-01");
-                recibo.setHora("00:00:00");
-            }
+        //Preenchendo a hora no recibo
+        if (partes[0].equals("0")) {
+            String[] div = partes[1].split(" ");
+            recibo.setData(div[0]);
+            recibo.setHora(div[1]);
 
-            //Não utilizado
-            /*
+        } else if (partes[0].equals("1")) {
+            recibo.setData(partes[1] + "-01-01");
+            recibo.setHora("00:00:00");
+        }
+
+        //Não utilizado
+        /*
         gasto.setGasto(Float.parseFloat(partes[9]));
-             */
-            //variaveis auxiliares
-            int indexDeputado = verificaDeputadoLista(deputado, deputados);
+         */
+        //variaveis auxiliares
+        int indexDeputado = verificaDeputadoLista(deputado, deputados);
 
-            //Não utilizado
-            //int indexEmpresa = verificaEmpresa(indexDeputado, deputados, empresa);
-            //Se o deputado não estiver na lista, adiciona
-            if (indexDeputado == -1) {
-                deputado.addRecibo(recibo);
-                deputados.add(deputado);
-            } else {
-                deputados.get(indexDeputado).addRecibo(recibo);
-            }
+        //Não utilizado
+        //int indexEmpresa = verificaEmpresa(indexDeputado, deputados, empresa);
+        //Se o deputado não estiver na lista, adiciona
+        if (indexDeputado == -1) {
+            deputado.addRecibo(recibo);
+            deputados.add(deputado);
+        } else {
+            deputados.get(indexDeputado).addRecibo(recibo);
+        }
 
-            //Não utilizado
-            /*
+        //Não utilizado
+        /*
         //Se a empresa não estiver na lista, adiciona
         if (indexEmpresa == -1) {
             empresa.addGastos(gasto);
@@ -168,12 +183,7 @@ public class TrabalhoED2 {
         } else {
             
         }
-             */
-            
-            //Criar maior que o padrão
-        } else {
-            
-        }
+         */
     }
 
     private static int verificaDeputadoLista(Deputado deputado, ArrayList<Deputado> deputados) {
@@ -200,21 +210,20 @@ public class TrabalhoED2 {
         return -1;
     }
      */
-    
-    public final static void clearConsole(){
+    public final static void clearConsole() {
 
-        try{
+        try {
             final String os = System.getProperty("os.name");
 
-            if (os.contains("Windows")){
+            if (os.contains("Windows")) {
                 Runtime.getRuntime().exec("cls");
 
-            }else{
+            } else {
                 Runtime.getRuntime().exec("clear");
             }
-        }
-        catch (final Exception e){
-        //  Tratar Exceptions
+        } catch (final Exception e) {
+            //  Tratar Exceptions
         }
     }
+
 }

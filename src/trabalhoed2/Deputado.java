@@ -6,6 +6,7 @@
 package trabalhoed2;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -84,6 +85,11 @@ public class Deputado {
         this.recibos.add(recibo);
     }
     
+    public void imprimeRecibos(){
+        for(int i=0; i<recibos.size();i++){
+            System.out.println(recibos.get(i).getGasto());
+        }
+    }
     
     
     
