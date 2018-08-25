@@ -15,6 +15,10 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import static java.lang.System.exit;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -34,14 +38,13 @@ public class TrabalhoED2 {
         deputados = new ArrayList<>();
         clearConsole();
         leDados(deputados);
-        
-        //imprimeDeputados(deputados);    
+
+        //imprimeDeputados(deputados);
         algoritmo.bubbleSortDeputados(deputados);
         //imprimeDeputados(deputados);
-        algoritmo.bubbleSortRecibos(deputados.get(0));
-        deputados.get(0).imprimeRecibos();
-        
-        
+        //algoritmo.bubbleSortRecibos(deputados.get(0));
+        //deputados.get(0).imprimeRecibos();
+
         //System.out.println("Número de deputados: " + deputados.size());
         clearConsole();
 
@@ -52,16 +55,22 @@ public class TrabalhoED2 {
         File arquivo = new File("deputies_dataset_tratado.csv");
         int cont = 0;
 
+        //Ver a quantidade de dados a serem lidos
+        Scanner teclado = new Scanner(System.in);
+        int qtdDados;
+        System.out.println("Digite a quantidade de dados a serem lidos");
+        qtdDados = teclado.nextInt();
+
+        //Tempo de execução
         long start = System.currentTimeMillis();
         // faz o trabalho a ser medido
-        
 
         try (FileInputStream fi = new FileInputStream(arquivo)) {
             System.out.println("Tentando ler o arquivo");
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
-            String linha = linha = reader.readLine();
+            String linha;// = reader.readLine();
 
             //Saber a quantidade de linhas          
             LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
@@ -72,21 +81,34 @@ public class TrabalhoED2 {
             String[] partes;
             String aux;
 
-            /*
-            for (int i = 0; i < 100000; i++) {
+            //Numeros aleatorios
+            List<Integer> numAleatorios = new ArrayList<>();
 
+            for (int i = 1; i < qtdLinha; i++) {
+                numAleatorios.add(i);
+            }
+            Collections.shuffle(numAleatorios);
+            numAleatorios = numAleatorios.subList(0, qtdDados);
+            Collections.sort(numAleatorios);
+            
+            int contLinha = 0;
+            for (int i = 0; i < qtdDados;) {
                 linha = reader.readLine();
-                aux = linha;
-                //System.out.println(linha);
-                
-                partes = aux.split(",");
-                //System.out.println(partes[]);
-                preencheDeputados(deputados, partes);
 
-                //deputados.add(new Deputado(partes[5], partes[3], partes[4], 12));
+                if (contLinha == numAleatorios.get(i)) {
+
+                    //System.out.println(linha);
+                    aux = linha;
+                    partes = aux.split(";");
+                    preencheDeputados(deputados, partes);
+                    i++;
+                }
+                
+                contLinha++;
 
             }
-             */
+
+            /*
             while (linha != null) {
                 cont++;
                 if (cont == 1) {
@@ -101,8 +123,10 @@ public class TrabalhoED2 {
 
                 //System.out.println(cont);
             }//*/
-
             //System.out.println("Terminou");
+            long elapsed = System.currentTimeMillis() - start;
+            System.out.println("Arquivo lido com sucesso!");
+            System.out.println(elapsed);
         } catch (Exception e) {
             //System.out.println(cont);
             if (cont == 0) {
