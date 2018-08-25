@@ -106,24 +106,24 @@ public class Algoritmo {
             heapify(deputados, n, maior);
         }
     }
-    
-    void sort(int deputados[])
-    {
-        int n = deputados.length;
-        for (int i=1; i<n; ++i)
-        {
-            int key = deputados[i];
-            int j = i-1;
- 
+
+    void insertionSort(ArrayList<Deputado> deputados) {
+        int n = deputados.size();
+        //Cria o leitor de letras ascii
+        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+        for (int i = 1; i < n; ++i) {
+            Deputado key = deputados.get(i);
+            int j = i - 1;
+
             /* Move elements of deputados[0..i-1], that are
                greater than key, to one position ahead
                of their current position */
-            while (j>=0 && deputados[j] > key)
-            {
-                deputados[j+1] = deputados[j];
-                j = j-1;
+            //while (j >= 0 && deputados[j] > key) {
+            while (collator.compare(deputados.get(j).getNome(), key.getNome()) > 0){
+                deputados.set(j+1, deputados.get(j));
+                j = j - 1;
             }
-            deputados[j+1] = key;
+            deputados.set((j + 1), key);
         }
     }
 }
