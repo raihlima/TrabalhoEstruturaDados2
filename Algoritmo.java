@@ -106,24 +106,4 @@ public class Algoritmo {
             heapify(deputados, n, maior);
         }
     }
-    
-    void sort(int deputados[])
-    {
-        int n = deputados.length;
-        for (int i=1; i<n; ++i)
-        {
-            int key = deputados[i];
-            int j = i-1;
- 
-            /* Move elements of deputados[0..i-1], that are
-               greater than key, to one position ahead
-               of their current position */
-            while (j>=0 && deputados[j] > key)
-            {
-                deputados[j+1] = deputados[j];
-                j = j-1;
-            }
-            deputados[j+1] = key;
-        }
-    }
 }
