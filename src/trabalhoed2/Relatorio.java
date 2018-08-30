@@ -18,7 +18,7 @@ public class Relatorio {
     private Calendar dataFim;
     private String descricao;
     private long usoMemoria;
-    private long tempoExecucao;
+    private String tempoExecucao;
     private String sistemaOperacional;
 
     public Relatorio() {
@@ -49,14 +49,18 @@ public class Relatorio {
         return usoMemoria;
     }
 
-    public long getTempoExecucao() {
+    public String getTempoExecucao() {
         return tempoExecucao;
     }
     
     
       public void setRelatorioFinal(){
         this.dataFim = Calendar.getInstance();
-        this.tempoExecucao = (dataFim.getTimeInMillis()-dataInicio.getTimeInMillis())/1000;
+        long hora = ((((dataFim.getTimeInMillis()-dataInicio.getTimeInMillis())/1000)/60)/60)%60;
+        long min = (((dataFim.getTimeInMillis()-dataInicio.getTimeInMillis())/1000)/60)%60;
+        long seg = ((dataFim.getTimeInMillis()-dataInicio.getTimeInMillis())/1000)%60;
+        long miliseg = (dataFim.getTimeInMillis()-dataInicio.getTimeInMillis())%1000;
+        this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms" ;
     }
     
     public void retornaTempoExecucao(){

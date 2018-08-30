@@ -8,12 +8,16 @@ package interfaceGrafica;
 import java.io.File;
 import java.io.FileReader;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Carcara
  */
 public class Programa extends javax.swing.JFrame {
+
+    File arquivo;
 
     /**
      * Creates new form Programa
@@ -33,10 +37,10 @@ public class Programa extends javax.swing.JFrame {
     private void initComponents() {
 
         fileChooser = new javax.swing.JFileChooser();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        textarea = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        barraStatus = new javax.swing.JPanel();
+        nomeArquivoStatus = new javax.swing.JLabel();
+        nomeArquivo = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuArquivoAbrir = new javax.swing.JMenuItem();
@@ -70,26 +74,41 @@ public class Programa extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Capivara APP");
 
-        textarea.setEditable(false);
-        textarea.setColumns(20);
-        textarea.setRows(5);
-        jScrollPane1.setViewportView(textarea);
+        barraStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel2.setText("jLabel2");
+        nomeArquivoStatus.setText("Nenhum arquivo aberto");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
+        javax.swing.GroupLayout barraStatusLayout = new javax.swing.GroupLayout(barraStatus);
+        barraStatus.setLayout(barraStatusLayout);
+        barraStatusLayout.setHorizontalGroup(
+            barraStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(barraStatusLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nomeArquivoStatus)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nomeArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(189, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addContainerGap(15, Short.MAX_VALUE))
+        barraStatusLayout.setVerticalGroup(
+            barraStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, barraStatusLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(barraStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(nomeArquivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nomeArquivoStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(16, 40, 143));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 238, Short.MAX_VALUE)
         );
 
         menuArquivo.setText("Arquivo");
@@ -103,6 +122,12 @@ public class Programa extends javax.swing.JFrame {
         menuArquivo.add(menuArquivoAbrir);
 
         menuArquivoFechar.setText("Fechar Arquivo");
+        menuArquivoFechar.setEnabled(false);
+        menuArquivoFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuArquivoFecharActionPerformed(evt);
+            }
+        });
         menuArquivo.add(menuArquivoFechar);
         menuArquivo.add(jSeparator1);
 
@@ -117,6 +142,7 @@ public class Programa extends javax.swing.JFrame {
         jMenuBar1.add(menuArquivo);
 
         menuAlgoritmos.setText("Algoritmos");
+        menuAlgoritmos.setEnabled(false);
 
         menuAlgoritmosOrdenacao.setText("Ordenação (Sort)");
 
@@ -186,15 +212,15 @@ public class Programa extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(barraStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(barraStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -202,13 +228,24 @@ public class Programa extends javax.swing.JFrame {
 
     private void menuArquivoAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArquivoAbrirActionPerformed
         // TODO add your handling code here:
+        FileFilter filter = new FileNameExtensionFilter("Arquivos de texto .txt, .csv", "txt", "csv");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
         //fileChooser.setResizable(false);
         int returnVal = fileChooser.showOpenDialog(this);
+       // fileChooser.setFileFilter(new FileNameExtensionFilter("txt", "png", "jpg"));
+      //  fileChooser.setAcceptAllFileFilterUsed(false);
+           fileChooser.setMultiSelectionEnabled(false);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             try {
                 // What to do with the file, e.g. display it in a TextArea
-                textarea.read(new FileReader(file.getAbsolutePath()), null);
+                //textarea.read(new FileReader(file.getAbsolutePath()), null);
+                this.arquivo = file;
+                nomeArquivoStatus.setText("Nome do arquivo:");
+                nomeArquivo.setText(arquivo.getName());
+                System.out.println(arquivo.getName());
+                ativaMenu();
             } catch (Exception e) {
                 System.out.println("problem accessing file" + file.getAbsolutePath());
             }
@@ -216,12 +253,19 @@ public class Programa extends javax.swing.JFrame {
             System.out.println("File access cancelled by user.");
         }
 
+
     }//GEN-LAST:event_menuArquivoAbrirActionPerformed
 
     private void menuArquivoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArquivoSairActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_menuArquivoSairActionPerformed
+
+    private void menuArquivoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArquivoFecharActionPerformed
+        // TODO add your handling code here:
+        this.arquivo = null;
+        desativaMenu();
+    }//GEN-LAST:event_menuArquivoFecharActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,8 +293,9 @@ public class Programa extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Programa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        /* */
 
-        /* Create and display the form */
+ /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Programa().setVisible(true);
@@ -258,9 +303,21 @@ public class Programa extends javax.swing.JFrame {
         });
     }
 
+    public void ativaMenu() {
+        menuArquivoFechar.setEnabled(true);
+        menuAlgoritmos.setEnabled(true);
+    }
+
+    public void desativaMenu() {
+        menuArquivoFechar.setEnabled(false);
+        menuAlgoritmos.setEnabled(false);
+        nomeArquivoStatus.setText("Nenhum arquivo aberto");
+        nomeArquivo.setText("");
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel barraStatus;
     private javax.swing.JFileChooser fileChooser;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -276,8 +333,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
@@ -290,6 +346,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuArquivoFechar;
     private javax.swing.JMenuItem menuArquivoSair;
     private javax.swing.JMenu menuRelatorio;
-    private javax.swing.JTextArea textarea;
+    private javax.swing.JLabel nomeArquivo;
+    private javax.swing.JLabel nomeArquivoStatus;
     // End of variables declaration//GEN-END:variables
 }
