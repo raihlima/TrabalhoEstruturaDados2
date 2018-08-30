@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import static java.lang.System.exit;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -33,13 +34,19 @@ public class TrabalhoED2 {
         ArrayList<Deputado> deputados;
         deputados = new ArrayList<>();
         clearConsole();
-        leDados(deputados);
+        //leDados(deputados);
+        
+        Relatorio relatorio = new Relatorio();
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+        relatorio.setRelatorioFinal();
+        relatorio.retornaTempoExecucao();
         
         //imprimeDeputados(deputados);    
-        algoritmo.bubbleSortDeputados(deputados);
+        //algoritmo.bubbleSortDeputados(deputados);
         //imprimeDeputados(deputados);
-        algoritmo.bubbleSortRecibos(deputados.get(0));
-        deputados.get(0).imprimeRecibos();
+        //algoritmo.bubbleSortRecibos(deputados.get(0));
+        //deputados.get(0).imprimeRecibos();
         
         
         //System.out.println("Número de deputados: " + deputados.size());
