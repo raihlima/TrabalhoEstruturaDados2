@@ -9,6 +9,7 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
+import java.util.Random;
 
 /**
  *
@@ -41,7 +42,7 @@ public class Algoritmo {
         }
     }
 
-    public static int particionaQuickSort(ArrayList<Deputado> deputados, int min, int max) {
+    public static int particionaQuickSortRec(ArrayList<Deputado> deputados, int min, int max) {
         //Cria o leitor de letras ascii
         Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         //Define o pivo como o maior da lista
@@ -60,13 +61,55 @@ public class Algoritmo {
         return i + 1;
     }
 
-    public void quickSort(ArrayList<Deputado> deputados, int min, int max) {
+    public void quickSortRec(ArrayList<Deputado> deputados, int min, int max) {
         if (min < max) {
             //define o indice da particao (ip)
-            int ip = particionaQuickSort(deputados, min, max);
+            int ip = particionaQuickSortRec(deputados, min, max);
             // Recusividade para ordenar os elementos antes e depois da particao
-            quickSort(deputados, min, ip - 1);
-            quickSort(deputados, ip + 1, max);
+            quickSortRec(deputados, min, ip - 1);
+            quickSortRec(deputados, ip + 1, max);
+        }
+    }
+
+    public static int particionaQuickSortMed(ArrayList<Deputado> deputados, int min, int max, int k) {
+        //Cria o leitor de letras ascii
+        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+        //Define o pivo como o maior da lista
+        //Deputado pivo = deputados.get(max);
+        //Cria um num randomico para ler no indice do vetor original de deputados
+        Random rand = new Random();
+
+        ArrayList<Deputado> deputadoMed = new ArrayList();
+        //Popula o vetor de novoa deputados para calcular a mediana
+        for (int i = 0; i < k; i++) {
+            deputadoMed.add(deputados.get(rand.nextInt(deputados.size())));
+        }
+        ///TO DO Implementar o sort aqui
+        Algoritmo.bubbleSortDeputados(deputadoMed);
+        //Define o pivo do algoritmo
+        Deputado pivo = deputadoMed.get(k / 2);
+
+        int i = (min - 1); // indice do menor elemento
+        for (int j = min; j < max; j++) {
+            //Compara as strings
+            if (collator.compare(deputados.get(j).getNome(), pivo.getNome()) < 0) {
+                i++;//avanca o menor
+                Collections.swap(deputados, i, j);
+            }
+        }
+        Deputado temp = deputados.get(i + 1);
+        Collections.swap(deputados, (i + 1), max);
+
+        return i + 1;
+    }
+
+    public void quickSortMed(ArrayList<Deputado> deputados, int min, int max, int k) {
+        if (min < max) {
+            //define o indice da particao (ip)
+            int ip = particionaQuickSortMed(deputados, min, max, k);
+            // Recusividade para ordenar os elementos antes e depois da particao
+            quickSortMed(deputados, min, ip - 1, k);
+            quickSortMed(deputados, ip + 1, max, k);
         }
     }
 
@@ -123,6 +166,31 @@ public class Algoritmo {
         }
     }
 
+    public void insertionSortRecursivo(ArrayList<Deputado> deputados, int n) {
+        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+        //Caso base
+        if (n <= 1) {
+            return;
+        }
+        // Sort first n-1 elements
+        insertionSortRecursivo(deputados, n - 1);
+
+        // Insert ultimo element at its correct position
+        // in sorted array.
+        Deputado ultimo = deputados.get(n - 1);
+        int j = n - 2;
+
+        /* Move elements of deputados[0..i-1], that are
+          greater than key, to one position ahead
+          of their current position */
+        //while (j >= 0 && deputados.get(j) > ultimo)
+        while (j > 0 && collator.compare(deputados.get(j).getNome(), ultimo.getNome()) >= 0) {
+            deputados.set(j + 1, deputados.get(j));
+            j--;
+        }
+        deputados.set(j + 1, ultimo);
+    }
+
     private void merge(ArrayList<Deputado> deputados, int esq, int meio, int dir) {
         Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         // Encontra os tamanhos dos dois sub arrays para serem mesclados
@@ -170,15 +238,41 @@ public class Algoritmo {
 
     public void mergeSort(ArrayList<Deputado> deputados, int esq, int dir) {
         if (esq < dir) {
-            // Find the middle point 
+            // Encontra o termo do meio
             int meio = (esq + dir) / 2;
-
-            // Sort first and second halves 
+            // Ordena primeira e segunda metade
             mergeSort(deputados, esq, meio);
             mergeSort(deputados, meio + 1, dir);
-
-            // Merge the sorted halves 
+            // Junta as metades
             merge(deputados, esq, meio, dir);
         }
     }
+
+    public static void shellSort(ArrayList<Deputado> deputados) {
+        int h = 1;
+        int n = deputados.size();
+        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+        // Define o h para o while
+        while (h < n) {
+            h = h * 3 + 1;
+        }
+        //
+        h = h / 3;
+        Deputado c;
+        int j;
+
+        while (h > 0) {
+            for (int i = h; i < n; i++) {
+                c = deputados.get(i);
+                j = i;
+                while (j >= h && collator.compare(deputados.get(j - h).getNome(), c.getNome()) >= 0) {
+                    deputados.set(j, deputados.get(j - h));
+                    j = j - h;
+                }
+                deputados.set(j, c);
+            }
+            h = h / 2;
+        }
+    }
+
 }
