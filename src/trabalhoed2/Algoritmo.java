@@ -275,4 +275,69 @@ public class Algoritmo {
         }
     }
 
+    public Deputado[] tabela(int tam) {
+        Deputado[] tab = new Deputado[tam];
+        for (int i = 0; i < tam; i++) {
+            tab[i] = null;
+        }
+        return tab;
+    }
+
+    public int hash(int k, int m) {
+        return k % m;
+    }
+
+    public int primo(int k) {
+        for (int i = k; k > 0; i--) {
+            if (ehPrimo(i)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private boolean ehPrimo(int k) {
+        for (int i = 2; i < k; i++) {
+            if (k % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Deputado[] sondagemLinear(ArrayList<Deputado> deputados, int tam) {
+        Deputado[] tabela = tabela(tam);
+        int h = primo(tam);
+        int pos;
+        for (int i = 0; i < tam; i++) {
+            pos = (hash(deputados.get(i).getId(), h));
+            if (tabela[pos] == null) {
+                tabela[(hash(deputados.get(i).getId(), h))] = deputados.get(i);
+            } else {
+                int j = i + 1;
+                while ((tabela[j] != null) && j < tam) {
+                    j++;
+                }
+                if (tabela[j] != null) {
+                    tabela[j] = deputados.get(i);
+                } else {
+                    j = 0;
+                    while (tabela[j] != null) {
+                        j++;
+                    }
+                    tabela[j] = deputados.get(i);
+                }
+            }
+        }
+        return tabela;
+    }
+
+    public Deputado[] sondagemQuadratica(ArrayList<Deputado> deputados, int tam) {
+        Deputado[] tabela = tabela(tam);
+        int h = primo(tam);
+        int pos;
+
+        return tabela;
+    }
+
 }
