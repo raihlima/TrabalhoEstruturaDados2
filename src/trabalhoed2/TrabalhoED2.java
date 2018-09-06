@@ -18,8 +18,7 @@ import java.util.Scanner;
  */
 public class TrabalhoED2 {
 
-    static int conta = 0;
-
+    //static int conta = 0;
     /**
      * @param args the command line arguments
      */
@@ -29,23 +28,8 @@ public class TrabalhoED2 {
         ListaEncadeada<Deputado> deputados;
         deputados = new ListaEncadeada<>();
         clearConsole();
-        //leDados(deputados);
+        leDados(deputados);
 
-        ListaEncadeada<Integer> x = new ListaEncadeada<>();
-
-        for (int i = 0; i < 10; i++) {
-            x.insereFinal(i);
-        }
-
-        x.removeInicio();
-        x.removeFinal();
-        //x.troca(0, 1);
-        x.insere(1, 900);
-        x.remove(1);
-        System.out.println("Tamanho x " + x.getTamanho());
-        for (int i = 0; i < x.getTamanho(); i++) {
-            System.out.println(x.retornaInfo(i) + " ");
-        }
 
         //Relatorio relatorio = new Relatorio();
         //Scanner scanner = new Scanner(System.in);
@@ -54,7 +38,7 @@ public class TrabalhoED2 {
         //relatorio.retornaTempoExecucao();
         //imprimeDeputados(deputados);    
         //algoritmo.bubbleSortDeputados(deputados);
-        //imprimeDeputados(deputados);
+        imprimeDeputados(deputados);
         //algoritmo.bubbleSortRecibos(deputados.get(0));
         //deputados.get(0).imprimeRecibos();
         //System.out.println("Número de deputados: " + deputados.size());
@@ -87,7 +71,7 @@ public class TrabalhoED2 {
             String aux;
 
             //linha = reader.readLine();
-            for (int i = 0; i < 3000000; i++) {
+            for (int i = 0; i < 500000; i++) {
 
                 linha = reader.readLine();
                 aux = linha;

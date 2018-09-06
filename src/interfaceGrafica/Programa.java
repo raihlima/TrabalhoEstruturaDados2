@@ -5,6 +5,7 @@
  */
 package interfaceGrafica;
 
+import java.awt.CardLayout;
 import java.io.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -17,13 +18,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Programa extends javax.swing.JFrame {
 
-   private File arquivo;
+    private File arquivo;
 
     /**
      * Creates new form Programa
      */
     public Programa() {
         setExtendedState(MAXIMIZED_BOTH);
+        //background.setVisible(true);
         initComponents();
     }
 
@@ -40,7 +42,11 @@ public class Programa extends javax.swing.JFrame {
         barraStatus = new javax.swing.JPanel();
         nomeArquivoStatus = new javax.swing.JLabel();
         nomeArquivo = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelPrincipal = new javax.swing.JPanel();
+        jPanelValores = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuArquivoAbrir = new javax.swing.JMenuItem();
@@ -87,7 +93,7 @@ public class Programa extends javax.swing.JFrame {
                 .addComponent(nomeArquivoStatus)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nomeArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         barraStatusLayout.setVerticalGroup(
             barraStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,18 +104,55 @@ public class Programa extends javax.swing.JFrame {
                     .addComponent(nomeArquivoStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)))
         );
 
-        jPanel2.setBackground(new java.awt.Color(16, 40, 143));
+        jPanelPrincipal.setBackground(new java.awt.Color(16, 40, 143));
+        jPanelPrincipal.setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPanelValores.setBackground(new java.awt.Color(40, 102, 45));
+
+        javax.swing.GroupLayout jPanelValoresLayout = new javax.swing.GroupLayout(jPanelValores);
+        jPanelValores.setLayout(jPanelValoresLayout);
+        jPanelValoresLayout.setHorizontalGroup(
+            jPanelValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 498, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 238, Short.MAX_VALUE)
+        jPanelValoresLayout.setVerticalGroup(
+            jPanelValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 263, Short.MAX_VALUE)
         );
+
+        jPanelPrincipal.add(jPanelValores, "card2");
+
+        jPanel1.setBackground(new java.awt.Color(33, 39, 132));
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setLayout(null);
+
+        jTextField1.setText("jTextField1");
+        jPanel3.add(jTextField1);
+        jTextField1.setBounds(55, 14, 76, 29);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 498, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(51, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(55, Short.MAX_VALUE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 263, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(26, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(30, Short.MAX_VALUE)))
+        );
+
+        jPanelPrincipal.add(jPanel1, "card3");
 
         menuArquivo.setText("Arquivo");
 
@@ -147,10 +190,20 @@ public class Programa extends javax.swing.JFrame {
         menuAlgoritmosOrdenacao.setText("Ordenação (Sort)");
 
         jMenuItem4.setText("Sementes aleatórias (Cinco de cada)");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         menuAlgoritmosOrdenacao.add(jMenuItem4);
         menuAlgoritmosOrdenacao.add(jSeparator3);
 
         jMenuItem7.setText("Bubble Sort");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         menuAlgoritmosOrdenacao.add(jMenuItem7);
 
         jMenu7.setText("Quick Sort");
@@ -167,6 +220,11 @@ public class Programa extends javax.swing.JFrame {
         menuAlgoritmosOrdenacao.add(jMenu7);
 
         jMenuItem11.setText("Insertion Sort");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         menuAlgoritmosOrdenacao.add(jMenuItem11);
 
         jMenuItem12.setText("Merge Sort");
@@ -175,7 +233,7 @@ public class Programa extends javax.swing.JFrame {
         jMenuItem13.setText("Heap Sort");
         menuAlgoritmosOrdenacao.add(jMenuItem13);
 
-        jMenuItem14.setText("Capivara Sort");
+        jMenuItem14.setText("Shell Sort");
         menuAlgoritmosOrdenacao.add(jMenuItem14);
 
         menuAlgoritmos.add(menuAlgoritmosOrdenacao);
@@ -188,9 +246,19 @@ public class Programa extends javax.swing.JFrame {
         menuRelatorio.setText("Relatórios");
 
         jMenuItem15.setText("Relatório Ordenação");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         menuRelatorio.add(jMenuItem15);
 
         jMenuItem16.setText("Relatório Busca");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         menuRelatorio.add(jMenuItem16);
 
         jMenuBar1.add(menuRelatorio);
@@ -212,13 +280,13 @@ public class Programa extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(barraStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(barraStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -228,7 +296,7 @@ public class Programa extends javax.swing.JFrame {
 
     private void menuArquivoAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArquivoAbrirActionPerformed
         // TODO add your handling code here:
-          FileFilter filter = new FileNameExtensionFilter("Arquivos de texto: txt, csv", "txt", "csv");
+        FileFilter filter = new FileNameExtensionFilter("Arquivos de texto: txt, csv", "txt", "csv");
         fileChooser.addChoosableFileFilter(filter);
         fileChooser.setAcceptAllFileFilterUsed(false);
 
@@ -257,7 +325,7 @@ public class Programa extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Falha ao abrir o arquivo!", "Abrir", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            
+
         }
 
     }//GEN-LAST:event_menuArquivoAbrirActionPerformed
@@ -272,6 +340,34 @@ public class Programa extends javax.swing.JFrame {
         this.arquivo = null;
         desativaMenu();
     }//GEN-LAST:event_menuArquivoFecharActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        CardLayout c1 = (CardLayout) jPanelPrincipal.getLayout();
+        c1.show(jPanelPrincipal, "card2");
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        CardLayout c1 = (CardLayout) jPanelPrincipal.getLayout();
+        c1.show(jPanelPrincipal, "card3");
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // TODO add your handling code here:
+                CardLayout c1 = (CardLayout) jPanelPrincipal.getLayout();
+        c1.show(jPanelPrincipal, "card2");
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+         CardLayout c1 = (CardLayout) jPanelPrincipal.getLayout();
+        c1.show(jPanelPrincipal, "card3");
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -340,10 +436,14 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JPanel jPanelValores;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuAlgoritmos;
     private javax.swing.JMenu menuAlgoritmosBusca;

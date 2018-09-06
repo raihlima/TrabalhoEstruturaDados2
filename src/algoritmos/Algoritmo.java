@@ -17,7 +17,10 @@ import trabalhoed2.Deputado;
  * @author ice
  */
 public class Algoritmo {
-
+    /**
+     * Esta função faz o bubbleSort
+     * @param deputados 
+     */
     public static void bubbleSortDeputados(ArrayList<Deputado> deputados) {
         Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         //auxiliar.compare(string, string1)

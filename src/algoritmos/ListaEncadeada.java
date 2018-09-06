@@ -10,7 +10,7 @@ package algoritmos;
  * @author carcara
  * @param <Class>
  */
-public class ListaEncadeada<Class> {
+public class ListaEncadeada <Class> {
 
     private No inicio;
     private No fim;
@@ -105,7 +105,11 @@ public class ListaEncadeada<Class> {
 
         }
     }
-
+    /**
+     * Esta função retorna o objeto guardado na Lista Encadeada
+     * @param index (inteiro para selecionar a posição da lista)
+     * @return objeto
+     */
     public Class retornaInfo(int index) {
         if (index == 0) {
             return (Class) this.inicio.getObjeto();
@@ -144,7 +148,6 @@ public class ListaEncadeada<Class> {
             for (int i = 1; i < index; i++) {
                 aux = aux.getProximo();
             }
-
             aux2 = aux.getProximo();
             no.setAnterior(aux);
             no.setProximo(aux2);
@@ -174,7 +177,6 @@ public class ListaEncadeada<Class> {
             auxAnt = aux.getAnterior();
             auxProx = aux.getProximo();
            
-
             auxAnt.setProximo(auxProx);
             auxProx.setAnterior(auxAnt);
              aux = null;
@@ -198,7 +200,6 @@ public class ListaEncadeada<Class> {
             no1 = this.inicio;
             for (int i = 0; i < index1; i++) {
                 no1 = no1.getProximo();
-
             }
             aux = (Class) no1.getObjeto();
         }
