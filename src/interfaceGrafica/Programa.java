@@ -5,9 +5,9 @@
  */
 package interfaceGrafica;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -17,7 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Programa extends javax.swing.JFrame {
 
-    File arquivo;
+   private File arquivo;
 
     /**
      * Creates new form Programa
@@ -228,31 +228,37 @@ public class Programa extends javax.swing.JFrame {
 
     private void menuArquivoAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuArquivoAbrirActionPerformed
         // TODO add your handling code here:
-        FileFilter filter = new FileNameExtensionFilter("Arquivos de texto .txt, .csv", "txt", "csv");
+          FileFilter filter = new FileNameExtensionFilter("Arquivos de texto: txt, csv", "txt", "csv");
         fileChooser.addChoosableFileFilter(filter);
         fileChooser.setAcceptAllFileFilterUsed(false);
-        //fileChooser.setResizable(false);
+
         int returnVal = fileChooser.showOpenDialog(this);
-       // fileChooser.setFileFilter(new FileNameExtensionFilter("txt", "png", "jpg"));
-      //  fileChooser.setAcceptAllFileFilterUsed(false);
-           fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.setMultiSelectionEnabled(false);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            try {
+            File arquivo = fileChooser.getSelectedFile();
+            try (FileInputStream fi = new FileInputStream(arquivo)) {
                 // What to do with the file, e.g. display it in a TextArea
-                //textarea.read(new FileReader(file.getAbsolutePath()), null);
-                this.arquivo = file;
-                nomeArquivoStatus.setText("Nome do arquivo:");
-                nomeArquivo.setText(arquivo.getName());
-                System.out.println(arquivo.getName());
-                ativaMenu();
+                String cabecalho = "bugged_date;receipt_date;deputy_id;political_party;state_code;deputy_name;receipt_social_security_number;receipt_description;establishment_name;receipt_value";
+                BufferedInputStream bis = new BufferedInputStream(fi);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+                String linha = linha = reader.readLine();
+                if (linha.equals(cabecalho)) {
+                    this.arquivo = arquivo;
+                    nomeArquivoStatus.setText("Nome do arquivo:");
+                    nomeArquivo.setText(arquivo.getName());
+                    System.out.println(arquivo.getName());
+                    JOptionPane.showMessageDialog(this, "Arquivo executado com sucesso!", "Abrir", JOptionPane.INFORMATION_MESSAGE);
+                    ativaMenu();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Falha ao abrir o arquivo!", "Abrir", JOptionPane.ERROR_MESSAGE);
+                }
+
             } catch (Exception e) {
-                System.out.println("problem accessing file" + file.getAbsolutePath());
+                JOptionPane.showMessageDialog(this, "Falha ao abrir o arquivo!", "Abrir", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            System.out.println("File access cancelled by user.");
+            
         }
-
 
     }//GEN-LAST:event_menuArquivoAbrirActionPerformed
 
@@ -292,6 +298,7 @@ public class Programa extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Programa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
         /* */
 

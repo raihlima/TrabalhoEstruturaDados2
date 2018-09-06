@@ -5,14 +5,9 @@
  */
 package trabalhoed2;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
+import algoritmos.Algoritmo;
+import algoritmos.ListaEncadeada;
+import java.io.*;
 import static java.lang.System.exit;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -31,37 +26,49 @@ public class TrabalhoED2 {
     public static void main(String[] args) {
         // TODO code application logic here
         Algoritmo algoritmo = new Algoritmo();
-        ArrayList<Deputado> deputados;
-        deputados = new ArrayList<>();
+        ListaEncadeada<Deputado> deputados;
+        deputados = new ListaEncadeada<>();
         clearConsole();
         //leDados(deputados);
-        
-        Relatorio relatorio = new Relatorio();
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
-        relatorio.setRelatorioFinal();
-        relatorio.retornaTempoExecucao();
-        
+
+        ListaEncadeada<Integer> x = new ListaEncadeada<>();
+
+        for (int i = 0; i < 10; i++) {
+            x.insereFinal(i);
+        }
+
+        x.removeInicio();
+        x.removeFinal();
+        //x.troca(0, 1);
+        x.insere(1, 900);
+        x.remove(1);
+        System.out.println("Tamanho x " + x.getTamanho());
+        for (int i = 0; i < x.getTamanho(); i++) {
+            System.out.println(x.retornaInfo(i) + " ");
+        }
+
+        //Relatorio relatorio = new Relatorio();
+        //Scanner scanner = new Scanner(System.in);
+        //scanner.nextLine();
+        //relatorio.setRelatorioFinal();
+        //relatorio.retornaTempoExecucao();
         //imprimeDeputados(deputados);    
         //algoritmo.bubbleSortDeputados(deputados);
         //imprimeDeputados(deputados);
         //algoritmo.bubbleSortRecibos(deputados.get(0));
         //deputados.get(0).imprimeRecibos();
-        
-        
         //System.out.println("Número de deputados: " + deputados.size());
         clearConsole();
 
     }
 
-    public static void leDados(ArrayList<Deputado> deputados) {
+    public static void leDados(ListaEncadeada<Deputado> deputados) {
         //File arquivo = new File("texto.txt");
         File arquivo = new File("deputies_dataset_tratado.csv");
         int cont = 0;
 
         long start = System.currentTimeMillis();
         // faz o trabalho a ser medido
-        
 
         try (FileInputStream fi = new FileInputStream(arquivo)) {
             System.out.println("Tentando ler o arquivo");
@@ -79,21 +86,23 @@ public class TrabalhoED2 {
             String[] partes;
             String aux;
 
-            /*
-            for (int i = 0; i < 100000; i++) {
+            //linha = reader.readLine();
+            for (int i = 0; i < 3000000; i++) {
 
                 linha = reader.readLine();
                 aux = linha;
                 //System.out.println(linha);
-                
-                partes = aux.split(",");
+                if (i % 100000 == 0) {
+                    System.out.println("Marca de " + i);
+                }
+                partes = aux.split(";");
                 //System.out.println(partes[]);
                 preencheDeputados(deputados, partes);
 
                 //deputados.add(new Deputado(partes[5], partes[3], partes[4], 12));
-
             }
-             */
+
+            /*
             while (linha != null) {
                 cont++;
                 if (cont == 1) {
@@ -105,10 +114,10 @@ public class TrabalhoED2 {
                 if (partes[0].equals("0") || partes[0].equals("1")) {
                     preencheDeputados(deputados, partes);
                 }
+            
 
                 //System.out.println(cont);
             }//*/
-
             //System.out.println("Terminou");
         } catch (Exception e) {
             //System.out.println(cont);
@@ -126,20 +135,15 @@ public class TrabalhoED2 {
         }
     }
 
-    private static void imprimeDeputados(ArrayList<Deputado> deputados) {
-        for (int i = 0; i < deputados.size(); i++) {
-            deputados.get(i).imprimeDeputado();
+    private static void imprimeDeputados(ListaEncadeada<Deputado> deputados) {
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            deputados.retornaInfo(i).imprimeDeputado();
         }
     }
 
-    private static void preencheDeputados(ArrayList<Deputado> deputados, String[] partes) {
+    private static void preencheDeputados(ListaEncadeada<Deputado> deputados, String[] partes) {
         Deputado deputado = new Deputado(partes[5], partes[3], partes[4], Integer.parseInt(partes[2]));
         Recibo recibo = new Recibo(partes[8], partes[6], partes[7], Float.parseFloat(partes[9]));
-        //Não utilizado
-        /*
-        Gasto gasto = new Gasto();
-        Empresa empresa = new Empresa(partes[8], partes[6], partes[7]);
-         */
 
         //Preenchendo a hora no recibo
         if (partes[0].equals("0")) {
@@ -152,71 +156,28 @@ public class TrabalhoED2 {
             recibo.setHora("00:00:00");
         }
 
-        //Não utilizado
-        /*
-        gasto.setGasto(Float.parseFloat(partes[9]));
-         */
         //variaveis auxiliares
         int indexDeputado = verificaDeputadoLista(deputado, deputados);
 
-        //Não utilizado
-        //int indexEmpresa = verificaEmpresa(indexDeputado, deputados, empresa);
         //Se o deputado não estiver na lista, adiciona
         if (indexDeputado == -1) {
             deputado.addRecibo(recibo);
-            deputados.add(deputado);
+            deputados.insereFinal(deputado);
         } else {
-            deputados.get(indexDeputado).addRecibo(recibo);
+            deputados.retornaInfo(indexDeputado).addRecibo(recibo);
         }
 
-        //Não utilizado
-        /*
-        //Se a empresa não estiver na lista, adiciona
-        if (indexEmpresa == -1) {
-            empresa.addGastos(gasto);
-
-            if (indexDeputado == -1) {
-                deputados.get(deputados.size() - 1).addEmpresa(empresa);
-            } else {
-                deputados.get(indexDeputado).addEmpresa(empresa);
-            }
-        } else {
-            if(indexDeputado == -1){
-                deputados.get(deputados.size()-1).addGastoEmpresa(indexEmpresa, gasto);
-            } else {
-                deputados.get(indexDeputado).addGastoEmpresa(indexEmpresa, gasto);
-            }
-        }
-        } else {
-            
-        }
-         */
     }
 
-    private static int verificaDeputadoLista(Deputado deputado, ArrayList<Deputado> deputados) {
-        for (int i = 0; i < deputados.size(); i++) {
-            if (deputado.getNome().equals(deputados.get(i).getNome())) {
+    private static int verificaDeputadoLista(Deputado deputado, ListaEncadeada<Deputado> deputados) {
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            if (deputado.getNome().equals(deputados.retornaInfo(i).getNome())) {
                 return i;
             }
         }
         return -1;
     }
 
-    //Não utilizado
-    /*
-    private static int verificaEmpresa(int indexDeputado, ArrayList<Deputado> deputados, Empresa empresa) {
-        if (indexDeputado == -1) {
-            return -1;
-        } else {
-                for (int j = 0; j < deputados.get(indexDeputado).getEmpresas().size(); j++) {
-                    if (empresa.getNome().equals(deputados.get(indexDeputado).getEmpresas().get(j).getNome())) {
-                        return j;
-                    }
-                }
-            }
-        return -1;
-    }
-     */
     public final static void clearConsole() {
 
         try {
