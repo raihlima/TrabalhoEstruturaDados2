@@ -7,6 +7,7 @@ package trabalhoed2;
 
 import algoritmos.Algoritmo;
 import algoritmos.ListaEncadeada;
+import interfaceGrafica.Programa;
 import java.io.*;
 import static java.lang.System.exit;
 import java.util.ArrayList;
@@ -28,9 +29,10 @@ public class TrabalhoED2 {
         ListaEncadeada<Deputado> deputados;
         deputados = new ListaEncadeada<>();
         clearConsole();
-        leDados(deputados);
+        //leDados(deputados);
 
-
+        Programa programa = new Programa();
+        programa.setVisible(true);
         //Relatorio relatorio = new Relatorio();
         //Scanner scanner = new Scanner(System.in);
         //scanner.nextLine();
@@ -38,7 +40,7 @@ public class TrabalhoED2 {
         //relatorio.retornaTempoExecucao();
         //imprimeDeputados(deputados);    
         //algoritmo.bubbleSortDeputados(deputados);
-        imprimeDeputados(deputados);
+        //imprimeDeputados(deputados);
         //algoritmo.bubbleSortRecibos(deputados.get(0));
         //deputados.get(0).imprimeRecibos();
         //System.out.println("Número de deputados: " + deputados.size());
