@@ -5,13 +5,15 @@
  */
 package interfaceGrafica;
 
+import algoritmos.ListaEncadeada;
 import java.awt.CardLayout;
 import java.io.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
+import trabalhoed2.Deputado;
+import trabalhoed2.Recibo;
 /**
  *
  * @author Carcara
@@ -31,6 +33,7 @@ public class Programa extends javax.swing.JFrame {
         initComponents();
         cardLayout = (CardLayout) jPanelPrincipal.getLayout();
         cardLayout.show(jPanelPrincipal, "inicio");
+        botaoTudo.setEnabled(false);
     }
 
     /**
@@ -46,6 +49,7 @@ public class Programa extends javax.swing.JFrame {
         grupoTipo = new javax.swing.ButtonGroup();
         grupoAlgoritmo = new javax.swing.ButtonGroup();
         grupoQuantidade = new javax.swing.ButtonGroup();
+        grupoMetodo = new javax.swing.ButtonGroup();
         barraStatus = new javax.swing.JPanel();
         nomeArquivoStatus = new javax.swing.JLabel();
         nomeArquivo = new javax.swing.JLabel();
@@ -53,24 +57,27 @@ public class Programa extends javax.swing.JFrame {
         jPanelOrdenacao = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        botaoDeputadoOrdenacao = new javax.swing.JRadioButton();
+        botaoPartidoOrdenacao = new javax.swing.JRadioButton();
         jPanel7 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jRadioButton11 = new javax.swing.JRadioButton();
-        jRadioButton12 = new javax.swing.JRadioButton();
-        jButton12 = new javax.swing.JButton();
+        valorOrdenacao = new javax.swing.JTextField();
+        botaoLinearOrdenacao = new javax.swing.JRadioButton();
+        botaoAleatorioOrdenacao = new javax.swing.JRadioButton();
+        botaoTudo = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
+        radioBubble = new javax.swing.JRadioButton();
+        radioInsertion = new javax.swing.JRadioButton();
+        radioMerge = new javax.swing.JRadioButton();
+        radioHeap = new javax.swing.JRadioButton();
+        radioShell = new javax.swing.JRadioButton();
+        radioQuick3 = new javax.swing.JRadioButton();
+        radioQuick1 = new javax.swing.JRadioButton();
+        radioQuick2 = new javax.swing.JRadioButton();
+        botaoComecar = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
         jRadioButton3 = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
-        jRadioButton8 = new javax.swing.JRadioButton();
-        jRadioButton9 = new javax.swing.JRadioButton();
-        jRadioButton10 = new javax.swing.JRadioButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
         jPanelArquivoAberto = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -154,12 +161,22 @@ public class Programa extends javax.swing.JFrame {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Ordenar por:"));
 
-        grupoTipo.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Deputado");
+        grupoTipo.add(botaoDeputadoOrdenacao);
+        botaoDeputadoOrdenacao.setSelected(true);
+        botaoDeputadoOrdenacao.setText("Deputado");
+        botaoDeputadoOrdenacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDeputadoOrdenacaoActionPerformed(evt);
+            }
+        });
 
-        grupoTipo.add(jRadioButton2);
-        jRadioButton2.setText("Partido");
+        grupoTipo.add(botaoPartidoOrdenacao);
+        botaoPartidoOrdenacao.setText("Partido");
+        botaoPartidoOrdenacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPartidoOrdenacaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -168,29 +185,39 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(botaoDeputadoOrdenacao)
+                    .addComponent(botaoPartidoOrdenacao))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jRadioButton1)
+                .addComponent(botaoDeputadoOrdenacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(botaoPartidoOrdenacao)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Quantidade"));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Leitura de Linhas"));
 
-        grupoQuantidade.add(jRadioButton11);
-        jRadioButton11.setSelected(true);
-        jRadioButton11.setText("Específica");
+        grupoQuantidade.add(botaoLinearOrdenacao);
+        botaoLinearOrdenacao.setSelected(true);
+        botaoLinearOrdenacao.setText("Linear");
+        botaoLinearOrdenacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoLinearOrdenacaoActionPerformed(evt);
+            }
+        });
 
-        grupoQuantidade.add(jRadioButton12);
-        jRadioButton12.setText("Sementes Randômicas");
+        grupoQuantidade.add(botaoAleatorioOrdenacao);
+        botaoAleatorioOrdenacao.setText("Aleatórias");
+        botaoAleatorioOrdenacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAleatorioOrdenacaoActionPerformed(evt);
+            }
+        });
 
-        jButton12.setText("Tudo");
+        botaoTudo.setText("Todas as linhas");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -198,53 +225,54 @@ public class Programa extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(valorOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoLinearOrdenacao))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addComponent(jRadioButton11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton12))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoTudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botaoAleatorioOrdenacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton12)
-                    .addComponent(jRadioButton11))
+                    .addComponent(botaoLinearOrdenacao)
+                    .addComponent(botaoAleatorioOrdenacao))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoTudo)
+                    .addComponent(valorOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Algoritmo de Ordenação"));
 
-        grupoAlgoritmo.add(jRadioButton3);
-        jRadioButton3.setSelected(true);
-        jRadioButton3.setText("Bubble Sort");
+        grupoAlgoritmo.add(radioBubble);
+        radioBubble.setSelected(true);
+        radioBubble.setText("Bubble Sort");
 
-        grupoAlgoritmo.add(jRadioButton4);
-        jRadioButton4.setText("Insertion Sort");
+        grupoAlgoritmo.add(radioInsertion);
+        radioInsertion.setText("Insertion Sort");
 
-        grupoAlgoritmo.add(jRadioButton5);
-        jRadioButton5.setText("Merge Sort");
+        grupoAlgoritmo.add(radioMerge);
+        radioMerge.setText("Merge Sort");
 
-        grupoAlgoritmo.add(jRadioButton6);
-        jRadioButton6.setText("Heap Sort");
+        grupoAlgoritmo.add(radioHeap);
+        radioHeap.setText("Heap Sort");
 
-        grupoAlgoritmo.add(jRadioButton7);
-        jRadioButton7.setText("Shell Sort");
+        grupoAlgoritmo.add(radioShell);
+        radioShell.setText("Shell Sort");
 
-        grupoAlgoritmo.add(jRadioButton8);
-        jRadioButton8.setText("Quick Sort Inserção");
+        grupoAlgoritmo.add(radioQuick3);
+        radioQuick3.setText("Quick Sort Inserção");
 
-        grupoAlgoritmo.add(jRadioButton9);
-        jRadioButton9.setText("Quick Sort Recursivo");
+        grupoAlgoritmo.add(radioQuick1);
+        radioQuick1.setText("Quick Sort Recursivo");
 
-        grupoAlgoritmo.add(jRadioButton10);
-        jRadioButton10.setText("Quick Sort Mediana");
+        grupoAlgoritmo.add(radioQuick2);
+        radioQuick2.setText("Quick Sort Mediana");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -253,20 +281,20 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton5))
+                    .addComponent(radioBubble)
+                    .addComponent(radioInsertion)
+                    .addComponent(radioMerge))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton8)
+                    .addComponent(radioQuick3)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton10)
-                            .addComponent(jRadioButton9))
+                            .addComponent(radioQuick2)
+                            .addComponent(radioQuick1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton6)
-                            .addComponent(jRadioButton7))))
+                            .addComponent(radioHeap)
+                            .addComponent(radioShell))))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -274,25 +302,74 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton6)
-                    .addComponent(jRadioButton9))
+                    .addComponent(radioBubble)
+                    .addComponent(radioHeap)
+                    .addComponent(radioQuick1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton4)
-                        .addComponent(jRadioButton10))
-                    .addComponent(jRadioButton7))
+                        .addComponent(radioInsertion)
+                        .addComponent(radioQuick2))
+                    .addComponent(radioShell))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton5)
-                    .addComponent(jRadioButton8))
+                    .addComponent(radioMerge)
+                    .addComponent(radioQuick3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton10.setText("Começar");
+        botaoComecar.setText("Começar");
+        botaoComecar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoComecarActionPerformed(evt);
+            }
+        });
 
         jButton11.setText("Cancelar");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Método"));
+
+        grupoMetodo.add(jRadioButton3);
+        jRadioButton3.setSelected(true);
+        jRadioButton3.setText("Customizado");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        grupoMetodo.add(jRadioButton4);
+        jRadioButton4.setText("Sementes Aleatórias ( 5 vezes)");
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jRadioButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton4))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -301,11 +378,12 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botaoComecar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -315,7 +393,9 @@ public class Programa extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -324,7 +404,7 @@ public class Programa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton11)
-                    .addComponent(jButton10))
+                    .addComponent(botaoComecar))
                 .addContainerGap())
         );
 
@@ -751,6 +831,168 @@ public class Programa extends javax.swing.JFrame {
         cardLayout.show(jPanelPrincipal, "ordenacao");
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(jPanelPrincipal, "arquivoAberto");
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void botaoPartidoOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPartidoOrdenacaoActionPerformed
+        // TODO add your handling code here:
+        botaoTudo.setEnabled(true);
+    }//GEN-LAST:event_botaoPartidoOrdenacaoActionPerformed
+
+    private void botaoDeputadoOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeputadoOrdenacaoActionPerformed
+        // TODO add your handling code here:
+        botaoTudo.setEnabled(false);
+    }//GEN-LAST:event_botaoDeputadoOrdenacaoActionPerformed
+
+    private void botaoLinearOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLinearOrdenacaoActionPerformed
+        // TODO add your handling code here:
+        alteraEstadoOrdenacao(true);
+    }//GEN-LAST:event_botaoLinearOrdenacaoActionPerformed
+
+    private void botaoAleatorioOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAleatorioOrdenacaoActionPerformed
+        // TODO add your handling code here:
+        alteraEstadoOrdenacao(false);
+    }//GEN-LAST:event_botaoAleatorioOrdenacaoActionPerformed
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        // TODO add your handling code here:
+        alteraEstadoOrdenacao(false);
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
+
+    private void botaoComecarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoComecarActionPerformed
+        // TODO add your handling code here:
+        try {
+
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_botaoComecarActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        // TODO add your handling code here:
+        alteraEstadoOrdenacao(true);
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+    
+    private void executarOrdenacao(int qtdLinhas, int algoritmo, int tipoOrdenacao, int leitura){
+        //File arquivo = new File("texto.txt");
+        ListaEncadeada <Deputado> listaDeputado = new ListaEncadeada<>();
+        
+        
+        int cont = 0;
+
+        long start = System.currentTimeMillis();
+        // faz o trabalho a ser medido
+
+        try (FileInputStream fi = new FileInputStream(arquivo)) {
+            System.out.println("Tentando ler o arquivo");
+
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha = linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int qtdLinha = linhaLeitura.getLineNumber();
+            System.out.println(qtdLinha);
+            //String
+            String[] partes;
+            String aux;
+
+            //linha = reader.readLine();
+            for (int i = 0; i < 500000; i++) {
+
+                linha = reader.readLine();
+                aux = linha;
+                //System.out.println(linha);
+                if (i % 100000 == 0) {
+                    System.out.println("Marca de " + i);
+                }
+                partes = aux.split(";");
+                //System.out.println(partes[]);
+                preencherDeputados(listaDeputado, partes);
+
+                //deputados.add(new Deputado(partes[5], partes[3], partes[4], 12));
+            }
+
+            /*
+            while (linha != null) {
+                cont++;
+                if (cont == 1) {
+                    System.out.println("Arquivo sendo executado");
+                }
+                //System.out.println(linha);
+                linha = reader.readLine();
+                partes = linha.split(";");
+                if (partes[0].equals("0") || partes[0].equals("1")) {
+                    preencheDeputados(deputados, partes);
+                }
+            
+
+                //System.out.println(cont);
+            }//*/
+            //System.out.println("Terminou");
+        } catch (Exception e) {
+            //System.out.println(cont);
+            if (cont == 0) {
+                System.err.println("Erro ao ler o arquivo.");
+            }
+            if (cont < 3014904) {
+                System.err.println("Erro ao ler o arquivo na linha " + cont);
+            } else {
+                long elapsed = System.currentTimeMillis() - start;
+                System.out.println("Arquivo lido com sucesso!");
+                System.out.println(elapsed);
+            }
+
+        }
+    }
+    
+    private void preencherDeputados(ListaEncadeada<Deputado> deputados, String[] partes) {
+        Deputado deputado = new Deputado(partes[5], partes[3], partes[4], Integer.parseInt(partes[2]));
+        Recibo recibo = new Recibo(partes[8], partes[6], partes[7], Float.parseFloat(partes[9]));
+
+        //Preenchendo a hora no recibo
+        if (partes[0].equals("0")) {
+            String[] div = partes[1].split(" ");
+            recibo.setData(div[0]);
+            recibo.setHora(div[1]);
+
+        } else if (partes[0].equals("1")) {
+            recibo.setData(partes[1] + "-01-01");
+            recibo.setHora("00:00:00");
+        }
+
+        //variaveis auxiliares
+        int indexDeputado = verificaDeputadoLista(deputado, deputados);
+
+        //Se o deputado não estiver na lista, adiciona
+        if (indexDeputado == -1) {
+            deputado.addRecibo(recibo);
+            deputados.insereFinal(deputado);
+        } else {
+            deputados.retornaInfo(indexDeputado).addRecibo(recibo);
+        }
+
+    }
+
+    private int verificaDeputadoLista(Deputado deputado, ListaEncadeada<Deputado> deputados) {
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            if (deputado.getNome().equals(deputados.retornaInfo(i).getNome())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+     private void imprimeDeputados(ListaEncadeada<Deputado> deputados) {
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            deputados.retornaInfo(i).imprimeDeputado();
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -831,7 +1073,7 @@ public class Programa extends javax.swing.JFrame {
     }
 
     public void desativaMenu() {
-        int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja fechar o arquivo?","Confirmação",JOptionPane.YES_NO_OPTION);
+        int resposta = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja fechar o arquivo?", "Confirmação", JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {
             menuArquivoFechar.setEnabled(false);
             menuAlgoritmos.setEnabled(false);
@@ -844,16 +1086,35 @@ public class Programa extends javax.swing.JFrame {
 
     }
 
+    private void alteraEstadoOrdenacao(boolean valor) {
+        botaoTudo.setEnabled(valor);
+        valorOrdenacao.setEditable(valor);
+        radioBubble.setEnabled(valor);
+        radioHeap.setEnabled(valor);
+        radioInsertion.setEnabled(valor);
+        radioMerge.setEnabled(valor);
+        radioQuick1.setEnabled(valor);
+        radioQuick2.setEnabled(valor);
+        radioQuick3.setEnabled(valor);
+        radioShell.setEnabled(valor);
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel barraStatus;
+    private javax.swing.JRadioButton botaoAleatorioOrdenacao;
+    private javax.swing.JButton botaoComecar;
+    private javax.swing.JRadioButton botaoDeputadoOrdenacao;
+    private javax.swing.JRadioButton botaoLinearOrdenacao;
+    private javax.swing.JRadioButton botaoPartidoOrdenacao;
+    private javax.swing.JButton botaoTudo;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.ButtonGroup grupoAlgoritmo;
+    private javax.swing.ButtonGroup grupoMetodo;
     private javax.swing.ButtonGroup grupoQuantidade;
     private javax.swing.ButtonGroup grupoTipo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -887,26 +1148,16 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelArquivoAberto;
     private javax.swing.JPanel jPanelInicio;
     private javax.swing.JPanel jPanelOrdenacao;
     private javax.swing.JPanel jPanelPrincipal;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton10;
-    private javax.swing.JRadioButton jRadioButton11;
-    private javax.swing.JRadioButton jRadioButton12;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JRadioButton jRadioButton9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuAlgoritmos;
     private javax.swing.JMenu menuAlgoritmosBusca;
@@ -918,5 +1169,14 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JMenu menuRelatorio;
     private javax.swing.JLabel nomeArquivo;
     private javax.swing.JLabel nomeArquivoStatus;
+    private javax.swing.JRadioButton radioBubble;
+    private javax.swing.JRadioButton radioHeap;
+    private javax.swing.JRadioButton radioInsertion;
+    private javax.swing.JRadioButton radioMerge;
+    private javax.swing.JRadioButton radioQuick1;
+    private javax.swing.JRadioButton radioQuick2;
+    private javax.swing.JRadioButton radioQuick3;
+    private javax.swing.JRadioButton radioShell;
+    private javax.swing.JTextField valorOrdenacao;
     // End of variables declaration//GEN-END:variables
 }
