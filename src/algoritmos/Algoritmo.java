@@ -8,6 +8,7 @@ package algoritmos;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import trabalhoed2.Deputado;
@@ -21,26 +22,38 @@ public class Algoritmo {
      * Esta função faz o bubbleSort
      * @param deputados 
      */
-    public static void bubbleSortDeputados(ArrayList<Deputado> deputados) {
-        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+    public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados) {
+        //Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         //auxiliar.compare(string, string1)
 
-        for (int i = 0; i < deputados.size(); i++) {
-            for (int j = 1; j < deputados.size() - i; j++) {
-                if (collator.compare(deputados.get(j - 1).getNome(), deputados.get(j).getNome()) > 0) {
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            for (int j = 1; j < deputados.getTamanho()- i; j++) {
+                if (deputados.retornaInfo(j - 1).getTotalGasto()> deputados.retornaInfo(j).getTotalGasto()) {
                     //if (deputados.get(j - 1).getNome().compareToIgnoreCase(deputados.get(j).getNome()) > 0) {
-                    Collections.swap(deputados, j, j - 1);
+                    deputados.troca(j, j-1);
                 }
             }
         }
 
     }
-
+    
     public static void bubbleSortRecibos(Deputado deputado) {
         for (int i = 0; i < deputado.getRecibos().size(); i++) {
             for (int j = 1; j < deputado.getRecibos().size() - i; j++) {
                 if (deputado.getRecibos().get(j).getGasto() < deputado.getRecibos().get(j - 1).getGasto()) {
                     Collections.swap(deputado.getRecibos(), j - 1, j);
+                }
+            }
+        }
+}
+
+    public static void bubbleSortArrayListInteiro(List<Integer> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            for (int j = 1; j < lista.size() - i; j++) {
+                if (lista.get(j) < lista.get(j - 1)) {
+                    int aux = lista.get(j);
+                    lista.set(j, lista.get(j-1));
+                    lista.set(j-1, aux);
                 }
             }
         }
@@ -89,7 +102,8 @@ public class Algoritmo {
             deputadoMed.add(deputados.get(rand.nextInt(deputados.size())));
         }
         ///TO DO Implementar o sort aqui
-        Algoritmo.bubbleSortDeputados(deputadoMed);
+        //Consertar
+//        Algoritmo.bubbleSortDeputados(deputadoMed);
         //Define o pivo do algoritmo
         Deputado pivo = deputadoMed.get(k / 2);
 

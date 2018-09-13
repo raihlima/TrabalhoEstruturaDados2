@@ -5,14 +5,21 @@
  */
 package interfaceGrafica;
 
+import algoritmos.Algoritmo;
 import algoritmos.ListaEncadeada;
 import java.awt.CardLayout;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import trabalhoed2.Deputado;
 import trabalhoed2.Recibo;
 
@@ -106,7 +113,11 @@ public class Programa extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaDeputados = new javax.swing.JTable();
+        jPanelExecutando = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        barraProgresso = new javax.swing.JProgressBar();
+        progressoStatus = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuArquivoAbrir = new javax.swing.JMenuItem();
@@ -211,6 +222,12 @@ public class Programa extends javax.swing.JFrame {
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Leitura de Linhas"));
+
+        valorOrdenacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                valorOrdenacaoActionPerformed(evt);
+            }
+        });
 
         grupoQuantidade.add(botaoLinearOrdenacao);
         botaoLinearOrdenacao.setSelected(true);
@@ -558,9 +575,9 @@ public class Programa extends javax.swing.JFrame {
         jPanelArquivoAbertoLayout.setVerticalGroup(
             jPanelArquivoAbertoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelArquivoAbertoLayout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelPrincipal.add(jPanelArquivoAberto, "arquivoAberto");
@@ -657,7 +674,7 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -678,7 +695,7 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -688,7 +705,7 @@ public class Programa extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaDeputados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -696,15 +713,22 @@ public class Programa extends javax.swing.JFrame {
                 "Nome", "Partido", "Gasto (R$)"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelaDeputados);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -719,8 +743,8 @@ public class Programa extends javax.swing.JFrame {
                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
@@ -744,17 +768,65 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelResultadoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelResultadoLayout.setVerticalGroup(
             jPanelResultadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelResultadoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelPrincipal.add(jPanelResultado, "card5");
+        jPanelPrincipal.add(jPanelResultado, "resultadoOrdenacao");
+
+        jPanelExecutando.setBackground(new java.awt.Color(33, 39, 132));
+
+        jPanel13.setBorder(new javax.swing.border.MatteBorder(null));
+
+        progressoStatus.setText("jLabel5");
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addComponent(progressoStatus)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(barraProgresso, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(progressoStatus)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanelExecutandoLayout = new javax.swing.GroupLayout(jPanelExecutando);
+        jPanelExecutando.setLayout(jPanelExecutandoLayout);
+        jPanelExecutandoLayout.setHorizontalGroup(
+            jPanelExecutandoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelExecutandoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelExecutandoLayout.setVerticalGroup(
+            jPanelExecutandoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelExecutandoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanelPrincipal.add(jPanelExecutando, "execucao");
 
         menuArquivo.setText("Arquivo");
 
@@ -984,7 +1056,7 @@ public class Programa extends javax.swing.JFrame {
 
     private void botaoAleatorioOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAleatorioOrdenacaoActionPerformed
         // TODO add your handling code here:
-        alteraEstadoOrdenacao(false);
+        //alteraEstadoOrdenacao(false);
     }//GEN-LAST:event_botaoAleatorioOrdenacaoActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
@@ -996,10 +1068,27 @@ public class Programa extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             int qtdLinhas = Integer.parseInt(valorOrdenacao.getText());
-            if(qtdLinhas<1){
-                 JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+
+            if (qtdLinhas < 1) {
+                JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
             } else {
-                
+                if (qtdLinhas > 500000) {
+                    int resposta = JOptionPane.showConfirmDialog(null, "Acima de 500000 linhas pode causar estouro de memória. Tem certeza que deseja executar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        cardLayout.show(jPanelPrincipal, "execucao");
+                        progressoStatus.setText("Lendo o arquivo");
+
+                        executarOrdenacao(qtdLinhas);
+                    } else {
+
+                    }
+                } else {
+                    cardLayout.show(jPanelPrincipal, "execucao");
+
+                    progressoStatus.setText("Lendo o arquivo");
+                    executarOrdenacao(qtdLinhas);
+
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -1013,12 +1102,16 @@ public class Programa extends javax.swing.JFrame {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
+        cardLayout.show(jPanelPrincipal, "arquivoAberto");
+        listaDeputado = new ListaEncadeada<Deputado>();
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void executarOrdenacao(int qtdLinhas, int algoritmo, int tipoOrdenacao, int leitura) {
-        //File arquivo = new File("texto.txt");
-        
+    private void valorOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorOrdenacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_valorOrdenacaoActionPerformed
 
+    private void executarOrdenacao(int qtdLinhas) throws InterruptedException {
+        //File arquivo = new File("texto.txt");
         int cont = 0;
 
         long start = System.currentTimeMillis();
@@ -1034,27 +1127,54 @@ public class Programa extends javax.swing.JFrame {
             //Saber a quantidade de linhas          
             LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
             linhaLeitura.skip(arquivo.length());
-            int qtdLinha = linhaLeitura.getLineNumber();
-            System.out.println(qtdLinha);
+            int totalLinhas = linhaLeitura.getLineNumber();
+
             //String
             String[] partes;
             String aux;
 
-            //linha = reader.readLine();
-            for (int i = 0; i < 500000; i++) {
-
-                linha = reader.readLine();
-                aux = linha;
-                //System.out.println(linha);
-                if (i % 100000 == 0) {
-                    System.out.println("Marca de " + i);
+            if (botaoAleatorioOrdenacao.isSelected()) {
+                //linha = reader.readLine();
+                List<Integer> numAleatorios = new ArrayList<>();
+                for (int i = 1; i < totalLinhas; i++) {
+                    numAleatorios.add(i);
                 }
-                partes = aux.split(";");
-                //System.out.println(partes[]);
-                preencherDeputados(listaDeputado, partes);
+                Collections.shuffle(numAleatorios);
+                numAleatorios = numAleatorios.subList(0, qtdLinhas);
+                Collections.sort(numAleatorios);
+                //Algoritmo.bubbleSortArrayListInteiro(numAleatorios);
+                int contadorLinhas = 1;
+                
+                for (int i = 0; i < qtdLinhas;) {
 
-                //deputados.add(new Deputado(partes[5], partes[3], partes[4], 12));
+                    linha = reader.readLine();
+                    if(contadorLinhas==numAleatorios.get(i)){
+                    aux = linha;
+                    //System.out.println(linha);
+
+                    partes = aux.split(";");
+                    //System.out.println(partes[]);
+                    preencherDeputados(listaDeputado, partes);
+                    i++;
+                    }
+                    contadorLinhas++;
+                }
+            } else {
+                //linha = reader.readLine();
+                for (int i = 1; i < qtdLinhas; i++) {
+
+                    linha = reader.readLine();
+                    aux = linha;
+                    //System.out.println(linha);
+
+                    partes = aux.split(";");
+                    //System.out.println(partes[]);
+                    preencherDeputados(listaDeputado, partes);
+
+                    //deputados.add(new Deputado(partes[5], partes[3], partes[4], 12));
+                }
             }
+
 
             /*
             while (linha != null) {
@@ -1073,6 +1193,9 @@ public class Programa extends javax.swing.JFrame {
                 //System.out.println(cont);
             }//*/
             //System.out.println("Terminou");
+            ordenarDeputados();
+            cardLayout.show(jPanelPrincipal, "resultadoOrdenacao");
+            preencherTabelaOrdenacao();
         } catch (Exception e) {
             //System.out.println(cont);
             if (cont == 0) {
@@ -1086,6 +1209,12 @@ public class Programa extends javax.swing.JFrame {
                 System.out.println(elapsed);
             }
 
+        }
+    }
+    
+    private void ordenarDeputados(){
+        if(radioBubble.isSelected()){
+            Algoritmo.bubbleSortDeputados(listaDeputado);
         }
     }
 
@@ -1110,9 +1239,11 @@ public class Programa extends javax.swing.JFrame {
         //Se o deputado não estiver na lista, adiciona
         if (indexDeputado == -1) {
             deputado.addRecibo(recibo);
+            deputado.setTotalGasto((deputado.getTotalGasto()+Float.parseFloat(partes[9])));
             deputados.insereFinal(deputado);
         } else {
             deputados.retornaInfo(indexDeputado).addRecibo(recibo);
+            deputados.retornaInfo(indexDeputado).setTotalGasto((deputados.retornaInfo(indexDeputado).getTotalGasto()+Float.parseFloat(partes[9])));
         }
 
     }
@@ -1143,7 +1274,7 @@ public class Programa extends javax.swing.JFrame {
          */
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            
+
             /*
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                  if ("Nimbus".equals(info.getName())) {
@@ -1230,7 +1361,7 @@ public class Programa extends javax.swing.JFrame {
 
     private void alteraEstadoOrdenacao(boolean valor) {
         botaoTudo.setEnabled(valor);
-        valorOrdenacao.setEditable(valor);
+
         radioBubble.setEnabled(valor);
         radioHeap.setEnabled(valor);
         radioInsertion.setEnabled(valor);
@@ -1242,7 +1373,20 @@ public class Programa extends javax.swing.JFrame {
 
     }
 
+    private void alteraBarraProgresso(int valor) {
+        barraProgresso.setValue(valor);
+    }
+
+    private void preencherTabelaOrdenacao() {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaDeputados.getModel();
+        modelo.setRowCount(0);
+        for(int i=0;i<listaDeputado.getTamanho();i++){
+            modelo.addRow(new Object[]{listaDeputado.retornaInfo(i).getNome(), listaDeputado.retornaInfo(i).getPartido(), listaDeputado.retornaInfo(i).getTotalGasto()});
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barraProgresso;
     private javax.swing.JPanel barraStatus;
     private javax.swing.JRadioButton botaoAleatorioOrdenacao;
     private javax.swing.JButton botaoComecar;
@@ -1289,6 +1433,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1298,6 +1443,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelArquivoAberto;
+    private javax.swing.JPanel jPanelExecutando;
     private javax.swing.JPanel jPanelInicio;
     private javax.swing.JPanel jPanelOrdenacao;
     private javax.swing.JPanel jPanelPrincipal;
@@ -1308,7 +1454,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuAlgoritmos;
     private javax.swing.JMenu menuAlgoritmosBusca;
@@ -1320,6 +1465,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JMenu menuRelatorio;
     private javax.swing.JLabel nomeArquivo;
     private javax.swing.JLabel nomeArquivoStatus;
+    private javax.swing.JLabel progressoStatus;
     private javax.swing.JRadioButton radioBubble;
     private javax.swing.JRadioButton radioHeap;
     private javax.swing.JRadioButton radioInsertion;
@@ -1328,6 +1474,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioQuick2;
     private javax.swing.JRadioButton radioQuick3;
     private javax.swing.JRadioButton radioShell;
+    private javax.swing.JTable tabelaDeputados;
     private javax.swing.JTextField valorOrdenacao;
     // End of variables declaration//GEN-END:variables
 }
