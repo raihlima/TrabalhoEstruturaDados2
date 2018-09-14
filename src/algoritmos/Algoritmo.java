@@ -18,25 +18,27 @@ import trabalhoed2.Deputado;
  * @author ice
  */
 public class Algoritmo {
+
     /**
      * Esta função faz o bubbleSort
-     * @param deputados 
+     *
+     * @param deputados
      */
     public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados) {
         //Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         //auxiliar.compare(string, string1)
 
         for (int i = 0; i < deputados.getTamanho(); i++) {
-            for (int j = 1; j < deputados.getTamanho()- i; j++) {
-                if (deputados.retornaInfo(j - 1).getTotalGasto()> deputados.retornaInfo(j).getTotalGasto()) {
+            for (int j = 1; j < deputados.getTamanho() - i; j++) {
+                if (deputados.retornaInfo(j - 1).getTotalGasto() > deputados.retornaInfo(j).getTotalGasto()) {
                     //if (deputados.get(j - 1).getNome().compareToIgnoreCase(deputados.get(j).getNome()) > 0) {
-                    deputados.troca(j, j-1);
+                    deputados.troca(j, j - 1);
                 }
             }
         }
 
     }
-    
+
     public static void bubbleSortRecibos(Deputado deputado) {
         for (int i = 0; i < deputado.getRecibos().size(); i++) {
             for (int j = 1; j < deputado.getRecibos().size() - i; j++) {
@@ -45,40 +47,39 @@ public class Algoritmo {
                 }
             }
         }
-}
+    }
 
     public static void bubbleSortArrayListInteiro(List<Integer> lista) {
         for (int i = 0; i < lista.size(); i++) {
             for (int j = 1; j < lista.size() - i; j++) {
                 if (lista.get(j) < lista.get(j - 1)) {
                     int aux = lista.get(j);
-                    lista.set(j, lista.get(j-1));
-                    lista.set(j-1, aux);
+                    lista.set(j, lista.get(j - 1));
+                    lista.set(j - 1, aux);
                 }
             }
         }
     }
 
-    public static int particionaQuickSortRec(ArrayList<Deputado> deputados, int min, int max) {
-        //Cria o leitor de letras ascii
-        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+    public static int particionaQuickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
+
         //Define o pivo como o maior da lista
-        Deputado pivo = deputados.get(max);
+        Deputado pivo = deputados.retornaInfo(max);
         int i = (min - 1); // indice do menor elemento
         for (int j = min; j < max; j++) {
             //Compara as strings
-            if (collator.compare(deputados.get(j).getNome(), pivo.getNome()) < 0) {
+            if (deputados.retornaInfo(j).getTotalGasto() < pivo.getTotalGasto()) {
                 i++;//avanca o menor
-                Collections.swap(deputados, i, j);
+                deputados.troca(i, j);
             }
         }
-        Deputado temp = deputados.get(i + 1);
-        Collections.swap(deputados, (i + 1), max);
+        Deputado temp = deputados.retornaInfo(i + 1);
+        deputados.troca(i + 1, max);
 
         return i + 1;
     }
 
-    public void quickSortRec(ArrayList<Deputado> deputados, int min, int max) {
+    public static void quickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
         if (min < max) {
             //define o indice da particao (ip)
             int ip = particionaQuickSortRec(deputados, min, max);
@@ -88,40 +89,39 @@ public class Algoritmo {
         }
     }
 
-    public static int particionaQuickSortMed(ArrayList<Deputado> deputados, int min, int max, int k) {
-        //Cria o leitor de letras ascii
-        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+    public static int particionaQuickSortMed(ListaEncadeada<Deputado> deputados, int min, int max, int k) {
+
         //Define o pivo como o maior da lista
         //Deputado pivo = deputados.get(max);
         //Cria um num randomico para ler no indice do vetor original de deputados
         Random rand = new Random();
 
-        ArrayList<Deputado> deputadoMed = new ArrayList();
+        ListaEncadeada<Deputado> deputadoMed = new ListaEncadeada();
         //Popula o vetor de novoa deputados para calcular a mediana
         for (int i = 0; i < k; i++) {
-            deputadoMed.add(deputados.get(rand.nextInt(deputados.size())));
+            deputadoMed.insereFinal(deputados.retornaInfo(rand.nextInt(deputados.getTamanho())));
         }
         ///TO DO Implementar o sort aqui
         //Consertar
 //        Algoritmo.bubbleSortDeputados(deputadoMed);
         //Define o pivo do algoritmo
-        Deputado pivo = deputadoMed.get(k / 2);
+        Deputado pivo = deputadoMed.retornaInfo(k / 2);
 
         int i = (min - 1); // indice do menor elemento
         for (int j = min; j < max; j++) {
             //Compara as strings
-            if (collator.compare(deputados.get(j).getNome(), pivo.getNome()) < 0) {
+            if (deputados.retornaInfo(j).getTotalGasto() < pivo.getTotalGasto()) {
                 i++;//avanca o menor
-                Collections.swap(deputados, i, j);
+                deputados.troca(i, j);
             }
         }
-        Deputado temp = deputados.get(i + 1);
-        Collections.swap(deputados, (i + 1), max);
+        Deputado temp = deputados.retornaInfo(i + 1);
+        deputados.troca(i + 1, max);
 
         return i + 1;
     }
 
-    public void quickSortMed(ArrayList<Deputado> deputados, int min, int max, int k) {
+    public static void quickSortMed(ListaEncadeada<Deputado> deputados, int min, int max, int k) {
         if (min < max) {
             //define o indice da particao (ip)
             int ip = particionaQuickSortMed(deputados, min, max, k);
@@ -131,8 +131,8 @@ public class Algoritmo {
         }
     }
 
-    public void heapSort(ArrayList<Deputado> deputados) {
-        int n = deputados.size();
+    public static void heapSort(ListaEncadeada<Deputado> deputados) {
+        int n = deputados.getTamanho();
         // Constroi a Heap
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(deputados, n, i);
@@ -140,51 +140,50 @@ public class Algoritmo {
         // Extrai um elemento por vez da heap
         for (int i = n - 1; i >= 0; i--) {
             // Move a raiz para o fim
-            Collections.swap(deputados, 0, i);
+            deputados.troca(0, i);
             // heapify a heap reduzida
             heapify(deputados, i, 0);
         }
     }
 
-    private void heapify(ArrayList<Deputado> deputados, int n, int i) {
+    private static void heapify(ListaEncadeada<Deputado> deputados, int n, int i) {
         int maior = i;  // Inicializa o maior como raiz
         int esq = 2 * i + 1;
         int dir = 2 * i + 2;
 
         Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         // Se filho da esq é maior que a raiz
-        if (esq < n && (collator.compare(deputados.get(esq).getNome(), deputados.get(maior).getNome()) > 0)) {
+        if (esq < n && (collator.compare(deputados.retornaInfo(esq).getTotalGasto(), deputados.retornaInfo(maior).getTotalGasto()) > 0)) {
             maior = esq;
         }
         // Se filho da dir é maior que a raiz
-        if (dir < n && (collator.compare(deputados.get(dir).getNome(), deputados.get(maior).getNome()) > 0)) {
+        if (dir < n && (collator.compare(deputados.retornaInfo(dir).getNome(), deputados.retornaInfo(maior).getNome()) > 0)) {
             maior = dir;
         }
         // Se maior nao e raiz
         if (maior != i) {
-            Collections.swap(deputados, i, maior);
+            deputados.troca(i, maior);
             // Heapify recursivamente a sub arvore afetada
             heapify(deputados, n, maior);
         }
     }
 
-    public void insertionSort(ArrayList<Deputado> deputados) {
-        int n = deputados.size();
+    public static void insertionSort(ListaEncadeada<Deputado> deputados) {
+        int n = deputados.getTamanho();
         //Cria o leitor de letras ascii
-        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         for (int i = 1; i < n; ++i) {
-            Deputado chave = deputados.get(i);
+            Deputado chave = deputados.retornaInfo(i);
             int j = i - 1;
 
-            while (collator.compare(deputados.get(j).getNome(), chave.getNome()) > 0) {
-                deputados.set(j + 1, deputados.get(j));
+            while (deputados.retornaInfo(j).getTotalGasto()>chave.getTotalGasto()) {
+                deputados.altera(j + 1, deputados.retornaInfo(j));
                 j = j - 1;
             }
-            deputados.set((j + 1), chave);
+            deputados.altera((j + 1), chave);
         }
     }
 
-    public void insertionSortRecursivo(ArrayList<Deputado> deputados, int n) {
+    public static void insertionSortRecursivo(ListaEncadeada<Deputado> deputados, int n) {
         Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         //Caso base
         if (n <= 1) {
@@ -195,34 +194,34 @@ public class Algoritmo {
 
         // Insert ultimo element at its correct position
         // in sorted array.
-        Deputado ultimo = deputados.get(n - 1);
+        Deputado ultimo = deputados.retornaInfo(n - 1);
         int j = n - 2;
 
         /* Move elements of deputados[0..i-1], that are
           greater than key, to one position ahead
           of their current position */
-        //while (j >= 0 && deputados.get(j) > ultimo)
-        while (j > 0 && collator.compare(deputados.get(j).getNome(), ultimo.getNome()) >= 0) {
-            deputados.set(j + 1, deputados.get(j));
+        //while (j >= 0 && deputados.retornaInfo(j) > ultimo)
+        while (j > 0 && collator.compare(deputados.retornaInfo(j).getNome(), ultimo.getNome()) >= 0) {
+            deputados.altera(j + 1, deputados.retornaInfo(j));
             j--;
         }
-        deputados.set(j + 1, ultimo);
+        deputados.altera(j + 1, ultimo);
     }
 
-    private void merge(ArrayList<Deputado> deputados, int esq, int meio, int dir) {
+    private static void merge(ListaEncadeada<Deputado> deputados, int esq, int meio, int dir) {
         Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         // Encontra os tamanhos dos dois sub arrays para serem mesclados
         int n1 = meio - esq + 1;
         int n2 = dir - meio;
         // Cria os arrays temporarios
-        ArrayList<Deputado> esqArray = new ArrayList();
-        ArrayList<Deputado> dirArray = new ArrayList();
+        ListaEncadeada<Deputado> esqArray = new ListaEncadeada();
+        ListaEncadeada<Deputado> dirArray = new ListaEncadeada();
         // Copia os dados para o novo array
         for (int i = 0; i < n1; ++i) {
-            esqArray.add(deputados.get(esq + i));
+            esqArray.insereFinal(deputados.retornaInfo(esq + i));
         }
         for (int j = 0; j < n2; ++j) {
-            dirArray.add(deputados.get(meio + 1 + j));
+            dirArray.insereFinal(deputados.retornaInfo(meio + 1 + j));
         }
         // Junta os arrays temporarios
         // Indice inicial dos sub arrays
@@ -230,31 +229,31 @@ public class Algoritmo {
         // Indice inicial dos sub arrays
         int k = esq;
         while (i < n1 && j < n2) {
-            if (collator.compare(esqArray.get(i).getNome(), dirArray.get(j).getNome()) <= 0) {
-                deputados.set(k, esqArray.get(i));
+            if (collator.compare(esqArray.retornaInfo(i).getNome(), dirArray.retornaInfo(j).getNome()) <= 0) {
+                deputados.altera(k, esqArray.retornaInfo(i));
                 i++;
             } else {
-                deputados.set(k, dirArray.get(j));
+                deputados.altera(k, dirArray.retornaInfo(j));
                 j++;
             }
             k++;
         }
         // Copia os elementos do vetor esq se houver
         while (i < n1) {
-            deputados.set(k, esqArray.get(i));
+            deputados.altera(k, esqArray.retornaInfo(i));
             //deputados[k] = esqVet[i];
             i++;
             k++;
         }
         // Copia os elementos do vetor dir se houver
         while (j < n2) {
-            deputados.set(k, dirArray.get(j));
+            deputados.altera(k, dirArray.retornaInfo(j));
             j++;
             k++;
         }
     }
 
-    public void mergeSort(ArrayList<Deputado> deputados, int esq, int dir) {
+    public static void mergeSort(ListaEncadeada<Deputado> deputados, int esq, int dir) {
         if (esq < dir) {
             // Encontra o termo do meio
             int meio = (esq + dir) / 2;
@@ -266,10 +265,9 @@ public class Algoritmo {
         }
     }
 
-    public static void shellSort(ArrayList<Deputado> deputados) {
+    public static void shellSort(ListaEncadeada<Deputado> deputados) {
         int h = 1;
-        int n = deputados.size();
-        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+        int n = deputados.getTamanho();
         // Define o h para o while
         while (h < n) {
             h = h * 3 + 1;
@@ -281,13 +279,13 @@ public class Algoritmo {
 
         while (h > 0) {
             for (int i = h; i < n; i++) {
-                c = deputados.get(i);
+                c = deputados.retornaInfo(i);
                 j = i;
-                while (j >= h && collator.compare(deputados.get(j - h).getNome(), c.getNome()) >= 0) {
-                    deputados.set(j, deputados.get(j - h));
+                while (j >= h && (deputados.retornaInfo(j - h).getTotalGasto() >= c.getTotalGasto())) {
+                    deputados.altera(j, deputados.retornaInfo(j - h));
                     j = j - h;
                 }
-                deputados.set(j, c);
+                deputados.altera(j, c);
             }
             h = h / 2;
         }

@@ -10,7 +10,7 @@ package algoritmos;
  * @author carcara
  * @param <Class>
  */
-public class ListaEncadeada <Class> {
+public class ListaEncadeada<Class> {
 
     private No inicio;
     private No fim;
@@ -105,8 +105,10 @@ public class ListaEncadeada <Class> {
 
         }
     }
+
     /**
      * Esta função retorna o objeto guardado na Lista Encadeada
+     *
      * @param index (inteiro para selecionar a posição da lista)
      * @return objeto
      */
@@ -161,6 +163,32 @@ public class ListaEncadeada <Class> {
 
     }
 
+    public void altera(int index, Class objeto) throws NullPointerException {
+        if (index < 0 || index >= this.tamanho) {
+            throw new NullPointerException("Index inválido");
+        } else {
+
+            if (index == 0) {
+                this.inicio.setObjeto(objeto);
+            } else if (index == tamanho - 1) {
+                this.fim.setObjeto(objeto);
+            } else if (index <= tamanho / 2) {
+                No aux = this.inicio;
+                for (int i = 1; i < index; i++) {
+                    aux = aux.getProximo();
+                }
+                aux.setObjeto(objeto);
+            } else {
+                No aux = this.fim;
+                for (int i = 1; i < index; i++) {
+                    aux = aux.getAnterior();
+                }
+                aux.setObjeto(objeto);
+            }
+
+        }
+    }
+
     public void remove(int index) {
         if (index == 0) {
             removeInicio();
@@ -176,10 +204,10 @@ public class ListaEncadeada <Class> {
             }
             auxAnt = aux.getAnterior();
             auxProx = aux.getProximo();
-           
+
             auxAnt.setProximo(auxProx);
             auxProx.setAnterior(auxAnt);
-             aux = null;
+            aux = null;
 
             this.tamanho--;
         }

@@ -417,7 +417,7 @@ public class Programa extends javax.swing.JFrame {
                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,7 +434,7 @@ public class Programa extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton11)
                     .addComponent(botaoComecar))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelOrdenacaoLayout = new javax.swing.GroupLayout(jPanelOrdenacao);
@@ -796,7 +796,7 @@ public class Programa extends javax.swing.JFrame {
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(progressoStatus)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(barraProgresso, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
+                    .addComponent(barraProgresso, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel13Layout.setVerticalGroup(
@@ -813,7 +813,7 @@ public class Programa extends javax.swing.JFrame {
         jPanelExecutando.setLayout(jPanelExecutandoLayout);
         jPanelExecutandoLayout.setHorizontalGroup(
             jPanelExecutandoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelExecutandoLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelExecutandoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1215,6 +1215,20 @@ public class Programa extends javax.swing.JFrame {
     private void ordenarDeputados(){
         if(radioBubble.isSelected()){
             Algoritmo.bubbleSortDeputados(listaDeputado);
+        } else if(radioInsertion.isSelected()){
+            Algoritmo.insertionSort(listaDeputado);
+        } else if(radioQuick1.isSelected()){
+            
+        } else if(radioQuick2.isSelected()){
+            
+        } else if(radioQuick3.isSelected()){
+            
+        } else if(radioMerge.isSelected()){
+            
+        } else if(radioHeap.isSelected()){
+            Algoritmo.heapSort(listaDeputado);
+        } else if(radioShell.isSelected()){
+            Algoritmo.shellSort(listaDeputado);
         }
     }
 
