@@ -793,20 +793,18 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addComponent(progressoStatus)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(barraProgresso, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(progressoStatus))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(progressoStatus)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelExecutandoLayout = new javax.swing.GroupLayout(jPanelExecutando);
@@ -1073,7 +1071,7 @@ public class Programa extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (qtdLinhas > 500000) {
-                    int resposta = JOptionPane.showConfirmDialog(null, "Acima de 500000 linhas pode causar estouro de memória. Tem certeza que deseja executar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                    int resposta = JOptionPane.showConfirmDialog(null, "Acima de 500000 linhas pode ocorrer erros por falta de memória.\nTem certeza que deseja executar?", "Confirmação", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
                         cardLayout.show(jPanelPrincipal, "execucao");
                         progressoStatus.setText("Lendo o arquivo");
@@ -1084,8 +1082,9 @@ public class Programa extends javax.swing.JFrame {
                     }
                 } else {
                     cardLayout.show(jPanelPrincipal, "execucao");
-
-                    progressoStatus.setText("Lendo o arquivo");
+                    //jPanelPrincipal.revalidate();
+                    //progressoStatus.setText("Lendo o arquivo");
+                    Thread.sleep(1000);
                     executarOrdenacao(qtdLinhas);
 
                 }
@@ -1118,7 +1117,7 @@ public class Programa extends javax.swing.JFrame {
         // faz o trabalho a ser medido
 
         try (FileInputStream fi = new FileInputStream(arquivo)) {
-            System.out.println("Tentando ler o arquivo");
+            //System.out.println("Tentando ler o arquivo");
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -1315,6 +1314,9 @@ public class Programa extends javax.swing.JFrame {
                 new Programa().setVisible(true);
             }
         });
+        
+        ListaEncadeada <Integer> teste = new ListaEncadeada<>();
+
     }
 
     public void abrirArquivo() {
@@ -1335,8 +1337,7 @@ public class Programa extends javax.swing.JFrame {
                 if (linha.equals(cabecalho)) {
                     this.arquivo = arquivo;
                     nomeArquivoStatus.setText("Nome do arquivo:");
-                    nomeArquivo.setText(arquivo.getName());
-                    System.out.println(arquivo.getName());
+                    nomeArquivo.setText(arquivo.getName());                  
                     ativaMenu();
                     cardLayout.show(jPanelPrincipal, "arquivoAberto");
                     jLabel2.setText(nomeArquivo.getText());

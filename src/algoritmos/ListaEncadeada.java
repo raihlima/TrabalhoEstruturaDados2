@@ -174,13 +174,13 @@ public class ListaEncadeada<Class> {
                 this.fim.setObjeto(objeto);
             } else if (index <= tamanho / 2) {
                 No aux = this.inicio;
-                for (int i = 1; i < index; i++) {
+                for (int i = 0; i < index; i++) {
                     aux = aux.getProximo();
                 }
                 aux.setObjeto(objeto);
             } else {
                 No aux = this.fim;
-                for (int i = 1; i < index; i++) {
+                for (int i = this.getTamanho()-1; i > index; i--) {
                     aux = aux.getAnterior();
                 }
                 aux.setObjeto(objeto);
