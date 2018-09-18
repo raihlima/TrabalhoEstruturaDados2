@@ -61,7 +61,7 @@ public class Algoritmo {
         }
     }
 
-    public static int particionaQuickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
+    private static int particionaQuickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
 
         //Define o pivo como o maior da lista
         Deputado pivo = deputados.retornaInfo(max);
@@ -79,7 +79,11 @@ public class Algoritmo {
         return i + 1;
     }
 
-    public static void quickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
+    public static void quickSortRec(ListaEncadeada<Deputado> deputados) {
+        quickSortRec(deputados, 0, deputados.getTamanho() - 1);
+    }
+
+    private static void quickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
         if (min < max) {
             //define o indice da particao (ip)
             int ip = particionaQuickSortRec(deputados, min, max);
@@ -89,46 +93,84 @@ public class Algoritmo {
         }
     }
 
-    public static int particionaQuickSortMed(ListaEncadeada<Deputado> deputados, int min, int max, int k) {
-
-        //Define o pivo como o maior da lista
-        //Deputado pivo = deputados.get(max);
-        //Cria um num randomico para ler no indice do vetor original de deputados
-        Random rand = new Random();
-
-        ListaEncadeada<Deputado> deputadoMed = new ListaEncadeada();
-        //Popula o vetor de novoa deputados para calcular a mediana
-        for (int i = 0; i < k; i++) {
-            deputadoMed.insereFinal(deputados.retornaInfo(rand.nextInt(deputados.getTamanho())));
-        }
-        ///TO DO Implementar o sort aqui
-        //Consertar
-//        Algoritmo.bubbleSortDeputados(deputadoMed);
-        //Define o pivo do algoritmo
-        Deputado pivo = deputadoMed.retornaInfo(k / 2);
-
-        int i = (min - 1); // indice do menor elemento
-        for (int j = min; j < max; j++) {
-            //Compara as strings
-            if (deputados.retornaInfo(j).getTotalGasto() < pivo.getTotalGasto()) {
-                i++;//avanca o menor
-                deputados.troca(i, j);
-            }
-        }
-        Deputado temp = deputados.retornaInfo(i + 1);
-        deputados.troca(i + 1, max);
-
-        return i + 1;
+    public static void quicksortMedianaDeTres(Deputado[] deputados) {
+        quicksortMedianaDeTres(deputados, 0, deputados.length - 1);
     }
 
-    public static void quickSortMed(ListaEncadeada<Deputado> deputados, int min, int max, int k) {
-        if (min < max) {
-            //define o indice da particao (ip)
-            int ip = particionaQuickSortMed(deputados, min, max, k);
-            // Recusividade para ordenar os elementos antes e depois da particao
-            quickSortMed(deputados, min, ip - 1, k);
-            quickSortMed(deputados, ip + 1, max, k);
+    private static void quicksortMedianaDeTres(Deputado[] deputados, int inicio, int fim) {
+        if (inicio < fim) {
+            //realiza a partição
+            int q = partition(deputados, inicio, fim);
+            //ordena a partição esquerda
+            quicksortMedianaDeTres(deputados, inicio, q - 1);
+            //ordena a partição direita
+            quicksortMedianaDeTres(deputados, q + 1, fim);
         }
+    }
+
+    //Método de partição
+    private static int partition(Deputado[] deputados, int inicio, int fim) {
+        //procura a mediana entre inicio, meio e fim
+        int meio = (inicio + fim) / 2;
+        float a = deputados[inicio].getTotalGasto();
+        float b = deputados[meio].getTotalGasto();
+        float c = deputados[fim].getTotalGasto();
+        int medianaIndice; //índice da mediana
+        //A sequência de if...else a seguir verifica qual é a mediana
+        if (a < b) {
+            if (b < c) {
+                //a < b && b < c
+                medianaIndice = meio;
+            } else {
+                if (a < c) {
+                    //a < c && c <= b
+                    medianaIndice = fim;
+                } else {
+                    //c <= a && a < b
+                    medianaIndice = inicio;
+                }
+            }
+        } else {
+            if (c < b) {
+                //c < b && b <= a
+                medianaIndice = meio;
+            } else {
+                if (c < a) {
+                    //b <= c && c < a
+                    medianaIndice = fim;
+                } else {
+                    //b <= a && a <= c
+                    medianaIndice = inicio;
+                }
+            }
+        }
+        //coloca o elemento da mediana no fim para poder usar o Quicksort de Cormen
+        trocaDeputados(deputados, medianaIndice, fim);
+
+        //*******************ALGORITMO DE PARTIÇÃO DE CORMEN*********************
+        //o pivo é o elemento final
+        Deputado pivo = deputados[fim];
+        int i = inicio - 1;
+        /*
+         * Este laço irá varrer os vetores da esquerda para direira
+         * procurando os elementos que são menores ou iguais ao pivô.
+         * Esses elementos são colocados na partição esquerda.         
+         */
+        for (int j = inicio; j <= fim - 1; j++) {
+            if (deputados[j].getTotalGasto() <= pivo.getTotalGasto()) {
+                i = i + 1;
+                trocaDeputados(deputados, i, j);
+            }
+        }
+        //coloca o pivô na posição de ordenação
+        trocaDeputados(deputados, i + 1, fim);
+        return i + 1; //retorna a posição do pivô
+    }
+
+    private static void trocaDeputados(Deputado[] deputado, int i, int j) {
+        Deputado aux = deputado[i];
+        deputado[i] = deputado[j];
+        deputado[j] = aux;
     }
 
     public static void heapSort(ListaEncadeada<Deputado> deputados) {
@@ -151,13 +193,12 @@ public class Algoritmo {
         int esq = 2 * i + 1;
         int dir = 2 * i + 2;
 
-        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         // Se filho da esq é maior que a raiz
-        if (esq < n && (collator.compare(deputados.retornaInfo(esq).getTotalGasto(), deputados.retornaInfo(maior).getTotalGasto()) > 0)) {
+        if (esq < n && ((deputados.retornaInfo(esq).getTotalGasto() > deputados.retornaInfo(maior).getTotalGasto()))) {
             maior = esq;
         }
         // Se filho da dir é maior que a raiz
-        if (dir < n && (collator.compare(deputados.retornaInfo(dir).getNome(), deputados.retornaInfo(maior).getNome()) > 0)) {
+        if (dir < n && ((deputados.retornaInfo(dir).getTotalGasto() > deputados.retornaInfo(maior).getTotalGasto()))) {
             maior = dir;
         }
         // Se maior nao e raiz
@@ -169,13 +210,12 @@ public class Algoritmo {
     }
 
     public static void insertionSort(ListaEncadeada<Deputado> deputados) {
-        int n = deputados.getTamanho();
-        //Cria o leitor de letras ascii
-        for (int i = 1; i < n; ++i) {
+
+        for (int i = 1; i < deputados.getTamanho(); i++) {
             Deputado chave = deputados.retornaInfo(i);
             int j = i - 1;
 
-            while (deputados.retornaInfo(j).getTotalGasto()>chave.getTotalGasto()) {
+            while (j >= 0 && deputados.retornaInfo(j).getTotalGasto() > chave.getTotalGasto()) {
                 deputados.altera(j + 1, deputados.retornaInfo(j));
                 j = j - 1;
             }
@@ -183,33 +223,8 @@ public class Algoritmo {
         }
     }
 
-    public static void insertionSortRecursivo(ListaEncadeada<Deputado> deputados, int n) {
-        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
-        //Caso base
-        if (n <= 1) {
-            return;
-        }
-        // Sort first n-1 elements
-        insertionSortRecursivo(deputados, n - 1);
-
-        // Insert ultimo element at its correct position
-        // in sorted array.
-        Deputado ultimo = deputados.retornaInfo(n - 1);
-        int j = n - 2;
-
-        /* Move elements of deputados[0..i-1], that are
-          greater than key, to one position ahead
-          of their current position */
-        //while (j >= 0 && deputados.retornaInfo(j) > ultimo)
-        while (j > 0 && collator.compare(deputados.retornaInfo(j).getNome(), ultimo.getNome()) >= 0) {
-            deputados.altera(j + 1, deputados.retornaInfo(j));
-            j--;
-        }
-        deputados.altera(j + 1, ultimo);
-    }
-
     private static void merge(ListaEncadeada<Deputado> deputados, int esq, int meio, int dir) {
-        Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+
         // Encontra os tamanhos dos dois sub arrays para serem mesclados
         int n1 = meio - esq + 1;
         int n2 = dir - meio;
@@ -229,7 +244,7 @@ public class Algoritmo {
         // Indice inicial dos sub arrays
         int k = esq;
         while (i < n1 && j < n2) {
-            if (collator.compare(esqArray.retornaInfo(i).getNome(), dirArray.retornaInfo(j).getNome()) <= 0) {
+            if (esqArray.retornaInfo(i).getTotalGasto() <= dirArray.retornaInfo(j).getTotalGasto()) {
                 deputados.altera(k, esqArray.retornaInfo(i));
                 i++;
             } else {
@@ -253,7 +268,11 @@ public class Algoritmo {
         }
     }
 
-    public static void mergeSort(ListaEncadeada<Deputado> deputados, int esq, int dir) {
+    public static void mergeSort(ListaEncadeada<Deputado> deputados) {
+        mergeSort(deputados, 0, deputados.getTamanho() - 1);
+    }
+
+    private static void mergeSort(ListaEncadeada<Deputado> deputados, int esq, int dir) {
         if (esq < dir) {
             // Encontra o termo do meio
             int meio = (esq + dir) / 2;

@@ -32,6 +32,7 @@ public class Programa extends javax.swing.JFrame {
     private File arquivo;
     private CardLayout cardLayout;
     private ListaEncadeada<Deputado> listaDeputado = new ListaEncadeada<>();
+    Deputado[] vetDeputados;
 
     /**
      * Creates new form Programa
@@ -1211,19 +1212,33 @@ public class Programa extends javax.swing.JFrame {
         }
     }
     
+    private void retornaVetorDeputados(){
+        vetDeputados=new Deputado[listaDeputado.getTamanho()];
+        for(int i = 0; i<listaDeputado.getTamanho();i++){
+            vetDeputados[i]=listaDeputado.retornaInfo(i);                    
+        }       
+    }
+    
     private void ordenarDeputados(){
+        
         if(radioBubble.isSelected()){
             Algoritmo.bubbleSortDeputados(listaDeputado);
         } else if(radioInsertion.isSelected()){
             Algoritmo.insertionSort(listaDeputado);
         } else if(radioQuick1.isSelected()){
-            
+            Algoritmo.quickSortRec(listaDeputado);
         } else if(radioQuick2.isSelected()){
-            
+            retornaVetorDeputados();
+            Algoritmo.quicksortMedianaDeTres(vetDeputados);
+            listaDeputado = new ListaEncadeada<>();
+            for(int i=0;i<vetDeputados.length;i++){
+                listaDeputado.insereFinal(vetDeputados[i]);
+            }
+            vetDeputados=null;
         } else if(radioQuick3.isSelected()){
             
         } else if(radioMerge.isSelected()){
-            
+            Algoritmo.mergeSort(listaDeputado);
         } else if(radioHeap.isSelected()){
             Algoritmo.heapSort(listaDeputado);
         } else if(radioShell.isSelected()){
