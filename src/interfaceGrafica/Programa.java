@@ -101,6 +101,8 @@ public class Programa extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
         jPanelInicio = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -120,6 +122,7 @@ public class Programa extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         barraProgresso = new javax.swing.JProgressBar();
         progressoStatus = new javax.swing.JLabel();
+        jPanelBusca = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuArquivoAbrir = new javax.swing.JMenuItem();
@@ -127,19 +130,8 @@ public class Programa extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuArquivoSair = new javax.swing.JMenuItem();
         menuAlgoritmos = new javax.swing.JMenu();
-        menuAlgoritmosOrdenacao = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        menuAlgoritmosBusca = new javax.swing.JMenu();
+        menuOrdenacao = new javax.swing.JMenuItem();
+        menuBusca = new javax.swing.JMenuItem();
         menuRelatorio = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
@@ -496,9 +488,9 @@ public class Programa extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setText("Relatório Ordenação");
+        jButton6.setText("Relatório Ordenação Deputado");
 
-        jButton7.setText("Relatório Busca");
+        jButton7.setText("Relatório Ordenação Deputado");
 
         jButton8.setText("Ordenar");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -507,29 +499,39 @@ public class Programa extends javax.swing.JFrame {
             }
         });
 
-        jButton9.setText("Buscar");
+        jButton9.setText("Busca");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        jButton12.setText("Relatório Busca Deputado");
+
+        jButton13.setText("Relatório Busca Partido");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                    .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jButton5))
@@ -537,23 +539,27 @@ public class Programa extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton8)
                     .addComponent(jButton9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
                     .addComponent(jButton7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton12)
+                    .addComponent(jButton13))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -828,6 +834,22 @@ public class Programa extends javax.swing.JFrame {
 
         jPanelPrincipal.add(jPanelExecutando, "execucao");
 
+        jPanelBusca.setBackground(new java.awt.Color(33, 39, 132));
+        jPanelBusca.setName(""); // NOI18N
+
+        javax.swing.GroupLayout jPanelBuscaLayout = new javax.swing.GroupLayout(jPanelBusca);
+        jPanelBusca.setLayout(jPanelBuscaLayout);
+        jPanelBuscaLayout.setHorizontalGroup(
+            jPanelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 530, Short.MAX_VALUE)
+        );
+        jPanelBuscaLayout.setVerticalGroup(
+            jPanelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 412, Short.MAX_VALUE)
+        );
+
+        jPanelPrincipal.add(jPanelBusca, "busca");
+
         menuArquivo.setText("Arquivo");
 
         menuArquivoAbrir.setText("Abrir Arquivo");
@@ -861,59 +883,21 @@ public class Programa extends javax.swing.JFrame {
         menuAlgoritmos.setText("Algoritmos");
         menuAlgoritmos.setEnabled(false);
 
-        menuAlgoritmosOrdenacao.setText("Ordenação (Sort)");
-
-        jMenuItem4.setText("Sementes aleatórias (Cinco de cada)");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuOrdenacao.setText("Ordenação");
+        menuOrdenacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menuOrdenacaoActionPerformed(evt);
             }
         });
-        menuAlgoritmosOrdenacao.add(jMenuItem4);
-        menuAlgoritmosOrdenacao.add(jSeparator3);
+        menuAlgoritmos.add(menuOrdenacao);
 
-        jMenuItem7.setText("Bubble Sort");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        menuBusca.setText("Busca (Hash)");
+        menuBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                menuBuscaActionPerformed(evt);
             }
         });
-        menuAlgoritmosOrdenacao.add(jMenuItem7);
-
-        jMenu7.setText("Quick Sort");
-
-        jMenuItem8.setText("Quick Sort Recursivo");
-        jMenu7.add(jMenuItem8);
-
-        jMenuItem9.setText("Quick Sort Mediana");
-        jMenu7.add(jMenuItem9);
-
-        jMenuItem10.setText("Quick Sort Inserção");
-        jMenu7.add(jMenuItem10);
-
-        menuAlgoritmosOrdenacao.add(jMenu7);
-
-        jMenuItem11.setText("Insertion Sort");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
-            }
-        });
-        menuAlgoritmosOrdenacao.add(jMenuItem11);
-
-        jMenuItem12.setText("Merge Sort");
-        menuAlgoritmosOrdenacao.add(jMenuItem12);
-
-        jMenuItem13.setText("Heap Sort");
-        menuAlgoritmosOrdenacao.add(jMenuItem13);
-
-        jMenuItem14.setText("Shell Sort");
-        menuAlgoritmosOrdenacao.add(jMenuItem14);
-
-        menuAlgoritmos.add(menuAlgoritmosOrdenacao);
-
-        menuAlgoritmosBusca.setText("Busca (Hash)");
-        menuAlgoritmos.add(menuAlgoritmosBusca);
+        menuAlgoritmos.add(menuBusca);
 
         jMenuBar1.add(menuAlgoritmos);
 
@@ -984,22 +968,6 @@ public class Programa extends javax.swing.JFrame {
         this.arquivo = null;
         desativaMenu();
     }//GEN-LAST:event_menuArquivoFecharActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-        CardLayout c1 = (CardLayout) jPanelPrincipal.getLayout();
-        c1.show(jPanelPrincipal, "card2");
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-        CardLayout c1 = (CardLayout) jPanelPrincipal.getLayout();
-        c1.show(jPanelPrincipal, "card3");
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         // TODO add your handling code here:
@@ -1076,14 +1044,15 @@ public class Programa extends javax.swing.JFrame {
                     int resposta = JOptionPane.showConfirmDialog(null, "Acima de 500000 linhas pode ocorrer erros por falta de memória.\nTem certeza que deseja executar?", "Confirmação", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
                         cardLayout.show(jPanelPrincipal, "execucao");
-                        progressoStatus.setText("Lendo o arquivo");
-
+                        
+                        JOptionPane.showMessageDialog(null, "A leitura do arquivo começou!", "Info", JOptionPane.INFORMATION_MESSAGE);
                         executarOrdenacao(qtdLinhas);
                     } else {
 
                     }
                 } else {
                     cardLayout.show(jPanelPrincipal, "execucao");
+                    JOptionPane.showMessageDialog(null, "A leitura do arquivo começou!", "Info", JOptionPane.INFORMATION_MESSAGE);
                     //jPanelPrincipal.revalidate();
                     //progressoStatus.setText("Lendo o arquivo");
                     executarOrdenacao(qtdLinhas);
@@ -1110,8 +1079,24 @@ public class Programa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_valorOrdenacaoActionPerformed
 
+    private void menuOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOrdenacaoActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(jPanelPrincipal, "ordenacao");
+    }//GEN-LAST:event_menuOrdenacaoActionPerformed
+
+    private void menuBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBuscaActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(jPanelPrincipal, "busca");
+    }//GEN-LAST:event_menuBuscaActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(jPanelPrincipal, "busca");
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     private void executarOrdenacao(int qtdLinhas) throws InterruptedException {
         //File arquivo = new File("texto.txt");
+        progressoStatus.setText("Lendo o arquivo");
         int cont = 0;
 
         long start = System.currentTimeMillis();
@@ -1192,6 +1177,9 @@ public class Programa extends javax.swing.JFrame {
                 //System.out.println(cont);
             }//*/
             //System.out.println("Terminou");
+            
+            progressoStatus.setText("Ordenando a lista");
+            barraProgresso.setValue(50);
             ordenarDeputados();
             cardLayout.show(jPanelPrincipal, "resultadoOrdenacao");
             preencherTabelaOrdenacao();
@@ -1210,7 +1198,6 @@ public class Programa extends javax.swing.JFrame {
             }
         }
     }
-
 
     private void ordenarDeputados() {
         if (radioBubble.isSelected()) {
@@ -1271,13 +1258,6 @@ public class Programa extends javax.swing.JFrame {
 
     }
 
-
-    private void imprimeDeputados(ListaEncadeada<Deputado> deputados) {
-        for (int i = 0; i < deputados.getTamanho(); i++) {
-            deputados.retornaInfo(i).imprimeDeputado();
-        }
-    }
-
     /**
      * @param args the command line arguments
      */
@@ -1316,9 +1296,6 @@ public class Programa extends javax.swing.JFrame {
                 new Programa().setVisible(true);
             }
         });
-
-        ListaEncadeada<Integer> teste = new ListaEncadeada<>();
-
     }
 
     public void abrirArquivo() {
@@ -1418,6 +1395,8 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1430,21 +1409,11 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1459,6 +1428,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelArquivoAberto;
+    private javax.swing.JPanel jPanelBusca;
     private javax.swing.JPanel jPanelExecutando;
     private javax.swing.JPanel jPanelInicio;
     private javax.swing.JPanel jPanelOrdenacao;
@@ -1469,15 +1439,14 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuAlgoritmos;
-    private javax.swing.JMenu menuAlgoritmosBusca;
-    private javax.swing.JMenu menuAlgoritmosOrdenacao;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenuItem menuArquivoAbrir;
     private javax.swing.JMenuItem menuArquivoFechar;
     private javax.swing.JMenuItem menuArquivoSair;
+    private javax.swing.JMenuItem menuBusca;
+    private javax.swing.JMenuItem menuOrdenacao;
     private javax.swing.JMenu menuRelatorio;
     private javax.swing.JLabel nomeArquivo;
     private javax.swing.JLabel nomeArquivoStatus;

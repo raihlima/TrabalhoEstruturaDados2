@@ -57,81 +57,22 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="menuAlgoritmosOrdenacao">
+            <MenuItem class="javax.swing.JMenuItem" name="menuOrdenacao">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ordena&#xe7;&#xe3;o (Sort)"/>
+                <Property name="text" type="java.lang.String" value="Ordena&#xe7;&#xe3;o"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Sementes aleat&#xf3;rias (Cinco de cada)"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Bubble Sort"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem7ActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <Menu class="javax.swing.JMenu" name="jMenu7">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Quick Sort"/>
-                  </Properties>
-                  <SubComponents>
-                    <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Quick Sort Recursivo"/>
-                      </Properties>
-                    </MenuItem>
-                    <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Quick Sort Mediana"/>
-                      </Properties>
-                    </MenuItem>
-                    <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Quick Sort Inser&#xe7;&#xe3;o"/>
-                      </Properties>
-                    </MenuItem>
-                  </SubComponents>
-                </Menu>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem11">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Insertion Sort"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem11ActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem12">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Merge Sort"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem13">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Heap Sort"/>
-                  </Properties>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Shell Sort"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="menuAlgoritmosBusca">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuOrdenacaoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuBusca">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Busca (Hash)"/>
               </Properties>
-            </Menu>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuBuscaActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuRelatorio">
@@ -754,13 +695,13 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jPanel4" max="32767" attributes="0"/>
                               <Component id="jPanel1" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -822,27 +763,28 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jButton6" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jButton12" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jButton8" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jButton6" alignment="0" pref="268" max="32767" attributes="0"/>
                                   <Component id="jButton4" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jButton9" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jButton7" alignment="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jButton5" max="32767" attributes="0"/>
+                                  <Component id="jButton7" alignment="0" pref="268" max="32767" attributes="0"/>
+                                  <Component id="jButton13" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -852,12 +794,17 @@
                                   <Component id="jButton8" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jButton9" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jButton7" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jButton12" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButton13" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -881,12 +828,12 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton6">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio Ordena&#xe7;&#xe3;o"/>
+                        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio Ordena&#xe7;&#xe3;o Deputado"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton7">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio Busca"/>
+                        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio Ordena&#xe7;&#xe3;o Deputado"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton8">
@@ -899,7 +846,20 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton9">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Buscar"/>
+                        <Property name="text" type="java.lang.String" value="Busca"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="jButton12">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio Busca Deputado"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="jButton13">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio Busca Partido"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -1283,6 +1243,32 @@
               </SubComponents>
             </Container>
           </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanelBusca">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="84" green="27" red="21" type="rgb"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="busca"/>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="530" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="412" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
         </Container>
       </SubComponents>
     </Container>
