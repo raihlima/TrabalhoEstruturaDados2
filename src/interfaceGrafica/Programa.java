@@ -21,6 +21,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import trabalhoed2.Deputado;
+import trabalhoed2.Partido;
 import trabalhoed2.Recibo;
 
 /**
@@ -31,8 +32,8 @@ public class Programa extends javax.swing.JFrame {
 
     private File arquivo;
     private CardLayout cardLayout;
-    private ListaEncadeada<Deputado> listaDeputado = new ListaEncadeada<>();
-    Deputado[] vetDeputados;
+    private ListaEncadeada <Deputado> listaDeputado = new ListaEncadeada<>();
+    private ListaEncadeada <Partido> listaPartido = new ListaEncadeada<>();
 
     /**
      * Creates new form Programa
@@ -1085,7 +1086,6 @@ public class Programa extends javax.swing.JFrame {
                     cardLayout.show(jPanelPrincipal, "execucao");
                     //jPanelPrincipal.revalidate();
                     //progressoStatus.setText("Lendo o arquivo");
-                    Thread.sleep(1000);
                     executarOrdenacao(qtdLinhas);
 
                 }
@@ -1141,21 +1141,20 @@ public class Programa extends javax.swing.JFrame {
                 }
                 Collections.shuffle(numAleatorios);
                 numAleatorios = numAleatorios.subList(0, qtdLinhas);
-                Collections.sort(numAleatorios);
-                //Algoritmo.bubbleSortArrayListInteiro(numAleatorios);
+                Algoritmo.mergeSortInteiro(numAleatorios, 0, numAleatorios.size()-1);
                 int contadorLinhas = 1;
-                
+
                 for (int i = 0; i < qtdLinhas;) {
 
                     linha = reader.readLine();
-                    if(contadorLinhas==numAleatorios.get(i)){
-                    aux = linha;
-                    //System.out.println(linha);
+                    if (contadorLinhas == numAleatorios.get(i)) {
+                        aux = linha;
+                        //System.out.println(linha);
 
-                    partes = aux.split(";");
-                    //System.out.println(partes[]);
-                    preencherDeputados(listaDeputado, partes);
-                    i++;
+                        partes = aux.split(";");
+                        //System.out.println(partes[]);
+                        preencherDeputados(partes);
+                        i++;
                     }
                     contadorLinhas++;
                 }
@@ -1169,7 +1168,7 @@ public class Programa extends javax.swing.JFrame {
 
                     partes = aux.split(";");
                     //System.out.println(partes[]);
-                    preencherDeputados(listaDeputado, partes);
+                    preencherDeputados(partes);
 
                     //deputados.add(new Deputado(partes[5], partes[3], partes[4], 12));
                 }
@@ -1198,6 +1197,7 @@ public class Programa extends javax.swing.JFrame {
             preencherTabelaOrdenacao();
         } catch (Exception e) {
             //System.out.println(cont);
+             JOptionPane.showMessageDialog(this, "Erro inesperado!", "Erro", JOptionPane.ERROR_MESSAGE);
             if (cont == 0) {
                 System.err.println("Erro ao ler o arquivo.");
             }
@@ -1208,45 +1208,38 @@ public class Programa extends javax.swing.JFrame {
                 System.out.println("Arquivo lido com sucesso!");
                 System.out.println(elapsed);
             }
-
         }
     }
-    
-    private void retornaVetorDeputados(){
-        vetDeputados=new Deputado[listaDeputado.getTamanho()];
-        for(int i = 0; i<listaDeputado.getTamanho();i++){
-            vetDeputados[i]=listaDeputado.retornaInfo(i);                    
-        }       
-    }
-    
-    private void ordenarDeputados(){
-        
-        if(radioBubble.isSelected()){
+
+
+    private void ordenarDeputados() {
+        if (radioBubble.isSelected()) {
             Algoritmo.bubbleSortDeputados(listaDeputado);
-        } else if(radioInsertion.isSelected()){
+        } else if (radioInsertion.isSelected()) {
             Algoritmo.insertionSort(listaDeputado);
-        } else if(radioQuick1.isSelected()){
+        } else if (radioQuick1.isSelected()) {
             Algoritmo.quickSortRec(listaDeputado);
-        } else if(radioQuick2.isSelected()){
-            retornaVetorDeputados();
-            Algoritmo.quicksortMedianaDeTres(vetDeputados);
-            listaDeputado = new ListaEncadeada<>();
-            for(int i=0;i<vetDeputados.length;i++){
-                listaDeputado.insereFinal(vetDeputados[i]);
-            }
-            vetDeputados=null;
-        } else if(radioQuick3.isSelected()){
-            
-        } else if(radioMerge.isSelected()){
+        } else if (radioQuick2.isSelected()) {
+            //retornaVetorDeputados();
+            Algoritmo.quicksortMedianaDeTres(listaDeputado);
+
+            //listaDeputado = new ListaEncadeada<>();
+           // for (int i = 0; i < vetDeputados.length; i++) {
+           //     listaDeputado.insereFinal(vetDeputados[i]);
+           // }
+            //vetDeputados = null;
+        } else if (radioQuick3.isSelected()) {
+
+        } else if (radioMerge.isSelected()) {
             Algoritmo.mergeSort(listaDeputado);
-        } else if(radioHeap.isSelected()){
+        } else if (radioHeap.isSelected()) {
             Algoritmo.heapSort(listaDeputado);
-        } else if(radioShell.isSelected()){
+        } else if (radioShell.isSelected()) {
             Algoritmo.shellSort(listaDeputado);
         }
     }
 
-    private void preencherDeputados(ListaEncadeada<Deputado> deputados, String[] partes) {
+    private void preencherDeputados(String[] partes) {
         Deputado deputado = new Deputado(partes[5], partes[3], partes[4], Integer.parseInt(partes[2]));
         Recibo recibo = new Recibo(partes[8], partes[6], partes[7], Float.parseFloat(partes[9]));
 
@@ -1262,28 +1255,22 @@ public class Programa extends javax.swing.JFrame {
         }
 
         //variaveis auxiliares
-        int indexDeputado = verificaDeputadoLista(deputado, deputados);
-
         //Se o deputado não estiver na lista, adiciona
-        if (indexDeputado == -1) {
+        if(listaDeputado.getTamanho()==0){
             deputado.addRecibo(recibo);
-            deputado.setTotalGasto((deputado.getTotalGasto()+Float.parseFloat(partes[9])));
-            deputados.insereFinal(deputado);
+            deputado.setTotalGasto((deputado.getTotalGasto() + Float.parseFloat(partes[9])));
+            listaDeputado.insereFinal(deputado);
+        }   else if (listaDeputado.retornaFim().getId()!= deputado.getId()) {
+            deputado.addRecibo(recibo);
+            deputado.setTotalGasto((deputado.getTotalGasto() + Float.parseFloat(partes[9])));
+            listaDeputado.insereFinal(deputado);
         } else {
-            deputados.retornaInfo(indexDeputado).addRecibo(recibo);
-            deputados.retornaInfo(indexDeputado).setTotalGasto((deputados.retornaInfo(indexDeputado).getTotalGasto()+Float.parseFloat(partes[9])));
+            listaDeputado.retornaFim().addRecibo(recibo);
+            listaDeputado.retornaFim().setTotalGasto((listaDeputado.retornaFim().getTotalGasto() + Float.parseFloat(partes[9])));
         }
 
     }
 
-    private int verificaDeputadoLista(Deputado deputado, ListaEncadeada<Deputado> deputados) {
-        for (int i = 0; i < deputados.getTamanho(); i++) {
-            if (deputado.getNome().equals(deputados.retornaInfo(i).getNome())) {
-                return i;
-            }
-        }
-        return -1;
-    }
 
     private void imprimeDeputados(ListaEncadeada<Deputado> deputados) {
         for (int i = 0; i < deputados.getTamanho(); i++) {
@@ -1329,8 +1316,8 @@ public class Programa extends javax.swing.JFrame {
                 new Programa().setVisible(true);
             }
         });
-        
-        ListaEncadeada <Integer> teste = new ListaEncadeada<>();
+
+        ListaEncadeada<Integer> teste = new ListaEncadeada<>();
 
     }
 
@@ -1352,7 +1339,7 @@ public class Programa extends javax.swing.JFrame {
                 if (linha.equals(cabecalho)) {
                     this.arquivo = arquivo;
                     nomeArquivoStatus.setText("Nome do arquivo:");
-                    nomeArquivo.setText(arquivo.getName());                  
+                    nomeArquivo.setText(arquivo.getName());
                     ativaMenu();
                     cardLayout.show(jPanelPrincipal, "arquivoAberto");
                     jLabel2.setText(nomeArquivo.getText());
@@ -1391,7 +1378,6 @@ public class Programa extends javax.swing.JFrame {
 
     private void alteraEstadoOrdenacao(boolean valor) {
         botaoTudo.setEnabled(valor);
-
         radioBubble.setEnabled(valor);
         radioHeap.setEnabled(valor);
         radioInsertion.setEnabled(valor);
@@ -1410,7 +1396,7 @@ public class Programa extends javax.swing.JFrame {
     private void preencherTabelaOrdenacao() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaDeputados.getModel();
         modelo.setRowCount(0);
-        for(int i=0;i<listaDeputado.getTamanho();i++){
+        for (int i = 0; i < listaDeputado.getTamanho(); i++) {
             modelo.addRow(new Object[]{listaDeputado.retornaInfo(i).getNome(), listaDeputado.retornaInfo(i).getPartido(), listaDeputado.retornaInfo(i).getTotalGasto()});
         }
     }

@@ -105,7 +105,10 @@ public class ListaEncadeada<Class> {
 
         }
     }
-
+    
+    public Class retornaFim(){
+        return (Class) fim.getObjeto();
+    }
     /**
      * Esta função retorna o objeto guardado na Lista Encadeada
      *

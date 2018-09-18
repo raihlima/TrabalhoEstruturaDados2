@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import trabalhoed2.Deputado;
+import trabalhoed2.Partido;
 
 /**
  *
@@ -19,6 +20,9 @@ import trabalhoed2.Deputado;
  */
 public class Algoritmo {
 
+    /*
+    *   Algoritmos de Ordenação de Deputados
+     */
     /**
      * Esta função faz o bubbleSort
      *
@@ -39,27 +43,83 @@ public class Algoritmo {
 
     }
 
-    public static void bubbleSortRecibos(Deputado deputado) {
-        for (int i = 0; i < deputado.getRecibos().size(); i++) {
-            for (int j = 1; j < deputado.getRecibos().size() - i; j++) {
-                if (deputado.getRecibos().get(j).getGasto() < deputado.getRecibos().get(j - 1).getGasto()) {
-                    Collections.swap(deputado.getRecibos(), j - 1, j);
-                }
+  
+
+    public static void insertionSort(ListaEncadeada<Deputado> deputados) {
+
+        for (int i = 1; i < deputados.getTamanho(); i++) {
+            Deputado chave = deputados.retornaInfo(i);
+            int j = i - 1;
+
+            while (j >= 0 && deputados.retornaInfo(j).getTotalGasto() > chave.getTotalGasto()) {
+                deputados.altera(j + 1, deputados.retornaInfo(j));
+                j = j - 1;
             }
+            deputados.altera((j + 1), chave);
+        }
+    }
+    
+      private static void merge(ListaEncadeada<Deputado> deputados, int esq, int meio, int dir) {
+
+        // Encontra os tamanhos dos dois sub arrays para serem mesclados
+        int n1 = meio - esq + 1;
+        int n2 = dir - meio;
+        // Cria os arrays temporarios
+        ListaEncadeada<Deputado> esqArray = new ListaEncadeada();
+        ListaEncadeada<Deputado> dirArray = new ListaEncadeada();
+        // Copia os dados para o novo array
+        for (int i = 0; i < n1; ++i) {
+            esqArray.insereFinal(deputados.retornaInfo(esq + i));
+        }
+        for (int j = 0; j < n2; ++j) {
+            dirArray.insereFinal(deputados.retornaInfo(meio + 1 + j));
+        }
+        // Junta os arrays temporarios
+        // Indice inicial dos sub arrays
+        int i = 0, j = 0;
+        // Indice inicial dos sub arrays
+        int k = esq;
+        while (i < n1 && j < n2) {
+            if (esqArray.retornaInfo(i).getTotalGasto() <= dirArray.retornaInfo(j).getTotalGasto()) {
+                deputados.altera(k, esqArray.retornaInfo(i));
+                i++;
+            } else {
+                deputados.altera(k, dirArray.retornaInfo(j));
+                j++;
+            }
+            k++;
+        }
+        // Copia os elementos do vetor esq se houver
+        while (i < n1) {
+            deputados.altera(k, esqArray.retornaInfo(i));
+            //deputados[k] = esqVet[i];
+            i++;
+            k++;
+        }
+        // Copia os elementos do vetor dir se houver
+        while (j < n2) {
+            deputados.altera(k, dirArray.retornaInfo(j));
+            j++;
+            k++;
         }
     }
 
-    public static void bubbleSortArrayListInteiro(List<Integer> lista) {
-        for (int i = 0; i < lista.size(); i++) {
-            for (int j = 1; j < lista.size() - i; j++) {
-                if (lista.get(j) < lista.get(j - 1)) {
-                    int aux = lista.get(j);
-                    lista.set(j, lista.get(j - 1));
-                    lista.set(j - 1, aux);
-                }
-            }
+    public static void mergeSort(ListaEncadeada<Deputado> deputados) {
+        mergeSort(deputados, 0, deputados.getTamanho() - 1);
+    }
+
+    private static void mergeSort(ListaEncadeada<Deputado> deputados, int esq, int dir) {
+        if (esq < dir) {
+            // Encontra o termo do meio
+            int meio = (esq + dir) / 2;
+            // Ordena primeira e segunda metade
+            mergeSort(deputados, esq, meio);
+            mergeSort(deputados, meio + 1, dir);
+            // Junta as metades
+            merge(deputados, esq, meio, dir);
         }
     }
+
 
     private static int particionaQuickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
 
@@ -93,6 +153,87 @@ public class Algoritmo {
         }
     }
 
+    public static void quicksortMedianaDeTres(ListaEncadeada<Deputado> deputados) {
+        quicksortMedianaDeTres(deputados, 0, deputados.getTamanho() - 1);
+    }
+
+    private static void quicksortMedianaDeTres(ListaEncadeada<Deputado> deputados, int inicio, int fim) {
+        if (inicio < fim) {
+            //realiza a partição
+            int q = partition(deputados, inicio, fim);
+            //ordena a partição esquerda
+            quicksortMedianaDeTres(deputados, inicio, q - 1);
+            //ordena a partição direita
+            quicksortMedianaDeTres(deputados, q + 1, fim);
+        }
+    }
+
+    //Método de partição
+    private static int partition(ListaEncadeada<Deputado> deputados, int inicio, int fim) {
+        //procura a mediana entre inicio, meio e fim
+        int meio = (inicio + fim) / 2;
+        float a = deputados.retornaInfo(inicio).getTotalGasto();
+        float b = deputados.retornaInfo(meio).getTotalGasto();
+        float c = deputados.retornaInfo(fim).getTotalGasto();
+        int medianaIndice; //índice da mediana
+        //A sequência de if...else a seguir verifica qual é a mediana
+        if (a < b) {
+            if (b < c) {
+                //a < b && b < c
+                medianaIndice = meio;
+            } else {
+                if (a < c) {
+                    //a < c && c <= b
+                    medianaIndice = fim;
+                } else {
+                    //c <= a && a < b
+                    medianaIndice = inicio;
+                }
+            }
+        } else {
+            if (c < b) {
+                //c < b && b <= a
+                medianaIndice = meio;
+            } else {
+                if (c < a) {
+                    //b <= c && c < a
+                    medianaIndice = fim;
+                } else {
+                    //b <= a && a <= c
+                    medianaIndice = inicio;
+                }
+            }
+        }
+        //coloca o elemento da mediana no fim para poder usar o Quicksort de Cormen
+        trocaDeputados(deputados, medianaIndice, fim);
+
+        //*******************ALGORITMO DE PARTIÇÃO DE CORMEN*********************
+        //o pivo é o elemento final
+        Deputado pivo = deputados.retornaInfo(fim);
+        int i = inicio - 1;
+        /*
+         * Este laço irá varrer os vetores da esquerda para direira
+         * procurando os elementos que são menores ou iguais ao pivô.
+         * Esses elementos são colocados na partição esquerda.         
+         */
+        for (int j = inicio; j <= fim - 1; j++) {
+            if (deputados.retornaInfo(j).getTotalGasto() <= pivo.getTotalGasto()) {
+                i = i + 1;
+                trocaDeputados(deputados, i, j);
+            }
+        }
+        //coloca o pivô na posição de ordenação
+        trocaDeputados(deputados, i + 1, fim);
+        return i + 1; //retorna a posição do pivô
+    }
+
+    private static void trocaDeputados(ListaEncadeada<Deputado> deputados, int i, int j) {
+        Deputado aux = deputados.retornaInfo(i);
+        deputados.altera(i, deputados.retornaInfo(j));
+        deputados.altera(j, aux);
+    }
+
+    /*
     public static void quicksortMedianaDeTres(Deputado[] deputados) {
         quicksortMedianaDeTres(deputados, 0, deputados.length - 1);
     }
@@ -155,7 +296,7 @@ public class Algoritmo {
          * Este laço irá varrer os vetores da esquerda para direira
          * procurando os elementos que são menores ou iguais ao pivô.
          * Esses elementos são colocados na partição esquerda.         
-         */
+
         for (int j = inicio; j <= fim - 1; j++) {
             if (deputados[j].getTotalGasto() <= pivo.getTotalGasto()) {
                 i = i + 1;
@@ -172,7 +313,7 @@ public class Algoritmo {
         deputado[i] = deputado[j];
         deputado[j] = aux;
     }
-
+     */
     public static void heapSort(ListaEncadeada<Deputado> deputados) {
         int n = deputados.getTamanho();
         // Constroi a Heap
@@ -209,81 +350,7 @@ public class Algoritmo {
         }
     }
 
-    public static void insertionSort(ListaEncadeada<Deputado> deputados) {
-
-        for (int i = 1; i < deputados.getTamanho(); i++) {
-            Deputado chave = deputados.retornaInfo(i);
-            int j = i - 1;
-
-            while (j >= 0 && deputados.retornaInfo(j).getTotalGasto() > chave.getTotalGasto()) {
-                deputados.altera(j + 1, deputados.retornaInfo(j));
-                j = j - 1;
-            }
-            deputados.altera((j + 1), chave);
-        }
-    }
-
-    private static void merge(ListaEncadeada<Deputado> deputados, int esq, int meio, int dir) {
-
-        // Encontra os tamanhos dos dois sub arrays para serem mesclados
-        int n1 = meio - esq + 1;
-        int n2 = dir - meio;
-        // Cria os arrays temporarios
-        ListaEncadeada<Deputado> esqArray = new ListaEncadeada();
-        ListaEncadeada<Deputado> dirArray = new ListaEncadeada();
-        // Copia os dados para o novo array
-        for (int i = 0; i < n1; ++i) {
-            esqArray.insereFinal(deputados.retornaInfo(esq + i));
-        }
-        for (int j = 0; j < n2; ++j) {
-            dirArray.insereFinal(deputados.retornaInfo(meio + 1 + j));
-        }
-        // Junta os arrays temporarios
-        // Indice inicial dos sub arrays
-        int i = 0, j = 0;
-        // Indice inicial dos sub arrays
-        int k = esq;
-        while (i < n1 && j < n2) {
-            if (esqArray.retornaInfo(i).getTotalGasto() <= dirArray.retornaInfo(j).getTotalGasto()) {
-                deputados.altera(k, esqArray.retornaInfo(i));
-                i++;
-            } else {
-                deputados.altera(k, dirArray.retornaInfo(j));
-                j++;
-            }
-            k++;
-        }
-        // Copia os elementos do vetor esq se houver
-        while (i < n1) {
-            deputados.altera(k, esqArray.retornaInfo(i));
-            //deputados[k] = esqVet[i];
-            i++;
-            k++;
-        }
-        // Copia os elementos do vetor dir se houver
-        while (j < n2) {
-            deputados.altera(k, dirArray.retornaInfo(j));
-            j++;
-            k++;
-        }
-    }
-
-    public static void mergeSort(ListaEncadeada<Deputado> deputados) {
-        mergeSort(deputados, 0, deputados.getTamanho() - 1);
-    }
-
-    private static void mergeSort(ListaEncadeada<Deputado> deputados, int esq, int dir) {
-        if (esq < dir) {
-            // Encontra o termo do meio
-            int meio = (esq + dir) / 2;
-            // Ordena primeira e segunda metade
-            mergeSort(deputados, esq, meio);
-            mergeSort(deputados, meio + 1, dir);
-            // Junta as metades
-            merge(deputados, esq, meio, dir);
-        }
-    }
-
+  
     public static void shellSort(ListaEncadeada<Deputado> deputados) {
         int h = 1;
         int n = deputados.getTamanho();
@@ -309,6 +376,115 @@ public class Algoritmo {
             h = h / 2;
         }
     }
+
+    /*
+    *   Algoritmos de Ordenação de Partidos
+     */
+    public static void bubbleSortPartido(ListaEncadeada<Partido> partidos) {
+        //Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+        //auxiliar.compare(string, string1)
+
+        for (int i = 0; i < partidos.getTamanho(); i++) {
+            for (int j = 1; j < partidos.getTamanho() - i; j++) {
+                if (partidos.retornaInfo(j - 1).getTotalGasto() > partidos.retornaInfo(j).getTotalGasto()) {
+                    //if (deputados.get(j - 1).getNome().compareToIgnoreCase(deputados.get(j).getNome()) > 0) {
+                    partidos.troca(j, j - 1);
+                }
+            }
+        }
+    }
+
+    public static void insertionSortPartido(ListaEncadeada<Partido> partidos) {
+        for (int i = 1; i < partidos.getTamanho(); i++) {
+            Partido chave = partidos.retornaInfo(i);
+            int j = i - 1;
+
+            while (j >= 0 && partidos.retornaInfo(j).getTotalGasto() > chave.getTotalGasto()) {
+                partidos.altera(j + 1, partidos.retornaInfo(j));
+                j = j - 1;
+            }
+            partidos.altera((j + 1), chave);
+        }
+    }
+    
+
+
+    /*
+    *   Algoritmo para ordenar lista inteira
+    */
+      public static void bubbleSortArrayListInteiro(List<Integer> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            for (int j = 1; j < lista.size() - i; j++) {
+                if (lista.get(j) < lista.get(j - 1)) {
+                    int aux = lista.get(j);
+                    lista.set(j, lista.get(j - 1));
+                    lista.set(j - 1, aux);
+                }
+            }
+        }
+    }
+    
+      private static void mergeInteiro(List<Integer> lista, int esq, int meio, int dir) {
+
+        // Encontra os tamanhos dos dois sub arrays para serem mesclados
+        int n1 = meio - esq + 1;
+        int n2 = dir - meio;
+        // Cria os arrays temporarios
+        List<Integer> esqArray = new ArrayList<>();
+        List<Integer> dirArray = new ArrayList<>();
+        // Copia os dados para o novo array
+        for (int i = 0; i < n1; ++i) {
+            esqArray.add(lista.get(esq + i));
+        }
+        for (int j = 0; j < n2; ++j) {
+            dirArray.add(lista.get(meio + 1 + j));
+        }
+        // Junta os arrays temporarios
+        // Indice inicial dos sub arrays
+        int i = 0, j = 0;
+        // Indice inicial dos sub arrays
+        int k = esq;
+        while (i < n1 && j < n2) {
+            if (esqArray.get(i)<= dirArray.get(j)) {
+                lista.set(k, esqArray.get(i));
+                i++;
+            } else {
+                lista.set(k, dirArray.get(j));
+                j++;
+            }
+            k++;
+        }
+        // Copia os elementos do vetor esq se houver
+        while (i < n1) {
+            lista.set(k, esqArray.get(i));
+            //deputados[k] = esqVet[i];
+            i++;
+            k++;
+        }
+        // Copia os elementos do vetor dir se houver
+        while (j < n2) {
+            lista.set(k, dirArray.get(j));
+            j++;
+            k++;
+        }
+    }
+
+    public static void mergeSortInteiro(List<Integer> lista, int esq, int dir) {
+        if (esq < dir) {
+            // Encontra o termo do meio
+            int meio = (esq + dir) / 2;
+            // Ordena primeira e segunda metade
+            mergeSortInteiro(lista, esq, meio);
+            mergeSortInteiro(lista, meio + 1, dir);
+            // Junta as metades
+            mergeInteiro(lista, esq, meio, dir);
+        }
+    }
+
+    
+    /*
+    *   Aqui começa os Algoritmos de Hash
+    */
 
     public Deputado[] tabela(int tam) {
         Deputado[] tab = new Deputado[tam];
