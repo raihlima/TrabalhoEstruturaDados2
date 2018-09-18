@@ -28,7 +28,7 @@ public class Algoritmo {
     /**
      * Esta função contém o código para execução do algoritmo de Bubble Sort
      *
-     * @param deputados - Lista encadeada que contém os deputados
+     * @param deputados
      */
     public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados) {
         //Collator collator = Collator.getInstance(new Locale("pt", "BR"));
@@ -48,7 +48,7 @@ public class Algoritmo {
     /**
      * Esta função contém o código para execução do algoritmo de Insertion Sort
      *
-     * @param deputados - Lista encadeada que contém os deputados
+     * @param deputados
      */
     public static void insertionSort(ListaEncadeada<Deputado> deputados) {
 
@@ -67,7 +67,7 @@ public class Algoritmo {
     /**
      * Estas funções contém o código para execução do algoritmo de Merge Sort
      *
-     * @param deputados - Lista encadeada que contém os deputados
+     * @param deputados
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
     public static void mergeSort(ListaEncadeada<Deputado> deputados) {
@@ -133,7 +133,7 @@ public class Algoritmo {
     /**
      * Estas funções contém o código para execução do algoritmo de Quick Sort
      *
-     * @param deputados - Lista encadeada que contém os deputados
+     * @param deputados
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao da recurcao
     public static void quickSortRec(ListaEncadeada<Deputado> deputados) {
@@ -171,7 +171,7 @@ public class Algoritmo {
     /**
      * Estas funções contém o código para execução do algoritmo de Quick Sort Mediana de 3
      *
-     * @param deputados - Lista encadeada que contém os deputados
+     * @param deputados
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
     public static void quicksortMedianaDeTres(ListaEncadeada<Deputado> deputados) {
@@ -250,7 +250,7 @@ public class Algoritmo {
     /**
      * Esta função contém o código para execução da troca (swap) de objetos no vetor
      *
-     * @param deputados - Lista encadeada que contém os deputados
+     * @param deputados
      */
     private static void trocaDeputados(ListaEncadeada<Deputado> deputados, int i, int j) {
         Deputado aux = deputados.retornaInfo(i);
@@ -261,7 +261,7 @@ public class Algoritmo {
     /**
      * Estas funções contém o código para execução do algoritmo de Heap Sort
      *
-     * @param deputados - Lista encadeada que contém os deputados
+     * @param deputados
      */
     //Chamada da funcao principal
     public static void heapSort(ListaEncadeada<Deputado> deputados) {
@@ -303,7 +303,7 @@ public class Algoritmo {
     /**
      * Esta função contém o código para execução do algoritmo de Shell Sort
      *
-     * @param deputados - Lista encadeada que contém os deputados
+     * @param deputados
      */
     //Funcao principal do algoritmo de Shell Sort
     public static void shellSort(ListaEncadeada<Deputado> deputados) {
@@ -338,7 +338,7 @@ public class Algoritmo {
     /**
      * Esta função contém o código para execução do algoritmo de Buble Sort
      *
-     * @param deputados - Lista encadeada que contém os deputados
+     * @param partidos
      */
     public static void bubbleSortPartido(ListaEncadeada<Partido> partidos) {
         //Collator collator = Collator.getInstance(new Locale("pt", "BR"));
@@ -357,7 +357,7 @@ public class Algoritmo {
     /**
      * Esta função contém o código para execução do algoritmo de Insertion Sort
      *
-     * @param partidos - Lista encadeada que contém os partidos
+     * @param partidos
      */
     public static void insertionSortPartido(ListaEncadeada<Partido> partidos) {
         for (int i = 1; i < partidos.getTamanho(); i++) {
@@ -371,14 +371,14 @@ public class Algoritmo {
             partidos.altera((j + 1), chave);
         }
     }
-
+    
     /*
     *   Algoritmo para ordenar lista inteira
      */
     /**
-     * Esta função contém o código para execução do algoritmo de Buble Sort
+     * Esta função contém o código para execução do algoritmo de Bubble Sort
      *
-     * @param lista - Lista de inteiros a serem ordenados
+     * @param lista
      */
     public static void bubbleSortArrayListInteiro(List<Integer> lista) {
         for (int i = 0; i < lista.size(); i++) {
@@ -394,7 +394,7 @@ public class Algoritmo {
     /**
      * Esta função contém o código para execução do algoritmo de Merge Sort
      *
-     * @param lista - Lista de inteiros a serem ordenados
+     * @param lista
      * @param esq
      * @param meio
      * @param dir
@@ -529,5 +529,4 @@ public class Algoritmo {
 
         return tabela;
     }
-
 }
