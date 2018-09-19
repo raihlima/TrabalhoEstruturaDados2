@@ -41,7 +41,6 @@ public class Algoritmo {
                 }
             }
         }
-
     }
 
     /**
@@ -50,8 +49,12 @@ public class Algoritmo {
      * @param deputados
      */
     public static void insertionSort(ListaEncadeada<Deputado> deputados) {
+        insertionSort(deputados, 0, deputados.getTamanho());
+    }
 
-        for (int i = 1; i < deputados.getTamanho(); i++) {
+    private static void insertionSort(ListaEncadeada<Deputado> deputados, int min, int max) {
+
+        for (int i = min + 1; i < max; i++) {
             Deputado chave = deputados.retornaInfo(i);
             int j = i - 1;
 
@@ -263,6 +266,22 @@ public class Algoritmo {
         Deputado aux = deputados.retornaInfo(i);
         deputados.altera(i, deputados.retornaInfo(j));
         deputados.altera(j, aux);
+    }
+
+    public static void quickSortHibrido(ListaEncadeada<Deputado> deputados) {
+        quickSortHibrido(deputados, 0, deputados.getTamanho() - 1);
+    }
+
+    private static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int min, int max) {
+        int size = (max + 1) - min;
+        if (size <= 10) { // inserion sort se o tamanho for menor que 10
+            insertionSort(deputados, min, size);
+        } else // quicksort se for maior
+        {
+            int pivo = particionaQuickSortRec(deputados, min, max);
+            quickSortRec(deputados, min, pivo - 1);
+            quickSortRec(deputados, pivo + 1, max);
+        }
     }
 
     /**
@@ -492,10 +511,10 @@ public class Algoritmo {
         return k * 2;
     }
 
-    private int hashDuplo(int k, int m, int colisao){
-        return (hash(k,m)+colisao*hash2(k));
+    private int hashDuplo(int k, int m, int colisao) {
+        return (hash(k, m) + colisao * hash2(k));
     }
-    
+
     private int primo(int k) {
         for (int i = k; k > 0; i--) {
             if (ehPrimo(i)) {
@@ -549,11 +568,11 @@ public class Algoritmo {
         int h = primo(tam);
         Deputado[] tabela = tabela(tam);
         for (int i = 0; i < tam; i++) {
-            pos = (hashDuplo(deputados.get(i).getId(), h,0));
+            pos = (hashDuplo(deputados.get(i).getId(), h, 0));
             int j = 0;
             while (tabela[pos] != null) {
                 j++;
-                pos = hash(hashDuplo(deputados.get(i).getId(), h,j),h);
+                pos = hash(hashDuplo(deputados.get(i).getId(), h, j), h);
             }
             tabela[pos] = deputados.get(i);
         }
