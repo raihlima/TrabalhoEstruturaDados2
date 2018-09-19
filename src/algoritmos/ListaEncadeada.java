@@ -5,12 +5,15 @@
  */
 package algoritmos;
 
+import java.io.Serializable;
+import trabalhoed2.Deputado;
+
 /**
  *
  * @author carcara
  * @param <Class>
  */
-public class ListaEncadeada<Class> {
+public class ListaEncadeada <Class> implements Serializable  {
 
     private No inicio;
     private No fim;

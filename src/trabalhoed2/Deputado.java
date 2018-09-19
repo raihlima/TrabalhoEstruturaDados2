@@ -12,27 +12,26 @@ import java.util.Collections;
  *
  * @author ice
  */
-public class Deputado {
+public class Deputado extends Generico {
 
-    private String nome;
     private String partido;
     private String estado;
     private int id;
     private ArrayList<Recibo> recibos;
-    private float totalGasto;
+
 
     public Deputado() {
         this.recibos = new ArrayList<>();
-        this.totalGasto = 0;
+        super.setTotalGasto(0);
     }
 
     public Deputado(String nome, String partido, String estado, int id) {
-        this.nome = nome;
+        super(nome,0);
         this.partido = partido;
         this.estado = estado;
         this.id = id;
         this.recibos = new ArrayList<>();
-        this.totalGasto = 0;
+
     }
 
     public int getId() {
@@ -44,11 +43,11 @@ public class Deputado {
     }
 
     public String getNome() {
-        return nome;
+        return super.getNome();
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        super.setNome(nome);
     }
 
     public String getPartido() {
@@ -68,15 +67,15 @@ public class Deputado {
     }
 
     public float getTotalGasto() {
-        return totalGasto;
+        return super.getTotalGasto();
     }
 
     public void setTotalGasto(float totalGasto) {
-        this.totalGasto = totalGasto;
+        super.setTotalGasto(totalGasto);
     }
 
     public void imprimeDeputado() {
-        System.out.println("Nome: " + this.nome + " Partido: " + this.partido + " " + this.estado + " ID: " + this.id);
+        System.out.println("Nome: " + super.getNome() + " Partido: " + this.partido + " " + this.estado + " ID: " + this.id);
     }
 
     public ArrayList<Recibo> getRecibos() {

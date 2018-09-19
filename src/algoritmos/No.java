@@ -5,11 +5,13 @@
  */
 package algoritmos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author carcara
  */
-class No<Class> {
+class No<Class> implements Serializable {
 
     private Class objeto;
     private No proximo;

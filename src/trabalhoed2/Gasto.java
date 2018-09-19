@@ -13,22 +13,22 @@ public class Gasto {
     
     private String data;
     private String hora;
-    private float gasto;
+    private float totalGasto;
 
     public Gasto() {
     }
 
-    public Gasto(String data, float gasto) {
+    public Gasto(String data, float totalGasto) {
         this.data = data;
-        this.gasto = gasto;
+        this.totalGasto = totalGasto;
     }
 
     public float getGasto() {
-        return gasto;
+        return totalGasto;
     }
 
-    public void setGasto(float gasto) {
-        this.gasto = gasto;
+    public void setGasto(float totalGasto) {
+        this.totalGasto = totalGasto;
     }
 
     public String getData() {

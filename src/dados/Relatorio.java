@@ -45,6 +45,10 @@ public class Relatorio implements Serializable{
     public String getDescricao() {
         return descricao;
     }
+    
+    public void setDescricao(String descricao){
+        this.descricao = descricao;
+    }
 
     public long getUsoMemoria() {
         return usoMemoria;
@@ -53,6 +57,7 @@ public class Relatorio implements Serializable{
     public String getTempoExecucao() {
         return tempoExecucao;
     }
+    
     
     
       public void setRelatorioFinal(){
@@ -71,6 +76,14 @@ public class Relatorio implements Serializable{
         System.out.println("Data fim: " + dataFim.getTimeInMillis());
         System.out.println("Tempo execução: " + tempoExecucao);
         System.out.println(sistemaOperacional);
+    }
+
+    public String getSistemaOperacional() {
+        return sistemaOperacional;
+    }
+
+    public void setSistemaOperacional(String sistemaOperacional) {
+        this.sistemaOperacional = sistemaOperacional;
     }
     
     

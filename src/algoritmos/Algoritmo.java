@@ -6,13 +6,10 @@
 //TO DO terminar os comentarios das funcoes
 package algoritmos;
 
-import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 import trabalhoed2.Deputado;
+import trabalhoed2.Generico;
 import trabalhoed2.Partido;
 
 /**
@@ -29,7 +26,7 @@ public class Algoritmo {
      *
      * @param deputados
      */
-    public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados) {
+    public static void bubbleSortDeputados(ListaEncadeada <Deputado> deputados) {
         //Collator collator = Collator.getInstance(new Locale("pt", "BR"));
         //auxiliar.compare(string, string1)
 
@@ -359,45 +356,9 @@ public class Algoritmo {
         }
     }
 
-    /*
-    *   Algoritmos de Ordenação de Partidos
-     */
-    /**
-     * Esta função contém o código para execução do algoritmo de Buble Sort
-     *
-     * @param partidos
-     */
-    public static void bubbleSortPartido(ListaEncadeada<Partido> partidos) {
-        //Collator collator = Collator.getInstance(new Locale("pt", "BR"));
-        //auxiliar.compare(string, string1)
-
-        for (int i = 0; i < partidos.getTamanho(); i++) {
-            for (int j = 1; j < partidos.getTamanho() - i; j++) {
-                if (partidos.retornaInfo(j - 1).getTotalGasto() > partidos.retornaInfo(j).getTotalGasto()) {
-                    //if (deputados.get(j - 1).getNome().compareToIgnoreCase(deputados.get(j).getNome()) > 0) {
-                    partidos.troca(j, j - 1);
-                }
-            }
-        }
-    }
-
-    /**
-     * Esta função contém o código para execução do algoritmo de Insertion Sort
-     *
-     * @param partidos
-     */
-    public static void insertionSortPartido(ListaEncadeada<Partido> partidos) {
-        for (int i = 1; i < partidos.getTamanho(); i++) {
-            Partido chave = partidos.retornaInfo(i);
-            int j = i - 1;
-
-            while (j >= 0 && partidos.retornaInfo(j).getTotalGasto() > chave.getTotalGasto()) {
-                partidos.altera(j + 1, partidos.retornaInfo(j));
-                j = j - 1;
-            }
-            partidos.altera((j + 1), chave);
-        }
-    }
+ 
+    
+    
 
     /*
     *   Algoritmo para ordenar lista inteira

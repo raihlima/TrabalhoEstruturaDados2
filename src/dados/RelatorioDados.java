@@ -8,10 +8,13 @@ package dados;
 import algoritmos.ListaEncadeada;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,13 +23,13 @@ import javax.swing.JOptionPane;
  *
  * @author carcara
  */
-public class RelatorioDados implements Serializable{
-    ListaEncadeada <Relatorio> relatorios = new ListaEncadeada<>();
+public class RelatorioDados implements Serializable {
+
+    ListaEncadeada<Relatorio> relatorios = new ListaEncadeada<>();
 
     public RelatorioDados() {
     }
-    
-    
+
     public void gravaRelatorio() {
         try {
             FileOutputStream arq = new FileOutputStream("Relatorio.txt");
@@ -55,10 +58,11 @@ public class RelatorioDados implements Serializable{
         return relatorios;
     }
 
-    public void adicionaDados(Relatorio m) {
+    public void adicionaDados(Relatorio m) throws IOException {
         leRelatorio();
         this.relatorios.insereFinal(m);
         gravaRelatorio();
+        geraTexto(m);
     }
 
     public void deletaDados(int m) {
@@ -77,6 +81,18 @@ public class RelatorioDados implements Serializable{
         leRelatorio();
         return relatorios.retornaInfo(i);
     }
+
+    public void geraTexto(Relatorio relatorio) throws IOException {
+        FileWriter arq = new FileWriter("teste.txt",true);
+        PrintWriter gravarArq = new PrintWriter(arq);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        gravarArq.print("<" + sdf.format(relatorio.getDataInicio().getTime()) + "> ");
+        gravarArq.print("<" + sdf.format(relatorio.getDataFim().getTime())+ "> ");
+        gravarArq.print(relatorio.getSistemaOperacional()+ " ");
+        gravarArq.print(relatorio.getTempoExecucao()+ " ");
+        gravarArq.print(relatorio.getUsoMemoria()+ "bytes ");
+        gravarArq.print(relatorio.getDescricao());
+        gravarArq.println();
+        arq.close();
+    }
 }
-
-
