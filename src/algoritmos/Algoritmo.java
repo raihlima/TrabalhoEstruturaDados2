@@ -24,7 +24,6 @@ public class Algoritmo {
     /*
     *   Algoritmos de ordenação dos gastos dos Deputados
      */
-    
     /**
      * Esta função contém o código para execução do algoritmo de Bubble Sort
      *
@@ -73,6 +72,7 @@ public class Algoritmo {
     public static void mergeSort(ListaEncadeada<Deputado> deputados) {
         mergeSort(deputados, 0, deputados.getTamanho() - 1);
     }
+
     //Funcao de chamada recursiva do algoritmo Merge Sort
     private static void mergeSort(ListaEncadeada<Deputado> deputados, int esq, int dir) {
         if (esq < dir) {
@@ -85,6 +85,7 @@ public class Algoritmo {
             merge(deputados, esq, meio, dir);
         }
     }
+
     //Funcao principal do algoritmo Merge Sort
     private static void merge(ListaEncadeada<Deputado> deputados, int esq, int meio, int dir) {
         // Encontra os tamanhos dos dois sub arrays para serem mesclados
@@ -129,7 +130,7 @@ public class Algoritmo {
             k++;
         }
     }
-    
+
     /**
      * Estas funções contém o código para execução do algoritmo de Quick Sort
      *
@@ -139,6 +140,7 @@ public class Algoritmo {
     public static void quickSortRec(ListaEncadeada<Deputado> deputados) {
         quickSortRec(deputados, 0, deputados.getTamanho() - 1);
     }
+
     //Executa a funcao recursivamente em todos os vetores apos as particoes
     private static void quickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
         if (min < max) {
@@ -149,6 +151,7 @@ public class Algoritmo {
             quickSortRec(deputados, ip + 1, max);
         }
     }
+
     //Cria as particoes para o algoritmo
     private static int particionaQuickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
 
@@ -167,9 +170,10 @@ public class Algoritmo {
 
         return i + 1;
     }
-    
+
     /**
-     * Estas funções contém o código para execução do algoritmo de Quick Sort Mediana de 3
+     * Estas funções contém o código para execução do algoritmo de Quick Sort
+     * Mediana de 3
      *
      * @param deputados
      */
@@ -177,6 +181,7 @@ public class Algoritmo {
     public static void quicksortMedianaDeTres(ListaEncadeada<Deputado> deputados) {
         quicksortMedianaDeTres(deputados, 0, deputados.getTamanho() - 1);
     }
+
     //Método de partição do Quick Sort Mediana de 3
     private static int particionaMediana(ListaEncadeada<Deputado> deputados, int inicio, int fim) {
         //procura a mediana entre inicio, meio e fim
@@ -235,6 +240,7 @@ public class Algoritmo {
         trocaDeputados(deputados, i + 1, fim);
         return i + 1; //retorna a posição do pivô
     }
+
     //Funcao principal do algoritmo, executa a recursao
     private static void quicksortMedianaDeTres(ListaEncadeada<Deputado> deputados, int inicio, int fim) {
         if (inicio < fim) {
@@ -246,9 +252,10 @@ public class Algoritmo {
             quicksortMedianaDeTres(deputados, q + 1, fim);
         }
     }
-    
+
     /**
-     * Esta função contém o código para execução da troca (swap) de objetos no vetor
+     * Esta função contém o código para execução da troca (swap) de objetos no
+     * vetor
      *
      * @param deputados
      */
@@ -278,6 +285,7 @@ public class Algoritmo {
             heapify(deputados, i, 0);
         }
     }
+
     //Funcao principal do algoritmo de Heap Sort
     private static void heapify(ListaEncadeada<Deputado> deputados, int n, int i) {
         int maior = i;  // Inicializa o maior como raiz
@@ -353,7 +361,7 @@ public class Algoritmo {
             }
         }
     }
-    
+
     /**
      * Esta função contém o código para execução do algoritmo de Insertion Sort
      *
@@ -371,7 +379,7 @@ public class Algoritmo {
             partidos.altera((j + 1), chave);
         }
     }
-    
+
     /*
     *   Algoritmo para ordenar lista inteira
      */
@@ -391,6 +399,7 @@ public class Algoritmo {
             }
         }
     }
+
     /**
      * Esta função contém o código para execução do algoritmo de Merge Sort
      *
@@ -443,6 +452,7 @@ public class Algoritmo {
             k++;
         }
     }
+
     /**
      * Esta função contém o código para execução do algoritmo de Merge Sort
      *
@@ -461,6 +471,7 @@ public class Algoritmo {
             mergeInteiro(lista, esq, meio, dir);
         }
     }
+
     //TO DO Java Doc a partir daqui
     /*
     *   Aqui começam os algoritmos de Hashing
@@ -473,11 +484,15 @@ public class Algoritmo {
         return tab;
     }
 
-    public int hash(int k, int m) {
+    private int hash(int k, int m) {
         return k % m;
     }
 
-    public int primo(int k) {
+    private int hash2(int k, int m){
+        return (k*k)%m; 
+    }
+    
+    private int primo(int k) {
         for (int i = k; k > 0; i--) {
             if (ehPrimo(i)) {
                 return i;
@@ -495,6 +510,52 @@ public class Algoritmo {
         return true;
     }
 
+    public Deputado[] sondagemLinear(ArrayList<Deputado> deputados, int tam){
+        int pos;
+        int h = primo(tam);
+        Deputado[] tabela = tabela(tam);
+        for (int i = 0; i < tam; i++) {
+            pos = (hash(deputados.get(i).getId(), h));
+            while(tabela[pos]!=null){
+                pos = hash(pos+1,h);
+            }
+            tabela[pos]=deputados.get(i);
+        }
+        return tabela;
+    }
+    
+     public Deputado[] sondagemQuadratica(ArrayList<Deputado> deputados, int tam){
+        int pos;
+        int h = primo(tam);
+        Deputado[] tabela = tabela(tam);
+        for (int i = 0; i < tam; i++) {
+            pos = (hash(deputados.get(i).getId(), h));
+            int j=0;
+            while(tabela[pos]!=null){
+                j++;
+                pos = hash(pos+j*j,h);
+            }
+            tabela[pos]=deputados.get(i);
+        }
+        return tabela;
+    }
+    
+     public Deputado[] duploHashing(ArrayList<Deputado> deputados, int tam){
+        int pos;
+        int h = primo(tam);
+        Deputado[] tabela = tabela(tam);
+        for (int i = 0; i < tam; i++) {
+            pos = (hash(deputados.get(i).getId(), h));
+            int j=0;
+            while(tabela[pos]!=null){
+                j++;
+                pos = hash2(deputados.get(i).getId(),h);
+            }
+            tabela[pos]=deputados.get(i);
+        }
+        return tabela;
+     
+    /*
     public Deputado[] sondagemLinear(ArrayList<Deputado> deputados, int tam) {
         Deputado[] tabela = tabela(tam);
         int h = primo(tam);
@@ -504,29 +565,44 @@ public class Algoritmo {
             if (tabela[pos] == null) {
                 tabela[(hash(deputados.get(i).getId(), h))] = deputados.get(i);
             } else {
-                int j = i + 1;
-                while ((tabela[j] != null) && j < tam) {
-                    j++;
-                }
-                if (tabela[j] != null) {
-                    tabela[j] = deputados.get(i);
-                } else {
-                    j = 0;
-                    while (tabela[j] != null) {
-                        j++;
+                int colisao = pos + 1;
+                while ((tabela[colisao] != null)) {
+                    if (colisao < tam) {
+                        colisao++;
+                    } else {
+                        colisao = 0;
                     }
-                    tabela[j] = deputados.get(i);
+                }
+                tabela[colisao] = deputados.get(i);
+            }
+        }
+
+        return tabela;
+    }
+
+    
+    public Deputado[] sondagemQuadratica(ArrayList<Deputado> deputados, int tam) {
+        Deputado[] tabela = tabela(tam);
+        int h = primo(tam);
+        int pos;
+        for (int i = 0; i < tam; i++) {
+            pos = (hash(deputados.get(i).getId(), h));
+            if (tabela[pos] == null) {
+                tabela[(hash(deputados.get(i).getId(), h))] = deputados.get(i);
+            } else {
+                int colisao = 1;
+                while ((tabela[pos + colisao * colisao] != null)) {
+                    if (pos + colisao * colisao < tam) {
+                        colisao++;
+                    } else {
+                        pos = 0;
+                        colisao=0;
+                    }
                 }
             }
         }
         return tabela;
     }
-
-    public Deputado[] sondagemQuadratica(ArrayList<Deputado> deputados, int tam) {
-        Deputado[] tabela = tabela(tam);
-        int h = primo(tam);
-        int pos;
-
-        return tabela;
-    }
+    */
+    
 }
