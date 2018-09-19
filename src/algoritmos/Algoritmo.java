@@ -488,8 +488,12 @@ public class Algoritmo {
         return k % m;
     }
 
-    private int hash2(int k, int m){
-        return (k*k)%m; 
+    private int hash2(int k) {
+        return k * 2;
+    }
+
+    private int hashDuplo(int k, int m, int colisao){
+        return (hash(k,m)+colisao*hash2(k));
     }
     
     private int primo(int k) {
@@ -510,52 +514,52 @@ public class Algoritmo {
         return true;
     }
 
-    public Deputado[] sondagemLinear(ArrayList<Deputado> deputados, int tam){
+    public Deputado[] sondagemLinear(ArrayList<Deputado> deputados, int tam) {
         int pos;
         int h = primo(tam);
         Deputado[] tabela = tabela(tam);
         for (int i = 0; i < tam; i++) {
             pos = (hash(deputados.get(i).getId(), h));
-            while(tabela[pos]!=null){
-                pos = hash(pos+1,h);
+            while (tabela[pos] != null) {
+                pos = hash(pos + 1, h);
             }
-            tabela[pos]=deputados.get(i);
+            tabela[pos] = deputados.get(i);
         }
         return tabela;
     }
-    
-     public Deputado[] sondagemQuadratica(ArrayList<Deputado> deputados, int tam){
+
+    public Deputado[] sondagemQuadratica(ArrayList<Deputado> deputados, int tam) {
         int pos;
         int h = primo(tam);
         Deputado[] tabela = tabela(tam);
         for (int i = 0; i < tam; i++) {
             pos = (hash(deputados.get(i).getId(), h));
-            int j=0;
-            while(tabela[pos]!=null){
+            int j = 0;
+            while (tabela[pos] != null) {
                 j++;
-                pos = hash(pos+j*j,h);
+                pos = hash(pos + j * j, h);
             }
-            tabela[pos]=deputados.get(i);
+            tabela[pos] = deputados.get(i);
         }
         return tabela;
     }
-    
-     public Deputado[] duploHashing(ArrayList<Deputado> deputados, int tam){
+
+    public Deputado[] duploHashing(ArrayList<Deputado> deputados, int tam) {
         int pos;
         int h = primo(tam);
         Deputado[] tabela = tabela(tam);
         for (int i = 0; i < tam; i++) {
-            pos = (hash(deputados.get(i).getId(), h));
-            int j=0;
-            while(tabela[pos]!=null){
+            pos = (hashDuplo(deputados.get(i).getId(), h,0));
+            int j = 0;
+            while (tabela[pos] != null) {
                 j++;
-                pos = hash2(deputados.get(i).getId(),h);
+                pos = hash(hashDuplo(deputados.get(i).getId(), h,j),h);
             }
-            tabela[pos]=deputados.get(i);
+            tabela[pos] = deputados.get(i);
         }
         return tabela;
-     
-    /*
+
+        /*
     public Deputado[] sondagemLinear(ArrayList<Deputado> deputados, int tam) {
         Deputado[] tabela = tabela(tam);
         int h = primo(tam);
@@ -603,6 +607,6 @@ public class Algoritmo {
         }
         return tabela;
     }
-    */
-    
+         */
+    }
 }
