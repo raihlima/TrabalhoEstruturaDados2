@@ -124,11 +124,11 @@ public class ListaEncadeada <Class> implements Serializable  {
         } else if (index == this.tamanho - 1) {
             return (Class) this.fim.getObjeto();
         } else if (index < 0 || index >= this.tamanho) {
-            return null;
+            throw new NullPointerException("Index fora do escopo");
 
         } else {
             No aux;
-            if (index <= this.tamanho / 2) {
+            if (index < this.tamanho / 2) {
                 aux = this.inicio;
                 for (int i = 0; i < index; i++) {
                     aux = aux.getProximo();

@@ -14,25 +14,38 @@ import java.util.Date;
  *
  * @author carcara
  */
-public class Relatorio implements Serializable{
+public class Relatorio implements Serializable {
+
     private Calendar dataInicio;
     private Calendar dataFim;
     private String descricao;
     private long usoMemoria;
+    private int quantidadeLinhas;
+    private String tipoOrganizacao; //Deputado ou Partido
+    private String tipoExecucao; //Customizada ou Sementes
+    private String tipoLeitura; //Linear ou Aleatória
     private String tempoExecucao;
     private String sistemaOperacional;
 
     public Relatorio() {
         this.dataInicio = Calendar.getInstance();
         this.sistemaOperacional = System.getProperty("os.name");
-        
+    }
+
+    public Relatorio(int quantidadeLinhas, String tipoExecucao, String tipoLeitura, String tipoOrganizacao) {
+        this.dataInicio = Calendar.getInstance();
+        this.sistemaOperacional = System.getProperty("os.name");
+        this.quantidadeLinhas = quantidadeLinhas;
+        this.tipoExecucao = tipoExecucao;
+        this.tipoLeitura = tipoLeitura;
+        this.tipoOrganizacao = tipoOrganizacao;
     }
 
     public Relatorio(String descricao) {
         this.dataInicio = Calendar.getInstance();
         this.descricao = descricao;
+        this.sistemaOperacional = System.getProperty("os.name");
     }
-    
 
     public Calendar getDataInicio() {
         return dataInicio;
@@ -45,8 +58,8 @@ public class Relatorio implements Serializable{
     public String getDescricao() {
         return descricao;
     }
-    
-    public void setDescricao(String descricao){
+
+    public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
@@ -57,19 +70,17 @@ public class Relatorio implements Serializable{
     public String getTempoExecucao() {
         return tempoExecucao;
     }
-    
-    
-    
-      public void setRelatorioFinal(){
+
+    public void setRelatorioFinal() {
         this.dataFim = Calendar.getInstance();
-        long hora = ((((dataFim.getTimeInMillis()-dataInicio.getTimeInMillis())/1000)/60)/60)%60;
-        long min = (((dataFim.getTimeInMillis()-dataInicio.getTimeInMillis())/1000)/60)%60;
-        long seg = ((dataFim.getTimeInMillis()-dataInicio.getTimeInMillis())/1000)%60;
-        long miliseg = (dataFim.getTimeInMillis()-dataInicio.getTimeInMillis())%1000;
-        this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms" ;
+        long hora = ((((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) / 60) % 60;
+        long min = (((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) % 60;
+        long seg = ((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) % 60;
+        long miliseg = (dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) % 1000;
+        this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
     }
-    
-    public void retornaTempoExecucao(){
+
+    public void retornaTempoExecucao() {
         System.out.println("Data inicio: " + dataInicio.getTime());
         System.out.println("Data inicio: " + dataInicio.getTimeInMillis());
         System.out.println("Data fim: " + dataFim.getTime());
@@ -85,6 +96,37 @@ public class Relatorio implements Serializable{
     public void setSistemaOperacional(String sistemaOperacional) {
         this.sistemaOperacional = sistemaOperacional;
     }
-    
-    
+
+    public int getQuantidadeLinhas() {
+        return quantidadeLinhas;
+    }
+
+    public void setQuantidadeLinhas(int quantidadeLinhas) {
+        this.quantidadeLinhas = quantidadeLinhas;
+    }
+
+    public String getTipoExecucao() {
+        return tipoExecucao;
+    }
+
+    public void setTipoExecucao(String tipoExecucao) {
+        this.tipoExecucao = tipoExecucao;
+    }
+
+    public String getTipoLeitura() {
+        return tipoLeitura;
+    }
+
+    public void setTipoLeitura(String tipoLeitura) {
+        this.tipoLeitura = tipoLeitura;
+    }
+
+    public String getTipoOrganizacao() {
+        return tipoOrganizacao;
+    }
+
+    public void setTipoOrganizacao(String tipoOrganizacao) {
+        this.tipoOrganizacao = tipoOrganizacao;
+    }
+
 }

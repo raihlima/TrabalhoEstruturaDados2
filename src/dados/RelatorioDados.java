@@ -86,11 +86,14 @@ public class RelatorioDados implements Serializable {
         FileWriter arq = new FileWriter("teste.txt",true);
         PrintWriter gravarArq = new PrintWriter(arq);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        gravarArq.print(relatorio.getTipoExecucao()+ " ");
+        gravarArq.print(relatorio.getTipoLeitura()+ " ");
         gravarArq.print("<" + sdf.format(relatorio.getDataInicio().getTime()) + "> ");
         gravarArq.print("<" + sdf.format(relatorio.getDataFim().getTime())+ "> ");
         gravarArq.print(relatorio.getSistemaOperacional()+ " ");
         gravarArq.print(relatorio.getTempoExecucao()+ " ");
         gravarArq.print(relatorio.getUsoMemoria()+ "bytes ");
+        gravarArq.print(relatorio.getQuantidadeLinhas()+ " ");
         gravarArq.print(relatorio.getDescricao());
         gravarArq.println();
         arq.close();
