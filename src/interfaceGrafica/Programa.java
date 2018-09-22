@@ -8,7 +8,6 @@ package interfaceGrafica;
 import algoritmos.Algoritmo;
 import algoritmos.ListaEncadeada;
 import dados.Relatorio;
-import dados.RelatorioDados;
 import java.awt.CardLayout;
 import java.io.*;
 import java.text.DecimalFormat;
@@ -16,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -34,7 +35,7 @@ import trabalhoed2.Recibo;
  */
 public class Programa extends javax.swing.JFrame {
 
-    private File arquivo;
+    private File arquivo = null;
     private CardLayout cardLayout;
     private ListaEncadeada<Deputado> listaDeputado = new ListaEncadeada<>();
     private ListaEncadeada<Partido> listaPartido = new ListaEncadeada<>();
@@ -118,6 +119,8 @@ public class Programa extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
         jPanelResultado = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jButton10 = new javax.swing.JButton();
@@ -155,12 +158,12 @@ public class Programa extends javax.swing.JFrame {
         jPanelRelatorioOrdenacao = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        radioRelatorioOrdenacaoDeputadoCustomizado = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
-        jButton15 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaRelatorioOrdenacao = new javax.swing.JTable();
         jButton16 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuArquivoAbrir = new javax.swing.JMenuItem();
@@ -654,9 +657,18 @@ public class Programa extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Relatório Ordenação");
+        jButton2.setText("Relatório Ordenação Deputados");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Relatório Busca");
+        jButton3.setText("Relatório Ordenação Partido");
+
+        jButton17.setText("Relatório Busca Deputados");
+
+        jButton18.setText("Relatório Busca Partido");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -669,12 +681,16 @@ public class Programa extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -688,6 +704,10 @@ public class Programa extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton17)
+                    .addComponent(jButton18))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -696,9 +716,9 @@ public class Programa extends javax.swing.JFrame {
         jPanelInicioLayout.setHorizontalGroup(
             jPanelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInicioLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanelInicioLayout.setVerticalGroup(
             jPanelInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1144,13 +1164,11 @@ public class Programa extends javax.swing.JFrame {
 
         jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo"));
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Método"));
 
-        jRadioButton1.setText("Customizado");
+        radioRelatorioOrdenacaoDeputadoCustomizado.setText("Customizado");
 
         jRadioButton2.setText("Sementes Aleatórias");
-
-        jButton15.setText("Começar");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -1158,45 +1176,49 @@ public class Programa extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton1)
+                .addComponent(radioRelatorioOrdenacaoDeputadoCustomizado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(178, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jButton15))
-                .addGap(0, 8, Short.MAX_VALUE))
+                    .addComponent(radioRelatorioOrdenacaoDeputadoCustomizado)
+                    .addComponent(jRadioButton2))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaRelatorioOrdenacao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Data Exec", "Hora Exec", "Tempo Exec", "Linhas Lidas", "Interações", "Algoritmo"
+                "Método", "Data Exec", "Hora Exec", "Tempo Leitura Arq", "Linhas Lidas", "Tempo Ordenação", "Interações", "Memória Gasta", "Algoritmo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tabelaRelatorioOrdenacao);
 
         jButton16.setText("Sair");
         jButton16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton16ActionPerformed(evt);
+            }
+        });
+
+        jButton15.setText("Começar");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
             }
         });
 
@@ -1207,18 +1229,26 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1528,18 +1558,62 @@ public class Programa extends javax.swing.JFrame {
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
-        cardLayout.show(jPanelPrincipal,"arquivoAberto");
+        if (arquivo != null) {
+            cardLayout.show(jPanelPrincipal, "arquivoAberto");
+        } else {
+            cardLayout.show(jPanelPrincipal, "inicio");
+        }
+
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        cardLayout.show(jPanelPrincipal,"relatorioOrdenacao");
+        cardLayout.show(jPanelPrincipal, "relatorioOrdenacao");
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        cardLayout.show(jPanelPrincipal,"relatorioOrdenacao");
+        cardLayout.show(jPanelPrincipal, "relatorioOrdenacao");
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel modelo = (DefaultTableModel) tabelaRelatorioOrdenacao.getModel();
+        modelo.setRowCount(0);
+        if (radioRelatorioOrdenacaoDeputadoCustomizado.isSelected()) {
+
+            try (FileInputStream fi = new FileInputStream("Relatorios/Deputados/OrdenacaoCustomizado.txt")) {
+                BufferedInputStream bis = new BufferedInputStream(fi);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+                String linha = reader.readLine();
+
+                //Saber a quantidade de linhas          
+                //String
+                String[] partes;
+                String aux;
+                while ((linha = reader.readLine()) != null) {
+                    //System.out.println(linha);
+                    partes = linha.split(" ");
+                    modelo.addRow(new Object[]{partes[0], partes[1], partes[2], "Implementar", partes[15], partes[7] + partes[8], "implementar", partes[14], partes[16]});
+                    System.out.println(linha);
+
+                    //System.out.println(cont);
+                }
+
+                //modelo.addRow(new Object[]{listaDeputado.retornaInfo(i).getNome(), listaDeputado.retornaInfo(i).getPartido(), df.format(listaDeputado.retornaInfo(i).getTotalGasto())});
+                fi.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Programa.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Programa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(jPanelPrincipal, "relatorioOrdenacao");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void executarOrdenacao(int qtdLinhas) throws InterruptedException {
         //File arquivo = new File("texto.txt");
@@ -1652,7 +1726,7 @@ public class Programa extends javax.swing.JFrame {
         } else {
             tipoExecucao = "Aleatório";
         }
-        Relatorio relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), tipoExecucao, "Customizado", "Deputado");
+        Relatorio relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
         String descricao = "";
         if (radioBubble.isSelected()) {
             Algoritmo.bubbleSortDeputados(listaDeputado);
@@ -1680,9 +1754,8 @@ public class Programa extends javax.swing.JFrame {
             descricao = radioShell.getText();
         }
         relatorio.setDescricao(descricao);
-        RelatorioDados rd = new RelatorioDados();
-        relatorio.setRelatorioFinal();
-        rd.adicionaDados(relatorio);
+
+        relatorio.setRelatorioFinal("Ordenacao");
     }
 
     private void preencherDeputados(String[] partes) {
@@ -1838,7 +1911,7 @@ public class Programa extends javax.swing.JFrame {
             despesas += listaDeputado.retornaInfo(i).getTotalGasto();
             modelo.addRow(new Object[]{listaDeputado.retornaInfo(i).getNome(), listaDeputado.retornaInfo(i).getPartido(), df.format(listaDeputado.retornaInfo(i).getTotalGasto())});
         }
-        
+
         df.applyPattern("R$ #,##0.00");
 
         labelDespesasTotais.setText(df.format(despesas));
@@ -1876,6 +1949,8 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1919,7 +1994,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JPanel jPanelRelatorioOrdenacao;
     private javax.swing.JPanel jPanelResultado;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
@@ -1929,7 +2003,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelDespesasTotais;
     private javax.swing.JLabel labelQuantidadeDeputado;
     private javax.swing.JMenu menuAjuda;
@@ -1954,10 +2027,12 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioQuick1;
     private javax.swing.JRadioButton radioQuick2;
     private javax.swing.JRadioButton radioQuick3;
+    private javax.swing.JRadioButton radioRelatorioOrdenacaoDeputadoCustomizado;
     private javax.swing.JRadioButton radioShell;
     private javax.swing.JRadioButton radioSondagemLinear;
     private javax.swing.JRadioButton radioSondagemQuadratica;
     private javax.swing.JTable tabelaDeputados;
+    private javax.swing.JTable tabelaRelatorioOrdenacao;
     private javax.swing.JTextField valorOrdenacao;
     private javax.swing.JTextField valorOrdenacao1;
     // End of variables declaration//GEN-END:variables

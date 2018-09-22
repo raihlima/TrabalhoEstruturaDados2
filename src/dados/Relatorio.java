@@ -5,6 +5,10 @@
  */
 package dados;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,6 +25,8 @@ public class Relatorio implements Serializable {
     private String descricao;
     private long usoMemoria;
     private int quantidadeLinhas;
+    private int semente;
+    private String tipoAlgoritmo; //Ordenacao ou Busca
     private String tipoOrganizacao; //Deputado ou Partido
     private String tipoExecucao; //Customizada ou Sementes
     private String tipoLeitura; //Linear ou Aleatória
@@ -71,13 +77,16 @@ public class Relatorio implements Serializable {
         return tempoExecucao;
     }
 
-    public void setRelatorioFinal() {
+    public void setRelatorioFinal(String algoritmo) throws IOException {
+        this.semente=1;
         this.dataFim = Calendar.getInstance();
+        this.tipoAlgoritmo = algoritmo;
         long hora = ((((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) / 60) % 60;
         long min = (((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) % 60;
         long seg = ((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) % 60;
         long miliseg = (dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) % 1000;
         this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
+        geraTexto();
     }
 
     public void retornaTempoExecucao() {
@@ -127,6 +136,32 @@ public class Relatorio implements Serializable {
 
     public void setTipoOrganizacao(String tipoOrganizacao) {
         this.tipoOrganizacao = tipoOrganizacao;
+    }
+    
+  
+    public void geraTexto() throws IOException {
+        new File("Relatorios/"+tipoOrganizacao).mkdirs();
+        FileWriter arq = new FileWriter("Relatorios/"+tipoOrganizacao+"/" + tipoAlgoritmo + tipoExecucao +".txt", true);
+        PrintWriter gravarArq = new PrintWriter(arq);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        gravarArq.print(this.getTipoLeitura() + " ");
+        gravarArq.print(sdf.format(this.getDataInicio().getTime()) + " ");
+        gravarArq.print(sdf.format(this.getDataFim().getTime()) + " ");
+        gravarArq.print(this.getSistemaOperacional() + " ");
+        gravarArq.print(this.getTempoExecucao() + " ");
+        gravarArq.print(this.getUsoMemoria() + "bytes ");
+        gravarArq.print(this.getQuantidadeLinhas() + " ");
+        gravarArq.print(this.getDescricao());
+        gravarArq.println();
+        arq.close();
+    }
+
+    public int getSemente() {
+        return semente;
+    }
+
+    public void setSemente(int semente) {
+        this.semente = semente;
     }
 
 }

@@ -13,7 +13,7 @@ import trabalhoed2.Deputado;
  * @author carcara
  * @param <Class>
  */
-public class ListaEncadeada <Class> implements Serializable  {
+public class ListaEncadeada<Class> implements Serializable {
 
     private No inicio;
     private No fim;
@@ -108,10 +108,11 @@ public class ListaEncadeada <Class> implements Serializable  {
 
         }
     }
-    
-    public Class retornaFim(){
+
+    public Class retornaFim() {
         return (Class) fim.getObjeto();
     }
+
     /**
      * Esta função retorna o objeto guardado na Lista Encadeada
      *
@@ -150,21 +151,36 @@ public class ListaEncadeada <Class> implements Serializable  {
         } else if (index == tamanho) {
             insereFinal(objeto);
         } else if (index > 0 && index < tamanho) {
-            No no = new No(objeto);
-            No aux = this.inicio;
-            No aux2;
-            for (int i = 1; i < index; i++) {
-                aux = aux.getProximo();
+            if (index < tamanho / 2) {
+                No no = new No(objeto);
+                No aux = this.inicio;
+                No aux2;
+                for (int i = 1; i < index; i++) {
+                    aux = aux.getProximo();
+                }
+                aux2 = aux.getProximo();
+                no.setAnterior(aux);
+                no.setProximo(aux2);
+                aux.setProximo(no);
+                aux2.setAnterior(no);
+                this.tamanho++;
+            } else {
+                No no = new No(objeto);
+                No aux = this.fim;
+                No aux2;
+                for (int i = tamanho - 1; i >= index; i--) {
+                    aux = aux.getAnterior();
+                }
+                aux2 = aux.getProximo();
+                no.setAnterior(aux);
+                no.setProximo(aux2);
+                aux.setProximo(no);
+                aux2.setAnterior(no);
+                this.tamanho++;
             }
-            aux2 = aux.getProximo();
-            no.setAnterior(aux);
-            no.setProximo(aux2);
-            aux.setProximo(no);
-            aux2.setAnterior(no);
-            this.tamanho++;
+
         } else {
-            NullPointerException e = new NullPointerException("Index fora do escopo");
-            throw e;
+            throw new NullPointerException("Index fora do escopo");
         }
 
     }
@@ -173,12 +189,11 @@ public class ListaEncadeada <Class> implements Serializable  {
         if (index < 0 || index >= this.tamanho) {
             throw new NullPointerException("Index inválido");
         } else {
-
             if (index == 0) {
                 this.inicio.setObjeto(objeto);
             } else if (index == tamanho - 1) {
                 this.fim.setObjeto(objeto);
-            } else if (index <= tamanho / 2) {
+            } else if (index < (tamanho / 2)) {
                 No aux = this.inicio;
                 for (int i = 0; i < index; i++) {
                     aux = aux.getProximo();
@@ -186,12 +201,11 @@ public class ListaEncadeada <Class> implements Serializable  {
                 aux.setObjeto(objeto);
             } else {
                 No aux = this.fim;
-                for (int i = this.getTamanho()-1; i > index; i--) {
+                for (int i = this.getTamanho() - 1; i > index; i--) {
                     aux = aux.getAnterior();
                 }
                 aux.setObjeto(objeto);
             }
-
         }
     }
 
@@ -201,21 +215,37 @@ public class ListaEncadeada <Class> implements Serializable  {
         } else if (index == tamanho - 1) {
             removeFinal();
         } else if (index > 0 && index < tamanho) {
-            No aux;
-            No auxAnt;
-            No auxProx;
-            aux = this.inicio;
-            for (int i = 0; i < index; i++) {
-                aux = aux.getProximo();
+            if (index < (tamanho / 2)) {
+                No aux;
+                No auxAnt;
+                No auxProx;
+                aux = this.inicio;
+                for (int i = 0; i < index; i++) {
+                    aux = aux.getProximo();
+                }
+                auxAnt = aux.getAnterior();
+                auxProx = aux.getProximo();
+                auxAnt.setProximo(auxProx);
+                auxProx.setAnterior(auxAnt);
+                aux = null;
+                this.tamanho--;
+            } else {
+                No aux;
+                No auxAnt;
+                No auxProx;
+                aux = this.fim;
+                for (int i = this.tamanho - 1; i > index; i--) {
+                    aux = aux.getAnterior();
+                }
+                auxAnt = aux.getAnterior();
+                auxProx = aux.getProximo();
+                auxAnt.setProximo(auxProx);
+                auxProx.setAnterior(auxAnt);
+                aux = null;
+                this.tamanho--;
             }
-            auxAnt = aux.getAnterior();
-            auxProx = aux.getProximo();
-
-            auxAnt.setProximo(auxProx);
-            auxProx.setAnterior(auxAnt);
-            aux = null;
-
-            this.tamanho--;
+        } else {
+            throw new NullPointerException("Index fora do escopo");
         }
     }
 
@@ -230,22 +260,41 @@ public class ListaEncadeada <Class> implements Serializable  {
         } else if (index1 == tamanho - 1) {
             aux = (Class) fim.getObjeto();
             no1 = this.fim;
+        } else if (index1 < 0 || index1 >= tamanho) {
+            throw new NullPointerException("Index fora do escopo");
         } else {
-            no1 = this.inicio;
-            for (int i = 0; i < index1; i++) {
-                no1 = no1.getProximo();
+            if (index1 < tamanho / 2) {
+                no1 = this.inicio;
+                for (int i = 0; i < index1; i++) {
+                    no1 = no1.getProximo();
+                }
+                aux = (Class) no1.getObjeto();
+            } else {
+                no1 = this.fim;
+                for (int i = tamanho - 1; i > index1; i--) {
+                    no1 = no1.getAnterior();
+                }
+                aux = (Class) no1.getObjeto();
             }
-            aux = (Class) no1.getObjeto();
         }
 
         if (index2 == 0) {
             no2 = this.inicio;
         } else if (index2 == tamanho - 1) {
             no2 = this.fim;
+        } else if (index2 < 0 || index2 >= tamanho) {
+            throw new NullPointerException("Index fora do escopo");
         } else {
-            no2 = this.inicio;
-            for (int i = 0; i < index2; i++) {
-                no2 = no2.getProximo();
+            if (index2 < tamanho / 2) {
+                no2 = this.inicio;
+                for (int i = 0; i < index2; i++) {
+                    no2 = no2.getProximo();
+                }
+            } else {
+                no2 = this.fim;
+                for (int i = tamanho-1; i > index2; i--) {
+                    no2 = no2.getAnterior();
+                }
             }
         }
 
