@@ -302,5 +302,13 @@ public class ListaEncadeada<Class> implements Serializable {
         no2.setObjeto(aux);
 
     }
+    
+    public void deletarLista(){
+        No aux = this.inicio;
+        while(aux!=null){
+            aux=aux.getProximo();
+            this.removeInicio();
+        }
+    }
 
 }

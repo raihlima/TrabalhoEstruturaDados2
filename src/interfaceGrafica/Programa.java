@@ -47,11 +47,9 @@ public class Programa extends javax.swing.JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         Locale.setDefault(new Locale("pt", "BR"));
         //background.setVisible(true);
-
         initComponents();
         cardLayout = (CardLayout) jPanelPrincipal.getLayout();
         cardLayout.show(jPanelPrincipal, "inicio");
-        botaoTudo.setEnabled(false);
     }
 
     /**
@@ -99,7 +97,7 @@ public class Programa extends javax.swing.JFrame {
         jButton11 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        sementesOrdenacao = new javax.swing.JRadioButton();
         jPanelArquivoAberto = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -222,19 +220,9 @@ public class Programa extends javax.swing.JFrame {
         grupoTipo.add(botaoDeputadoOrdenacao);
         botaoDeputadoOrdenacao.setSelected(true);
         botaoDeputadoOrdenacao.setText("Deputado");
-        botaoDeputadoOrdenacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoDeputadoOrdenacaoActionPerformed(evt);
-            }
-        });
 
         grupoTipo.add(botaoPartidoOrdenacao);
         botaoPartidoOrdenacao.setText("Partido");
-        botaoPartidoOrdenacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoPartidoOrdenacaoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -267,21 +255,17 @@ public class Programa extends javax.swing.JFrame {
         grupoQuantidade.add(botaoLinearOrdenacao);
         botaoLinearOrdenacao.setSelected(true);
         botaoLinearOrdenacao.setText("Linear");
-        botaoLinearOrdenacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoLinearOrdenacaoActionPerformed(evt);
-            }
-        });
 
         grupoQuantidade.add(botaoAleatorioOrdenacao);
         botaoAleatorioOrdenacao.setText("Aleatórias");
-        botaoAleatorioOrdenacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAleatorioOrdenacaoActionPerformed(evt);
-            }
-        });
 
         botaoTudo.setText("Todas as linhas");
+        botaoTudo.setToolTipText("Pode demorar um pouco para analizar a quantidade total.");
+        botaoTudo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoTudoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -407,11 +391,11 @@ public class Programa extends javax.swing.JFrame {
             }
         });
 
-        grupoMetodo.add(jRadioButton4);
-        jRadioButton4.setText("Sementes Aleatórias ( 5 vezes)");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+        grupoMetodo.add(sementesOrdenacao);
+        sementesOrdenacao.setText("Sementes Aleatórias ( 5 vezes)");
+        sementesOrdenacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
+                sementesOrdenacaoActionPerformed(evt);
             }
         });
 
@@ -423,7 +407,7 @@ public class Programa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jRadioButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton4)
+                .addComponent(sementesOrdenacao)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -431,7 +415,7 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
+                    .addComponent(sementesOrdenacao))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -634,9 +618,9 @@ public class Programa extends javax.swing.JFrame {
         jPanelArquivoAbertoLayout.setVerticalGroup(
             jPanelArquivoAbertoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelArquivoAbertoLayout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelPrincipal.add(jPanelArquivoAberto, "arquivoAberto");
@@ -1432,39 +1416,28 @@ public class Programa extends javax.swing.JFrame {
         cardLayout.show(jPanelPrincipal, "arquivoAberto");
     }//GEN-LAST:event_jButton11ActionPerformed
 
-    private void botaoPartidoOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPartidoOrdenacaoActionPerformed
+    private void sementesOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sementesOrdenacaoActionPerformed
         // TODO add your handling code here:
-        botaoTudo.setEnabled(true);
-    }//GEN-LAST:event_botaoPartidoOrdenacaoActionPerformed
 
-    private void botaoDeputadoOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDeputadoOrdenacaoActionPerformed
-        // TODO add your handling code here:
-        botaoTudo.setEnabled(false);
-    }//GEN-LAST:event_botaoDeputadoOrdenacaoActionPerformed
-
-    private void botaoLinearOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLinearOrdenacaoActionPerformed
-        // TODO add your handling code here:
-        alteraEstadoOrdenacao(true);
-    }//GEN-LAST:event_botaoLinearOrdenacaoActionPerformed
-
-    private void botaoAleatorioOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAleatorioOrdenacaoActionPerformed
-        // TODO add your handling code here:
-        //alteraEstadoOrdenacao(false);
-    }//GEN-LAST:event_botaoAleatorioOrdenacaoActionPerformed
-
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        // TODO add your handling code here:
         alteraEstadoOrdenacao(false);
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
+    }//GEN-LAST:event_sementesOrdenacaoActionPerformed
 
     private void botaoComecarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoComecarActionPerformed
         // TODO add your handling code here:
+        if (sementesOrdenacao.isSelected()) {
+            try {
+                executarSementesOrdenacao();
+            } catch (IOException ex) {
+                Logger.getLogger(Programa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         try {
             int qtdLinhas = Integer.parseInt(valorOrdenacao.getText());
 
             if (qtdLinhas < 1) {
                 JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
             } else {
+
                 if (qtdLinhas > 500000) {
                     int resposta = JOptionPane.showConfirmDialog(null, "Acima de 500000 linhas pode ocorrer erros por falta de memória.\nTem certeza que deseja executar?", "Confirmação", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
@@ -1568,6 +1541,8 @@ public class Programa extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel modelo = (DefaultTableModel) tabelaRelatorioOrdenacao.getModel();
+        modelo.setRowCount(0);
         cardLayout.show(jPanelPrincipal, "relatorioOrdenacao");
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -1593,8 +1568,8 @@ public class Programa extends javax.swing.JFrame {
                 String aux;
                 while ((linha = reader.readLine()) != null) {
                     //System.out.println(linha);
-                    partes = linha.split(" ");
-                    modelo.addRow(new Object[]{partes[0], partes[1], partes[2], "Implementar", partes[15], partes[7] + partes[8], "implementar", partes[14], partes[16]});
+                    partes = linha.split(";");
+                    modelo.addRow(new Object[]{partes[0], partes[1], partes[2], "Implementar", partes[8], partes[7], "implementar", partes[7], partes[9]});
                     System.out.println(linha);
 
                     //System.out.println(cont);
@@ -1603,9 +1578,9 @@ public class Programa extends javax.swing.JFrame {
                 //modelo.addRow(new Object[]{listaDeputado.retornaInfo(i).getNome(), listaDeputado.retornaInfo(i).getPartido(), df.format(listaDeputado.retornaInfo(i).getTotalGasto())});
                 fi.close();
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Programa.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Não existe relatórios!", "Erro", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
-                Logger.getLogger(Programa.class.getName()).log(Level.SEVERE, null, ex);
+
             }
         }
     }//GEN-LAST:event_jButton15ActionPerformed
@@ -1614,6 +1589,20 @@ public class Programa extends javax.swing.JFrame {
         // TODO add your handling code here:
         cardLayout.show(jPanelPrincipal, "relatorioOrdenacao");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void botaoTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTudoActionPerformed
+        // TODO add your handling code here:
+        LineNumberReader linhaLeitura;
+        try {
+            linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int valor = linhaLeitura.getLineNumber();
+            valorOrdenacao.setText(Integer.toString(valor));
+        } catch (Exception ex) {
+            Logger.getLogger(Programa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_botaoTudoActionPerformed
 
     private void executarOrdenacao(int qtdLinhas) throws InterruptedException {
         //File arquivo = new File("texto.txt");
@@ -1790,6 +1779,154 @@ public class Programa extends javax.swing.JFrame {
 
     }
 
+    private void executarSementesOrdenacao() throws IOException {
+        int semente;
+        //N=1000, 5000, 10000, 50000, 100000 e 500000, no mínimo.
+        for (semente = 1; semente <= 5; semente++) {
+            leDadosAleatorios(1000);
+            ordenaSementesDeputado(semente,1000);
+            leDadosAleatorios(5000);
+            ordenaSementesDeputado(semente,5000);
+            leDadosAleatorios(10000);
+            ordenaSementesDeputado(semente,10000);
+            leDadosAleatorios(50000);
+            ordenaSementesDeputado(semente,50000);
+            leDadosAleatorios(100000);
+            ordenaSementesDeputado(semente,100000);
+            leDadosAleatorios(500000);
+            ordenaSementesDeputado(semente,500000);
+        }
+
+    }
+
+    public void leDadosAleatorios(int qtdLinhas) {
+        listaDeputado.deletarLista();
+        progressoStatus.setText("Lendo o arquivo");
+        int cont = 0;
+
+        long start = System.currentTimeMillis();
+        // faz o trabalho a ser medido
+
+        try (FileInputStream fi = new FileInputStream(arquivo)) {
+            //System.out.println("Tentando ler o arquivo");
+
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            //String
+            String[] partes;
+            String aux;
+
+            //linha = reader.readLine();
+            List<Integer> numAleatorios = new ArrayList<>();
+            for (int i = 1; i < totalLinhas; i++) {
+                numAleatorios.add(i);
+            }
+            Collections.shuffle(numAleatorios);
+            numAleatorios = numAleatorios.subList(0, qtdLinhas);
+            Algoritmo.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
+            int contadorLinhas = 1;
+
+            for (int i = 0; i < qtdLinhas;) {
+
+                linha = reader.readLine();
+                if (contadorLinhas == numAleatorios.get(i)) {
+                    aux = linha;
+                    partes = aux.split(";");
+                    preencherDeputados(partes);
+                    i++;
+                }
+                contadorLinhas++;
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void ordenaSementesDeputado(int semente, int linhas) throws IOException {
+        ListaEncadeada<Deputado> aux = new ListaEncadeada<>();
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+        //Ordena bubbleSort
+        Relatorio relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+        Algoritmo.bubbleSortDeputados(aux);
+        relatorio.setRelatorioFinal("Ordenacao","Bubble Sort", semente);
+
+        aux.deletarLista();
+
+        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+        Algoritmo.insertionSort(aux);
+        relatorio.setRelatorioFinal("Ordenacao","Insertion Sort",semente);
+
+        aux.deletarLista();
+        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+        Algoritmo.mergeSort(aux);
+        relatorio.setRelatorioFinal("Ordenacao","Merge Sort",semente);
+
+        aux.deletarLista();
+        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+        Algoritmo.heapSort(aux);
+        relatorio.setRelatorioFinal("Ordenacao","Heap Sort",semente);
+
+        aux.deletarLista();
+        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+        Algoritmo.shellSort(aux);
+        relatorio.setRelatorioFinal("Ordenacao","Shell Sort",semente);
+
+        aux.deletarLista();
+        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+        Algoritmo.quickSortRec(aux);
+        relatorio.setRelatorioFinal("Ordenacao","Quick Sort Recursivo",semente);
+
+        aux.deletarLista();
+        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+        Algoritmo.quicksortMedianaDeTres(aux);
+        relatorio.setRelatorioFinal("Ordenacao","Quick Sort Mediana de Tres",semente);
+
+        aux.deletarLista();
+        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+        Algoritmo.quickSortHibrido(aux);
+        relatorio.setRelatorioFinal("Ordenacao","Quick Sort Hibrido",semente);
+
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -1844,6 +1981,7 @@ public class Programa extends javax.swing.JFrame {
                 String cabecalho = "bugged_date;receipt_date;deputy_id;political_party;state_code;deputy_name;receipt_social_security_number;receipt_description;establishment_name;receipt_value";
                 BufferedInputStream bis = new BufferedInputStream(fi);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+
                 String linha = linha = reader.readLine();
                 if (linha.equals(cabecalho)) {
                     this.arquivo = arquivo;
@@ -1885,6 +2023,8 @@ public class Programa extends javax.swing.JFrame {
     }
 
     private void alteraEstadoOrdenacao(boolean valor) {
+        botaoLinearOrdenacao.setEnabled(valor);
+        botaoAleatorioOrdenacao.setEnabled(valor);
         botaoTudo.setEnabled(valor);
         radioBubble.setEnabled(valor);
         radioHeap.setEnabled(valor);
@@ -1996,7 +2136,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelResultado;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JScrollPane jScrollPane1;
@@ -2031,6 +2170,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioShell;
     private javax.swing.JRadioButton radioSondagemLinear;
     private javax.swing.JRadioButton radioSondagemQuadratica;
+    private javax.swing.JRadioButton sementesOrdenacao;
     private javax.swing.JTable tabelaDeputados;
     private javax.swing.JTable tabelaRelatorioOrdenacao;
     private javax.swing.JTextField valorOrdenacao;
