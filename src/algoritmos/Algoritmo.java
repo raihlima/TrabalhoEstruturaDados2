@@ -452,7 +452,7 @@ public class Algoritmo {
     /*
     *   Aqui começam os algoritmos de Hashing
      */
-    private Deputado[] tabela(int tam) {
+    private static Deputado[] tabela(int tam) {
         Deputado[] tab = new Deputado[tam];
         for (int i = 0; i < tam; i++) {
             tab[i] = null;
@@ -460,15 +460,15 @@ public class Algoritmo {
         return tab;
     }
 
-    private ListaEncadeada<Deputado>[] tabelaEncadeada(int tam) {
+    private static ListaEncadeada<Deputado>[] tabelaEncadeada(int tam) {
         ListaEncadeada[] tab = new ListaEncadeada[tam];//falta tipo deputado na lista?
         for (int i = 0; i < tam; i++) {
-            tab[i] = null;
+            tab[i] = new ListaEncadeada();
         }
         return tab;
     }
 
-    private Deputado[][] tabelaCoalescida(int tam) {
+    private static Deputado[][] tabelaCoalescida(int tam) {
         Deputado[][] tab = new Deputado[tam][1];
         for (int i = 0; i < tam; i++) {
             tab[i][0] = null;
@@ -477,19 +477,19 @@ public class Algoritmo {
         return tab;
     }
 
-    private int hash(int k, int m) {
+    private static int hash(int k, int m) {
         return k % m;
     }
 
-    private int hash2(int k) {
+    private static int hash2(int k) {
         return k * 2;
     }
 
-    private int hashDuplo(int k, int m, int colisao) {
+    private static int hashDuplo(int k, int m, int colisao) {
         return (hash(k, m) + colisao * hash2(k));
     }
 
-    private int primo(int k) {
+    private static int primo(int k) {
         for (int i = k; k > 0; i--) {
             if (ehPrimo(i)) {
                 return i;
@@ -498,7 +498,7 @@ public class Algoritmo {
         return -1;
     }
 
-    private boolean ehPrimo(int k) {
+    private static boolean ehPrimo(int k) {
         for (int i = 2; i < k; i++) {
             if (k % i == 0) {
                 return false;
@@ -507,83 +507,87 @@ public class Algoritmo {
         return true;
     }
 
-    public Deputado[] sondagemLinear(ArrayList<Deputado> deputados, int tam) {
+    public static Deputado[] sondagemLinear(ListaEncadeada<Deputado> deputados) {
         int pos;
-        int h = primo(tam);
-        Deputado[] tabela = tabela(tam);
-        for (int i = 0; i < tam; i++) {
-            pos = (hash(deputados.get(i).getId(), h));
+        int h = primo(deputados.getTamanho());
+        Deputado[] tabela = tabela(deputados.getTamanho());
+        //for (int i = 0; i < tam; i++) {
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            pos = (hash(deputados.retornaInfo(i).getId(), h));
             while (tabela[pos] != null) {
-                pos = hash(pos + 1, tam);
+                pos = hash(pos + 1, deputados.getTamanho());
             }
-            tabela[pos] = deputados.get(i);
+            tabela[pos] = deputados.retornaInfo(i);
         }
         return tabela;
     }
 
-    public Deputado[] sondagemQuadratica(ArrayList<Deputado> deputados, int tam) {
+    public static Deputado[] sondagemQuadratica(ListaEncadeada<Deputado> deputados) {
         int pos;
-        int h = primo(tam);
-        Deputado[] tabela = tabela(tam);
-        for (int i = 0; i < tam; i++) {
-            pos = (hash(deputados.get(i).getId(), h));
+        int h = primo(deputados.getTamanho());
+        Deputado[] tabela = tabela(deputados.getTamanho());
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            pos = (hash(deputados.retornaInfo(i).getId(), h));
             int j = 0;
             while (tabela[pos] != null) {
                 j++;
-                pos = hash(pos + j * j, tam);
+                pos = hash(pos + j * j, deputados.getTamanho());
             }
-            tabela[pos] = deputados.get(i);
+            tabela[pos] = deputados.retornaInfo(i);
         }
         return tabela;
     }
 
-    public Deputado[] duploHashing(ArrayList<Deputado> deputados, int tam) {
+    public static Deputado[] duploHashing(ListaEncadeada<Deputado> deputados) {
         int pos;
-        int h = primo(tam);
-        Deputado[] tabela = tabela(tam);
-        for (int i = 0; i < tam; i++) {
-            pos = (hashDuplo(deputados.get(i).getId(), h, 0));
+        int h = primo(deputados.getTamanho());
+        Deputado[] tabela = tabela(deputados.getTamanho());
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            pos = (hash(deputados.retornaInfo(i).getId(), h));
             int j = 0;
             while (tabela[pos] != null) {
                 j++;
-                pos = hash(hashDuplo(deputados.get(i).getId(), h, j), tam);
+                pos = hash(hashDuplo(deputados.retornaInfo(i).getId(), h, j), deputados.getTamanho());
+                //pos = hash(deputados.retornaInfo(i).getId(), h);
             }
-            tabela[pos] = deputados.get(i);
+             tabela[pos] = deputados.retornaInfo(i);
         }
         return tabela;
     }
 
-    public ListaEncadeada[] encadeamentoSeparado(ArrayList<Deputado> deputados, int tam) {
+    public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Deputado> deputados) {
         int pos;
-        ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(tam);
-        for (int i = 0; i < tam; i++) {
-            pos = (hash(deputados.get(i).getId(), tam));
-            tabela[pos].insereFinal(deputados.get(i));
+        ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(50);
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            System.out.println(i);
+            pos = (hash(deputados.retornaInfo(i).getId(), 50));
+            tabela[pos].insereFinal(deputados.retornaInfo(i));
         }
         return tabela;
     }
 
-    public Deputado[][] encadeamentoCoalescido(ArrayList<Deputado> deputados, int tam) {
+    public static Deputado[][] encadeamentoCoalescido(ListaEncadeada<Deputado> deputados) {
         int pos;
-        int h = primo(tam);
-        Deputado[][] tabela = tabelaCoalescida(tam);
-        for (int i = 0; i < tam; i++) {
-            pos = (hash(deputados.get(i).getId(), h));
+        int h = primo(deputados.getTamanho());
+        Deputado[][] tabela = tabelaCoalescida(deputados.getTamanho());
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            pos = (hash(deputados.retornaInfo(i).getId(), h));
             if (tabela[pos][0] != null) {
-                pos = tam - 1;
+                pos = deputados.getTamanho() - 1;
                 while (tabela[pos][0] != null) {
                     pos = pos - 1;
                 }
-                tabela[pos][0] = deputados.get(i);
+                tabela[pos][0] = deputados.retornaInfo(i);
                 //Cria um dep aux que usa o id como posicao para o proximo
                 //TO DO Expandir o comentario acima
                 Deputado aux = new Deputado();
                 aux.setId(pos);
-                tabela[hash(deputados.get(i).getId(), h)][1] = aux;
+                tabela[hash(deputados.retornaInfo(i).getId(), h)][1] = aux;
             } else {
-                tabela[pos][0] = deputados.get(i);
+                tabela[pos][0] = deputados.retornaInfo(i);
             }
         }
+        System.out.println("FUNCIONA PORRA!!!");
         return tabela;
     }
 
@@ -591,7 +595,7 @@ public class Algoritmo {
     *Funcoes de busca de hashing
     */
     
-    public Deputado buscaSondagemLinear(Deputado deputado, Deputado[] tabela) {
+    public static Deputado buscaSondagemLinear(Deputado deputado, Deputado[] tabela) {
         int pos;
         int h = primo(tabela.length);
 
@@ -613,7 +617,7 @@ public class Algoritmo {
         return null; //retorno para "comprir tabela"
     }
 
-    public Deputado buscaSondagemQuadratica(Deputado deputado, Deputado[] tabela) {
+    public static Deputado buscaSondagemQuadratica(Deputado deputado, Deputado[] tabela) {
         int pos;
         int h = primo(tabela.length);
 
@@ -637,7 +641,7 @@ public class Algoritmo {
         return null; //retorno para "comprir tabela"
     }
 
-    public Deputado buscaDuploHashing(Deputado deputado, Deputado[] tabela) {
+    public static Deputado buscaDuploHashing(Deputado deputado, Deputado[] tabela) {
         int pos;
         int h = primo(tabela.length);
 
@@ -661,7 +665,7 @@ public class Algoritmo {
         return null; //retorno para "comprir tabela"
     }
 
-    public Deputado buscaEncadeamentoSeparado(Deputado deputado, ListaEncadeada[] tabela) {
+    public static Deputado buscaEncadeamentoSeparado(Deputado deputado, ListaEncadeada[] tabela) {
         int pos;
         pos = (hash(deputado.getId(), tabela.length));
         No<Deputado> aux = tabela[pos].getInicio();
@@ -673,7 +677,7 @@ public class Algoritmo {
         return null;
     }
 
-    public Deputado buscaEncadeamentoCoalescido(Deputado deputado, Deputado[][] tabela) {
+    public static Deputado buscaEncadeamentoCoalescido(Deputado deputado, Deputado[][] tabela) {
         int pos;
         int h = primo(tabela[0].length);
         pos = (hash(deputado.getId(), h));
