@@ -178,6 +178,99 @@ public class Algoritmo {
      * @param deputados
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
+    public static void quicksortMedianaK(ListaEncadeada<Deputado> deputados) {
+        quicksortMedianaK(deputados, 0, deputados.getTamanho() - 1, 3);
+    }
+
+    //Método de partição do Quick Sort Mediana de 3
+    private static int particionaMedianaK(ListaEncadeada<Deputado> deputados, int inicio, int fim, int k) {
+        //procura a mediana entre inicio, meio e fim
+        float div = ((float) fim - inicio) / (float) (k - 1);
+        float aux = 0;
+        int[] indice = new int[k];
+        for (int i = 0; i < k; i++) {
+            indice[i] = (int) aux;
+            aux = aux + div;
+        }
+/*
+        int a = 0;
+        int b = 0;
+        for (int j = 0; j < ((k + 1) / 2); j++) {
+            a = 0;
+            aux = deputados.retornaInfo(0).getTotalGasto();
+            for (int i = 0; i < indice.length - j; i++) {
+                if (indice[i] != -1) {
+                    if (deputados.retornaInfo(indice[i]).getTotalGasto() > aux) {
+                        aux = deputados.retornaInfo(indice[i]).getTotalGasto();
+                        a = i;
+                    }
+                }
+            }
+            b = indice[a];
+            indice[a] = -1;
+        }
+*/
+        
+        int n = indice.length;
+        int temp = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j < (n - i); j++) {
+                if (deputados.retornaInfo(indice[j - 1]).getTotalGasto() > deputados.retornaInfo(indice[j]).getTotalGasto() ) {
+                    //swap elements  
+                    temp = indice[j - 1];
+                    indice[j - 1] = indice[j];
+                    indice[j] = temp;
+                }
+
+            }
+        }
+        
+        int medianaIndice = 2; //índice da mediana
+        //A sequência de if...else a seguir verifica qual é a mediana
+
+        //coloca o elemento da mediana no fim para poder usar o Quicksort de Cormen
+        trocaDeputados(deputados, medianaIndice, fim);
+
+        //*******************ALGORITMO DE PARTIÇÃO DE CORMEN*********************
+        //o pivo é o elemento final
+        Deputado pivo = deputados.retornaInfo(fim);
+        int i = inicio - 1;
+        /*
+         * Este laço irá varrer os vetores da esquerda para direira
+         * procurando os elementos que são menores ou iguais ao pivô.
+         * Esses elementos são colocados na partição esquerda.         
+         */
+        for (int j = inicio; j <= fim - 1; j++) {
+            if (deputados.retornaInfo(j).getTotalGasto() <= pivo.getTotalGasto()) {
+                i = i + 1;
+                trocaDeputados(deputados, i, j);
+            }
+        }
+        //coloca o pivô na posição de ordenação
+        trocaDeputados(deputados, i + 1, fim);
+        return i + 1; //retorna a posição do pivô
+    }
+
+    //Funcao principal do algoritmo, executa a recursao
+    private static void quicksortMedianaK(ListaEncadeada<Deputado> deputados, int inicio, int fim, int k) {
+        if (inicio < fim) {
+            //realiza a partição
+            int q = particionaMedianaK(deputados, inicio, fim, k);
+            //ordena a partição esquerda
+            quicksortMedianaK(deputados, inicio, q - 1, k);
+            //ordena a partição direita
+            quicksortMedianaK(deputados, q + 1, fim, k);
+        }
+    }
+
+    
+    /**
+     * Estas funções contém o código para execução do algoritmo de Quick Sort
+     * Mediana de 3
+     *
+     * @param deputados
+     */
+    //Chamada da funcao, calcula os parametros necessarios para execucao
     public static void quicksortMedianaDeTres(ListaEncadeada<Deputado> deputados) {
         quicksortMedianaDeTres(deputados, 0, deputados.getTamanho() - 1);
     }
@@ -185,39 +278,31 @@ public class Algoritmo {
     //Método de partição do Quick Sort Mediana de 3
     private static int particionaMediana(ListaEncadeada<Deputado> deputados, int inicio, int fim) {
         //procura a mediana entre inicio, meio e fim
-        int meio = (inicio + fim) / 2;
-        float a = deputados.retornaInfo(inicio).getTotalGasto();
-        float b = deputados.retornaInfo(meio).getTotalGasto();
-        float c = deputados.retornaInfo(fim).getTotalGasto();
-        int medianaIndice; //índice da mediana
-        //A sequência de if...else a seguir verifica qual é a mediana
-        if (a < b) {
-            if (b < c) {
-                //a < b && b < c
-                medianaIndice = meio;
-            } else {
-                if (a < c) {
-                    //a < c && c <= b
-                    medianaIndice = fim;
-                } else {
-                    //c <= a && a < b
-                    medianaIndice = inicio;
+        int k =6;
+        float div = ((float) (fim - inicio)) / (float) (k - 1);
+        float aux = 0;
+        int[] indice = new int[k];
+        for (int i = 0; i < k; i++) {
+            indice[i] = (int) aux;
+            aux = aux + div;
+            System.out.println(indice[i]);
+        }
+
+        
+        int n = indice.length;
+        int temp = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j < (n - i); j++) {
+                if (deputados.retornaInfo(indice[j - 1]).getTotalGasto() > deputados.retornaInfo(indice[j]).getTotalGasto() ) {
+                    //swap elements  
+                    temp = indice[j - 1];
+                    indice[j - 1] = indice[j];
+                    indice[j] = temp;
                 }
-            }
-        } else {
-            if (c < b) {
-                //c < b && b <= a
-                medianaIndice = meio;
-            } else {
-                if (c < a) {
-                    //b <= c && c < a
-                    medianaIndice = fim;
-                } else {
-                    //b <= a && a <= c
-                    medianaIndice = inicio;
-                }
+
             }
         }
+        int medianaIndice=(inicio+fim)/2;
         //coloca o elemento da mediana no fim para poder usar o Quicksort de Cormen
         trocaDeputados(deputados, medianaIndice, fim);
 
@@ -252,7 +337,7 @@ public class Algoritmo {
             quicksortMedianaDeTres(deputados, q + 1, fim);
         }
     }
-
+    
     /**
      * Esta função contém o código para execução da troca (swap) de objetos no
      * vetor
@@ -507,7 +592,6 @@ public class Algoritmo {
     /**
      * Funcoes de hashing
      */
-    
     public static Deputado[] sondagemLinear(ListaEncadeada<Deputado> deputados) {
         int pos;
         int h = primo(deputados.getTamanho());
@@ -537,7 +621,7 @@ public class Algoritmo {
         }
         return tabela;
     }
-    
+
     public static Deputado[] duploHashing(ListaEncadeada<Deputado> deputados) {
         int pos;
         int h = primo(deputados.getTamanho());
@@ -591,7 +675,6 @@ public class Algoritmo {
     /**
      * Funcoes de busca de hashing
      */
-    
     public static Deputado buscaSondagemLinear(Deputado deputado, Deputado[] tabela) {
         int h = primo(tabela.length);
         int pos = (hash(deputado.getId(), h));
