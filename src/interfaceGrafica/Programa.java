@@ -70,15 +70,13 @@ public class Programa extends javax.swing.JFrame {
         grupoHashTipo = new javax.swing.ButtonGroup();
         grupoHashMetodo = new javax.swing.ButtonGroup();
         grupoHashQuantidade = new javax.swing.ButtonGroup();
+        botaoDeputadoOrdenacao = new javax.swing.JRadioButton();
         barraStatus = new javax.swing.JPanel();
         nomeArquivoStatus = new javax.swing.JLabel();
         nomeArquivo = new javax.swing.JLabel();
         jPanelPrincipal = new javax.swing.JPanel();
         jPanelOrdenacao = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        botaoDeputadoOrdenacao = new javax.swing.JRadioButton();
-        botaoPartidoOrdenacao = new javax.swing.JRadioButton();
         jPanel7 = new javax.swing.JPanel();
         valorOrdenacao = new javax.swing.JTextField();
         botaoLinearOrdenacao = new javax.swing.JRadioButton();
@@ -106,7 +104,6 @@ public class Programa extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -181,6 +178,10 @@ public class Programa extends javax.swing.JFrame {
 
         fileChooser.setDialogTitle("Abrir");
 
+        grupoTipo.add(botaoDeputadoOrdenacao);
+        botaoDeputadoOrdenacao.setSelected(true);
+        botaoDeputadoOrdenacao.setText("Deputado");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Capivara APP");
 
@@ -215,35 +216,6 @@ public class Programa extends javax.swing.JFrame {
 
         jPanel5.setBorder(new javax.swing.border.MatteBorder(null));
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Ordenar por:"));
-
-        grupoTipo.add(botaoDeputadoOrdenacao);
-        botaoDeputadoOrdenacao.setSelected(true);
-        botaoDeputadoOrdenacao.setText("Deputado");
-
-        grupoTipo.add(botaoPartidoOrdenacao);
-        botaoPartidoOrdenacao.setText("Partido");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoDeputadoOrdenacao)
-                    .addComponent(botaoPartidoOrdenacao))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(botaoDeputadoOrdenacao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoPartidoOrdenacao)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Leitura de Linhas"));
 
         valorOrdenacao.addActionListener(new java.awt.event.ActionListener() {
@@ -274,12 +246,14 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(valorOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoLinearOrdenacao))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoTudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botaoAleatorioOrdenacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(botaoLinearOrdenacao)
+                        .addGap(43, 43, 43)
+                        .addComponent(botaoAleatorioOrdenacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(valorOrdenacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoTudo, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -432,11 +406,8 @@ public class Programa extends javax.swing.JFrame {
                         .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoComecar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,9 +415,7 @@ public class Programa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -520,13 +489,6 @@ public class Programa extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setText("Relatório Ordenação Partido");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
         jButton8.setText("Ordenar");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -560,8 +522,7 @@ public class Programa extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                    .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -575,9 +536,7 @@ public class Programa extends javax.swing.JFrame {
                     .addComponent(jButton8)
                     .addComponent(jButton9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7))
+                .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton12)
@@ -1546,11 +1505,6 @@ public class Programa extends javax.swing.JFrame {
         cardLayout.show(jPanelPrincipal, "relatorioOrdenacao");
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        cardLayout.show(jPanelPrincipal, "relatorioOrdenacao");
-    }//GEN-LAST:event_jButton7ActionPerformed
-
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
         DefaultTableModel modelo = (DefaultTableModel) tabelaRelatorioOrdenacao.getModel();
@@ -1569,7 +1523,7 @@ public class Programa extends javax.swing.JFrame {
                 while ((linha = reader.readLine()) != null) {
                     //System.out.println(linha);
                     partes = linha.split(";");
-                    modelo.addRow(new Object[]{partes[0], partes[1], partes[2], "Implementar", partes[8], partes[7], "implementar", partes[7], partes[9]});
+                    modelo.addRow(new Object[]{partes[0], partes[1], partes[2], partes[6], partes[8], partes[7], "implementar", partes[7], partes[9]});
                     System.out.println(linha);
 
                     //System.out.println(cont);
@@ -1606,7 +1560,7 @@ public class Programa extends javax.swing.JFrame {
 
     private void executarOrdenacao(int qtdLinhas) throws InterruptedException {
         //File arquivo = new File("texto.txt");
-        progressoStatus.setText("Lendo o arquivo");
+        //progressoStatus.setText("Lendo o arquivo");
         int cont = 0;
 
         long start = System.currentTimeMillis();
@@ -1710,11 +1664,13 @@ public class Programa extends javax.swing.JFrame {
 
     private void ordenarDeputados() throws IOException {
         String tipoExecucao;
+        String quantidade;
         if (botaoLinearOrdenacao.isSelected()) {
             tipoExecucao = "Linear";
         } else {
             tipoExecucao = "Aleatório";
         }
+
         Relatorio relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
         String descricao = "";
         if (radioBubble.isSelected()) {
@@ -1727,11 +1683,15 @@ public class Programa extends javax.swing.JFrame {
             Algoritmo.quickSortRec(listaDeputado);
             descricao = radioQuick1.getText();
         } else if (radioQuick2.isSelected()) {
-            Algoritmo.quicksortMedianaDeTres(listaDeputado);
-            descricao = radioQuick2.getText();
+            quantidade = JOptionPane.showInputDialog(null, "Digite o valor de k para calcular a mediana:", "Digite um valor", JOptionPane.QUESTION_MESSAGE);
+            relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
+            Algoritmo.quicksortMedianaK(listaDeputado, Integer.parseInt(quantidade));
+            descricao = radioQuick2.getText() + quantidade;
         } else if (radioQuick3.isSelected()) {
-            Algoritmo.quickSortHibrido(listaDeputado);
-            descricao = radioQuick3.getText();
+            quantidade = JOptionPane.showInputDialog(null, "Digite o valor de k para executar o Insertion Sort:", "Digite um valor", JOptionPane.QUESTION_MESSAGE);
+            relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
+            Algoritmo.quickSortHibrido(listaDeputado, Integer.parseInt(quantidade));
+            descricao = radioQuick3.getText() + quantidade;
         } else if (radioMerge.isSelected()) {
             Algoritmo.mergeSort(listaDeputado);
             descricao = radioMerge.getText();
@@ -1784,17 +1744,17 @@ public class Programa extends javax.swing.JFrame {
         //N=1000, 5000, 10000, 50000, 100000 e 500000, no mínimo.
         for (semente = 1; semente <= 5; semente++) {
             leDadosAleatorios(1000);
-            ordenaSementesDeputado(semente,1000);
+            ordenaSementesDeputado(semente, 1000);
             leDadosAleatorios(5000);
-            ordenaSementesDeputado(semente,5000);
+            ordenaSementesDeputado(semente, 5000);
             leDadosAleatorios(10000);
-            ordenaSementesDeputado(semente,10000);
+            ordenaSementesDeputado(semente, 10000);
             leDadosAleatorios(50000);
-            ordenaSementesDeputado(semente,50000);
+            ordenaSementesDeputado(semente, 50000);
             leDadosAleatorios(100000);
-            ordenaSementesDeputado(semente,100000);
+            ordenaSementesDeputado(semente, 100000);
             leDadosAleatorios(500000);
-            ordenaSementesDeputado(semente,500000);
+            ordenaSementesDeputado(semente, 500000);
         }
 
     }
@@ -1852,6 +1812,8 @@ public class Programa extends javax.swing.JFrame {
 
     public void ordenaSementesDeputado(int semente, int linhas) throws IOException {
         ListaEncadeada<Deputado> aux = new ListaEncadeada<>();
+
+        //----------Bubble Sort-------------
         for (int i = 0; i < aux.getTamanho(); i++) {
             aux.insereFinal(listaDeputado.retornaInfo(i));
         }
@@ -1859,71 +1821,133 @@ public class Programa extends javax.swing.JFrame {
         Relatorio relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
         relatorio.setSemente(semente);
         Algoritmo.bubbleSortDeputados(aux);
-        relatorio.setRelatorioFinal("Ordenacao","Bubble Sort", semente);
+        relatorio.setRelatorioFinal("Ordenacao", "Bubble Sort", semente);
 
         aux.deletarLista();
 
         relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
         relatorio.setSemente(semente);
+
+        //----------Insertion Sort-------------
         for (int i = 0; i < aux.getTamanho(); i++) {
             aux.insereFinal(listaDeputado.retornaInfo(i));
         }
         Algoritmo.insertionSort(aux);
-        relatorio.setRelatorioFinal("Ordenacao","Insertion Sort",semente);
+        relatorio.setRelatorioFinal("Ordenacao", "Insertion Sort", semente);
 
         aux.deletarLista();
         relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
         relatorio.setSemente(semente);
+
+        //----------Merge Sort-------------
         for (int i = 0; i < aux.getTamanho(); i++) {
             aux.insereFinal(listaDeputado.retornaInfo(i));
         }
         Algoritmo.mergeSort(aux);
-        relatorio.setRelatorioFinal("Ordenacao","Merge Sort",semente);
+        relatorio.setRelatorioFinal("Ordenacao", "Merge Sort", semente);
 
         aux.deletarLista();
         relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
         relatorio.setSemente(semente);
+
+        //----------Heap Sort-------------
         for (int i = 0; i < aux.getTamanho(); i++) {
             aux.insereFinal(listaDeputado.retornaInfo(i));
         }
         Algoritmo.heapSort(aux);
-        relatorio.setRelatorioFinal("Ordenacao","Heap Sort",semente);
+        relatorio.setRelatorioFinal("Ordenacao", "Heap Sort", semente);
 
         aux.deletarLista();
         relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
         relatorio.setSemente(semente);
+
+        //----------Shell Sort-------------
         for (int i = 0; i < aux.getTamanho(); i++) {
             aux.insereFinal(listaDeputado.retornaInfo(i));
         }
         Algoritmo.shellSort(aux);
-        relatorio.setRelatorioFinal("Ordenacao","Shell Sort",semente);
+        relatorio.setRelatorioFinal("Ordenacao", "Shell Sort", semente);
 
         aux.deletarLista();
         relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
         relatorio.setSemente(semente);
+
+        //----------Quick Sort Recursivo-------------
         for (int i = 0; i < aux.getTamanho(); i++) {
             aux.insereFinal(listaDeputado.retornaInfo(i));
         }
         Algoritmo.quickSortRec(aux);
-        relatorio.setRelatorioFinal("Ordenacao","Quick Sort Recursivo",semente);
+        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Recursivo", semente);
 
         aux.deletarLista();
         relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
         relatorio.setSemente(semente);
+
+        //----------Quick Sort MedianaK-------------
         for (int i = 0; i < aux.getTamanho(); i++) {
             aux.insereFinal(listaDeputado.retornaInfo(i));
         }
-        Algoritmo.quicksortMedianaDeTres(aux);
-        relatorio.setRelatorioFinal("Ordenacao","Quick Sort Mediana de Tres",semente);
+
+        Algoritmo.quicksortMedianaK(aux, 3);
+        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 3, semente);
 
         aux.deletarLista();
         relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
         relatorio.setSemente(semente);
+
+        //----------Quick Sort MedianaK-------------
         for (int i = 0; i < aux.getTamanho(); i++) {
             aux.insereFinal(listaDeputado.retornaInfo(i));
         }
-        Algoritmo.quickSortHibrido(aux);
-        relatorio.setRelatorioFinal("Ordenacao","Quick Sort Hibrido",semente);
+
+        Algoritmo.quicksortMedianaK(aux, 5);
+        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 5, semente);
+
+        aux.deletarLista();
+        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+
+        //----------Quick Sort MedianaK-------------
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+
+        Algoritmo.quicksortMedianaK(aux, 7);
+        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 7, semente);
+
+        aux.deletarLista();
+        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+        relatorio.setSemente(semente);
+
+        //----------Quick Sort Hibrido-------------
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+
+        Algoritmo.quickSortHibrido(aux, 10);
+        aux.deletarLista();
+        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 10, semente);
+        relatorio.setSemente(semente);
+
+        //----------Quick Sort Hibrido-------------
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+
+        Algoritmo.quickSortHibrido(aux, 100);
+        aux.deletarLista();
+        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 100, semente);
+        relatorio.setSemente(semente);
+
+        //----------Quick Sort Hibrido-------------
+        for (int i = 0; i < aux.getTamanho(); i++) {
+            aux.insereFinal(listaDeputado.retornaInfo(i));
+        }
+
+        Algoritmo.quickSortHibrido(aux, 200);
+        aux.deletarLista();
+        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 200, semente);
+        relatorio.setSemente(semente);
 
     }
 
@@ -2068,7 +2092,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JRadioButton botaoDeputadoOrdenacao2;
     private javax.swing.JRadioButton botaoLinearOrdenacao;
     private javax.swing.JRadioButton botaoLinearOrdenacao1;
-    private javax.swing.JRadioButton botaoPartidoOrdenacao;
     private javax.swing.JRadioButton botaoPartidoOrdenacao2;
     private javax.swing.JButton botaoTudo;
     private javax.swing.JButton botaoTudo1;
@@ -2096,7 +2119,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
@@ -2122,7 +2144,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;

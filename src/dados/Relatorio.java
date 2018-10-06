@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import org.omg.SendingContext.RunTime;
 
 /**
  *
@@ -32,10 +33,14 @@ public class Relatorio implements Serializable {
     private String tipoLeitura; //Linear ou Aleatória
     private String tempoExecucao;
     private String sistemaOperacional;
+    private long tempoIni;
+    private long tempoFim;
+    private long interacao;
 
     public Relatorio() {
         this.dataInicio = Calendar.getInstance();
         this.sistemaOperacional = System.getProperty("os.name");
+        this.tempoIni = System.nanoTime();
     }
 
     public Relatorio(int quantidadeLinhas, String tipoExecucao, String tipoLeitura, String tipoOrganizacao) {
@@ -45,12 +50,14 @@ public class Relatorio implements Serializable {
         this.tipoExecucao = tipoExecucao;
         this.tipoLeitura = tipoLeitura;
         this.tipoOrganizacao = tipoOrganizacao;
+        this.tempoIni = System.nanoTime();
     }
 
     public Relatorio(String descricao) {
         this.dataInicio = Calendar.getInstance();
         this.descricao = descricao;
         this.sistemaOperacional = System.getProperty("os.name");
+        this.tempoIni = System.nanoTime();
     }
 
     public Calendar getDataInicio() {
@@ -77,14 +84,19 @@ public class Relatorio implements Serializable {
         return tempoExecucao;
     }
 
-    public void setRelatorioFinal(String algoritmo) throws IOException {;
+    public void setRelatorioFinal(String algoritmo) throws IOException {
+        this.tempoFim = System.nanoTime();
+
         this.dataFim = Calendar.getInstance();
         this.tipoAlgoritmo = algoritmo;
+        /*
         long hora = ((((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) / 60) % 60;
         long min = (((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) % 60;
         long seg = ((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) % 60;
         long miliseg = (dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) % 1000;
         this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
+         */
+        this.tempoExecucao = Long.toString((this.tempoFim-this.tempoIni));
         geraTexto();
     }
 
@@ -93,11 +105,14 @@ public class Relatorio implements Serializable {
         this.descricao = descricao;
         this.dataFim = Calendar.getInstance();
         this.tipoAlgoritmo = algoritmo;
+        /*
         long hora = ((((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) / 60) % 60;
         long min = (((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) % 60;
         long seg = ((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) % 60;
         long miliseg = (dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) % 1000;
-        this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
+        */
+        this.tempoExecucao = Long.toString((this.tempoFim-this.tempoIni));
+       // this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
         geraTexto();
     }
 
@@ -159,7 +174,9 @@ public class Relatorio implements Serializable {
         gravarArq.print(sdf.format(this.getDataInicio().getTime()) + ";");
         gravarArq.print(sdf.format(this.getDataFim().getTime()) + ";");
         gravarArq.print(this.getSistemaOperacional() + ";");
-        gravarArq.print(this.getTempoExecucao() + ";");
+        gravarArq.print(this.getTempoExecucao() + "ns;");
+        Runtime rt = Runtime.getRuntime();  
+        this.usoMemoria = rt.maxMemory() -rt.freeMemory();
         gravarArq.print(this.getUsoMemoria() + "bytes;");
         gravarArq.print(this.getQuantidadeLinhas() + ";");
         gravarArq.print(this.getDescricao());
@@ -174,5 +191,15 @@ public class Relatorio implements Serializable {
     public void setSemente(int semente) {
         this.semente = semente;
     }
+
+    public long getInteracao() {
+        return interacao;
+    }
+
+    public void setInteracao(long interacao) {
+        this.interacao = interacao;
+    }
+    
+    
 
 }

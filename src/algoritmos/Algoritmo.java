@@ -255,13 +255,13 @@ public class Algoritmo {
         deputados.altera(j, aux);
     }
 
-    public static void quickSortHibrido(ListaEncadeada<Deputado> deputados) {
-        quickSortHibrido(deputados, 0, deputados.getTamanho() - 1);
+    public static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int k) {
+        quickSortHibrido(deputados, 0, deputados.getTamanho() - 1,k);
     }
 
-    private static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int min, int max) {
+    private static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int min, int max, int k) {
         int size = (max + 1) - min;
-        if (size <= 10) { // inserion sort se o tamanho for menor que 10
+        if (size <= k) { // inserion sort se o tamanho for menor que 10
             insertionSort(deputados, min, size);
         } else // quicksort se for maior
         {
