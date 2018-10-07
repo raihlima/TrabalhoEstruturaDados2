@@ -10,8 +10,6 @@ import dados.Relatorio;
 import java.util.ArrayList;
 import java.util.List;
 import trabalhoed2.Deputado;
-import trabalhoed2.Generico;
-import trabalhoed2.Partido;
 
 /**
  *
@@ -26,16 +24,18 @@ public class AlgoritmoDeputado {
      * Esta função contém o código para execução do algoritmo de Bubble Sort
      *
      * @param deputados
+     * @param relatorio
      */
     public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int contIteracao = 0;
-
+       
         for (int i = 0; i < deputados.getTamanho(); i++) {
             contIteracao++;
             for (int j = 1; j < deputados.getTamanho() - i; j++) {
                 contIteracao++;
                 if (deputados.retornaInfo(j - 1).getTotalGasto() > deputados.retornaInfo(j).getTotalGasto()) {
-                    deputados.troca(j, j - 1);
+                    deputados.troca(j, j - 1,relatorio);
+                   
                     contIteracao++;
                 }
                 contIteracao++;
@@ -44,12 +44,14 @@ public class AlgoritmoDeputado {
         }
         contIteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
+        
     }
 
     /**
      * Esta função contém o código para execução do algoritmo de Insertion Sort
      *
      * @param deputados
+     * @param relatorio
      */
     public static void insertionSort(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         insertionSort(deputados, 0, deputados.getTamanho(), relatorio);
@@ -57,7 +59,7 @@ public class AlgoritmoDeputado {
 
     private static void insertionSort(ListaEncadeada<Deputado> deputados, int min, int max, Relatorio relatorio) {
         int contIteracao = 1;
-
+        
         for (int i = min + 1; i < max; i++) {
             contIteracao++;
             Deputado chave = deputados.retornaInfo(i);
@@ -70,6 +72,7 @@ public class AlgoritmoDeputado {
             }
             contIteracao++;
             deputados.altera((j + 1), chave);
+            relatorio.incrementaTrocaColisao();
         }
         contIteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
@@ -138,6 +141,7 @@ public class AlgoritmoDeputado {
                 contInteracao++;
                 j++;
             }
+            relatorio.incrementaTrocaColisao();
             contInteracao++;
             k++;
         }
@@ -160,6 +164,7 @@ public class AlgoritmoDeputado {
             j++;
             k++;
         }
+        relatorio.incrementaTrocaColisao();
         contInteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
@@ -200,13 +205,13 @@ public class AlgoritmoDeputado {
             //Compara as strings
             if (deputados.retornaInfo(j).getTotalGasto() < pivo.getTotalGasto()) {
                 i++;//avanca o menor
-                deputados.troca(i, j);
+                deputados.troca(i, j,relatorio);
             }
             contInteracao++;
         }
         contInteracao++;
         Deputado temp = deputados.retornaInfo(i + 1);
-        deputados.troca(i + 1, max);
+        deputados.troca(i + 1, max, relatorio);
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
         return i + 1;
     }
@@ -247,6 +252,7 @@ public class AlgoritmoDeputado {
                     temp = indice[j - 1];
                     indice[j - 1] = indice[j];
                     indice[j] = temp;
+                    
                 }
                 contInteracao++;
             }
@@ -254,7 +260,8 @@ public class AlgoritmoDeputado {
         }
         contInteracao++;
         int medianaIndice = (inicio + fim) / 2;
-        trocaDeputados(deputados, medianaIndice, fim, relatorio);
+        deputados.troca(medianaIndice, fim, relatorio);
+        
 
         //o pivo é o elemento final
         Deputado pivo = deputados.retornaInfo(fim);
@@ -264,13 +271,15 @@ public class AlgoritmoDeputado {
             contInteracao++;
             if (deputados.retornaInfo(j).getTotalGasto() <= pivo.getTotalGasto()) {
                 i = i + 1;
-                trocaDeputados(deputados, i, j, relatorio);
+                deputados.troca(i, j,relatorio);
+                contInteracao++;
+               
             }
             contInteracao++;
         }
         contInteracao++;
         //coloca o pivô na posição de ordenação
-        trocaDeputados(deputados, i + 1, fim, relatorio);
+        deputados.troca(i + 1, fim, relatorio);
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
         return i + 1; //retorna a posição do pivô
     }
@@ -289,20 +298,6 @@ public class AlgoritmoDeputado {
         contInteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
 
-    }
-
-    /**
-     * Esta função contém o código para execução da troca (swap) de objetos no
-     * vetor
-     *
-     * @param deputados
-     */
-    private static void trocaDeputados(ListaEncadeada<Deputado> deputados, int i, int j, Relatorio relatorio) {
-        Deputado aux = deputados.retornaInfo(i);
-        deputados.altera(i, deputados.retornaInfo(j));
-        deputados.altera(j, aux);
-        int contInteracao = 2;
-        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     public static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int k, Relatorio relatorio) {
@@ -343,7 +338,7 @@ public class AlgoritmoDeputado {
         for (int i = n - 1; i >= 0; i--) {
             contInteracao++;
             // Move a raiz para o fim
-            deputados.troca(0, i);
+            deputados.troca(0, i,relatorio);
             // heapify a heap reduzida
             heapify(deputados, i, 0, relatorio);
         }
@@ -370,7 +365,7 @@ public class AlgoritmoDeputado {
         contInteracao++;
         // Se maior nao e raiz
         if (maior != i) {
-            deputados.troca(i, maior);
+            deputados.troca(i, maior,relatorio);
             // Heapify recursivamente a sub arvore afetada
             heapify(deputados, n, maior,relatorio);
         }
@@ -414,6 +409,7 @@ public class AlgoritmoDeputado {
                 contInteracao++;
                 deputados.altera(j, c);
                 contInteracao++;
+                relatorio.incrementaTrocaColisao();
             }
             contInteracao++;
             h = h / 2;
@@ -573,6 +569,8 @@ public class AlgoritmoDeputado {
     /**
      * Funcoes de hashing
      */
+    
+    
     public static Deputado[] sondagemLinear(ListaEncadeada<Deputado> deputados) {
         int pos;
         int h = primo(deputados.getTamanho());

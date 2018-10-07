@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import org.omg.SendingContext.RunTime;
 
 /**
@@ -31,6 +32,7 @@ public class Relatorio implements Serializable {
     private String tipoOrganizacao; //Deputado ou Partido
     private String tipoExecucao; //Customizada ou Sementes
     private String tipoLeitura; //Linear ou Aleatória
+    private int trocaColisao; //Troca para ordenação e Colisão para Busca(Hash)
     private String tempoExecucao;
     private String sistemaOperacional;
     private long tempoIni;
@@ -42,6 +44,7 @@ public class Relatorio implements Serializable {
         this.sistemaOperacional = System.getProperty("os.name");
         this.tempoIni = System.nanoTime();
         this.interacao = 0;
+        this.trocaColisao = 0;
     }
 
     public Relatorio(int quantidadeLinhas, String tipoExecucao, String tipoLeitura, String tipoOrganizacao) {
@@ -53,6 +56,7 @@ public class Relatorio implements Serializable {
         this.tipoOrganizacao = tipoOrganizacao;
         this.tempoIni = System.nanoTime();
         this.interacao = 0;
+        this.trocaColisao = 0;
     }
 
     public Relatorio(String descricao) {
@@ -61,6 +65,7 @@ public class Relatorio implements Serializable {
         this.sistemaOperacional = System.getProperty("os.name");
         this.tempoIni = System.nanoTime();
         this.interacao = 0;
+        this.trocaColisao = 0;
     }
 
     public Calendar getDataInicio() {
@@ -89,16 +94,8 @@ public class Relatorio implements Serializable {
 
     public void setRelatorioFinal(String algoritmo) throws IOException {
         this.tempoFim = System.nanoTime();
-
         this.dataFim = Calendar.getInstance();
         this.tipoAlgoritmo = algoritmo;
-        /*
-        long hora = ((((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) / 60) % 60;
-        long min = (((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) % 60;
-        long seg = ((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) % 60;
-        long miliseg = (dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) % 1000;
-        this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
-         */
         this.tempoExecucao = Long.toString((this.tempoFim - this.tempoIni));
         geraTexto();
     }
@@ -109,12 +106,6 @@ public class Relatorio implements Serializable {
         this.descricao = descricao;
         this.dataFim = Calendar.getInstance();
         this.tipoAlgoritmo = algoritmo;
-        /*
-        long hora = ((((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) / 60) % 60;
-        long min = (((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) % 60;
-        long seg = ((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) % 60;
-        long miliseg = (dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) % 1000;
-         */
         this.tempoExecucao = Long.toString((this.tempoFim - this.tempoIni));
 
         // this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
@@ -170,28 +161,33 @@ public class Relatorio implements Serializable {
         this.tipoOrganizacao = tipoOrganizacao;
     }
 
-    public void geraTexto() throws IOException {
-        new File("Relatorios/" + tipoOrganizacao).mkdirs();
-        FileWriter arq = new FileWriter("Relatorios/" + tipoOrganizacao + "/" + tipoAlgoritmo + tipoExecucao + ".txt", true);
-        PrintWriter gravarArq = new PrintWriter(arq);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy;HH:mm:ss");
-        if (tipoExecucao.equalsIgnoreCase("Sementes")) {
-            gravarArq.print("Semente "+this.semente + ";");
-        } else {
-            gravarArq.print(this.getTipoLeitura() + ";");
+    public void geraTexto() {
+        try {
+            new File("Relatorios/" + tipoOrganizacao).mkdirs();
+            FileWriter arq = new FileWriter("Relatorios/" + this.tipoOrganizacao + "/" + this.tipoAlgoritmo + this.tipoExecucao + ".txt", true);
+            PrintWriter gravarArq = new PrintWriter(arq);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy;HH:mm:ss");
+            if (this.tipoExecucao.equalsIgnoreCase("Sementes")) {
+                gravarArq.print("Semente " + this.semente + ";");
+            } else {
+                gravarArq.print(this.getTipoLeitura() + ";");
+            }
+            gravarArq.print(sdf.format(this.getDataInicio().getTime()) + ";");
+            gravarArq.print(sdf.format(this.getDataFim().getTime()) + ";");
+            gravarArq.print(this.getSistemaOperacional() + ";");
+            gravarArq.print(this.getTempoExecucao() + "ns" + " " + (this.dataFim.getTimeInMillis() - this.dataInicio.getTimeInMillis()) + "ms;");
+            Runtime rt = Runtime.getRuntime();
+            this.usoMemoria = rt.maxMemory() - rt.freeMemory();
+            gravarArq.print(this.getUsoMemoria() + "bytes;");
+            gravarArq.print(this.getQuantidadeLinhas() + ";");
+            gravarArq.print(this.getDescricao() + ";");
+            gravarArq.print(getInteracao() + ";");
+            gravarArq.print(getTrocaColisao());
+            gravarArq.println();
+            arq.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar o relatório", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        gravarArq.print(sdf.format(this.getDataInicio().getTime()) + ";");
-        gravarArq.print(sdf.format(this.getDataFim().getTime()) + ";");
-        gravarArq.print(this.getSistemaOperacional() + ";");
-        gravarArq.print(this.getTempoExecucao() + "ns"+" "+(this.dataFim.getTimeInMillis()-this.dataInicio.getTimeInMillis()) +"ms;");
-        Runtime rt = Runtime.getRuntime();
-        this.usoMemoria = rt.maxMemory() - rt.freeMemory();
-        gravarArq.print(this.getUsoMemoria() + "bytes;");
-        gravarArq.print(this.getQuantidadeLinhas() + ";");
-        gravarArq.print(this.getDescricao()+ ";");
-        gravarArq.print(getInteracao());
-        gravarArq.println();
-        arq.close();
     }
 
     public int getSemente() {
@@ -212,6 +208,18 @@ public class Relatorio implements Serializable {
 
     public void setInteracao(long interacao) {
         this.interacao = interacao;
+    }
+
+    public int getTrocaColisao() {
+        return trocaColisao;
+    }
+
+    public void setTrocaColisao(int trocaColisao) {
+        this.trocaColisao = trocaColisao;
+    }
+
+    public void incrementaTrocaColisao() {
+        this.trocaColisao = this.trocaColisao + 1;
     }
 
 }

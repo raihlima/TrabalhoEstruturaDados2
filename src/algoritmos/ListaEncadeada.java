@@ -5,6 +5,7 @@
  */
 package algoritmos;
 
+import dados.Relatorio;
 import java.io.Serializable;
 import trabalhoed2.Deputado;
 
@@ -301,6 +302,60 @@ public class ListaEncadeada<Class> implements Serializable {
         no1.setObjeto((Class) no2.getObjeto());
         no2.setObjeto(aux);
 
+    }
+    
+    public void troca(int index1, int index2, Relatorio relatorio) {
+        Class aux;
+        No no1;
+        No no2;
+
+        if (index1 == 0) {
+            aux = (Class) inicio.getObjeto();
+            no1 = this.inicio;
+        } else if (index1 == tamanho - 1) {
+            aux = (Class) fim.getObjeto();
+            no1 = this.fim;
+        } else if (index1 < 0 || index1 >= tamanho) {
+            throw new NullPointerException("Index fora do escopo");
+        } else {
+            if (index1 < tamanho / 2) {
+                no1 = this.inicio;
+                for (int i = 0; i < index1; i++) {
+                    no1 = no1.getProximo();
+                }
+                aux = (Class) no1.getObjeto();
+            } else {
+                no1 = this.fim;
+                for (int i = tamanho - 1; i > index1; i--) {
+                    no1 = no1.getAnterior();
+                }
+                aux = (Class) no1.getObjeto();
+            }
+        }
+
+        if (index2 == 0) {
+            no2 = this.inicio;
+        } else if (index2 == tamanho - 1) {
+            no2 = this.fim;
+        } else if (index2 < 0 || index2 >= tamanho) {
+            throw new NullPointerException("Index fora do escopo");
+        } else {
+            if (index2 < tamanho / 2) {
+                no2 = this.inicio;
+                for (int i = 0; i < index2; i++) {
+                    no2 = no2.getProximo();
+                }
+            } else {
+                no2 = this.fim;
+                for (int i = tamanho-1; i > index2; i--) {
+                    no2 = no2.getAnterior();
+                }
+            }
+        }
+
+        no1.setObjeto((Class) no2.getObjeto());
+        no2.setObjeto(aux);
+        relatorio.incrementaTrocaColisao();
     }
     
     public void deletarLista(){
