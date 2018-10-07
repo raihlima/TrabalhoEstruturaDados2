@@ -26,13 +26,15 @@ public class TrabalhoED2 {
     public static void main(String[] args) {
         // TODO code application logic here
         AlgoritmoDeputado algoritmo = new AlgoritmoDeputado();
-        ListaEncadeada<Deputado> deputados;
+        ListaEncadeada<Integer> deputados;
         deputados = new ListaEncadeada<>();
         clearConsole();
         //leDados(deputados);
-
-        Programa programa = new Programa();
-        programa.setVisible(true);
+        
+        for(int i=0;i<2000;i++){
+            deputados.insereFinal(i);
+        }
+     
         //Relatorio relatorio = new Relatorio();
         //Scanner scanner = new Scanner(System.in);
         //scanner.nextLine();

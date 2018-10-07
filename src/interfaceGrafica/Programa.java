@@ -2285,15 +2285,17 @@ public class Programa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro na Sondagem Quadratica, Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         //----------Duplo Hash-------------
+        
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
+            System.out.println(aux.getTamanho());
             relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Deputados");
             AlgoritmoDeputado.duploHashing(aux, relatorio);
             relatorio.setRelatorioFinal("Busca", "Duplo Hash", semente);
-
+            
             relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Inteiro");
             AlgoritmoInteiro.duploHashing(listaInteira, relatorio);
             relatorio.setRelatorioFinal("Busca", "Duplo Hash", semente);

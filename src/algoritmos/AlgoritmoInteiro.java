@@ -449,12 +449,12 @@ public class AlgoritmoInteiro {
     }
 
     private static int hash(int k, int m) {
-        return k%m;
+        return k % m;
 
     }
 
     private static int hash2(int k, int j) {
-        int aux = (k * k * j * j) + (j) + 11;
+        int aux =k*j+1;
         return aux;
     }
 
@@ -478,7 +478,7 @@ public class AlgoritmoInteiro {
 
     /**
      * Funcoes de hashing
-     * 
+     *
      */
     public static Integer[] sondagemLinear(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
@@ -508,47 +508,59 @@ public class AlgoritmoInteiro {
             relatorio.incrementaInteracao();
             pos = (hash(listaInteiros.retornaInfo(i), h));
             int j = 0;
+            if (pos < 0) {
+                pos += tabela.length;
+            }
             while (tabela[pos] != null) {
                 relatorio.incrementaInteracao();
                 j++;
-                pos = hash(pos + j * j, listaInteiros.getTamanho());
+                pos = hash(pos + (j * j), listaInteiros.getTamanho());
                 relatorio.incrementaTrocaColisao();
+                if (pos < 0) {
+                    pos += tabela.length;
+                }
+            }
+
+            if (pos < 0) {
+                pos += tabela.length;
             }
             relatorio.incrementaInteracao();
             tabela[pos] = listaInteiros.retornaInfo(i);
         }
+
         relatorio.incrementaInteracao();
         return tabela;
     }
 
     public static Integer[] duploHashing(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
-        int pos;
+       int pos = 0;
         int h = primo(listaInteiros.getTamanho());
-        Integer[] tabela = tabela(listaInteiros.getTamanho());
+        Integer [] tabela = tabela(listaInteiros.getTamanho());
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
             relatorio.incrementaInteracao();
             pos = (hash(listaInteiros.retornaInfo(i), h));
-            if (pos < 0) {
-                pos = pos * (-1);
+            if(pos<0){
+                pos=pos+tabela.length;
             }
             int j = 0;
-            while (tabela[pos] != null) {
+            while (tabela[pos] != null && pos < 0) {
                 relatorio.incrementaInteracao();
                 j++;
-                pos = hash(hash(listaInteiros.retornaInfo(i), h) + j * hash2(listaInteiros.retornaInfo(i), j), listaInteiros.getTamanho());
+                pos = hash(pos + hash2(pos, j), listaInteiros.getTamanho());
+                //pos=hash(pos+1,tabela.length);
                 relatorio.incrementaTrocaColisao();
-                if (pos < 0) {
-                    pos = pos * (-1);
-                }
+                            if(pos<0){
+                pos=pos+tabela.length;
             }
-            if (pos < 0) {
-                pos = pos * (-1);
+            }
+                        if(pos<0){
+                pos=pos+tabela.length;
             }
             relatorio.incrementaInteracao();
             tabela[pos] = listaInteiros.retornaInfo(i);
         }
         relatorio.incrementaInteracao();
-        return tabela;
+        return null;
     }
 
     public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {

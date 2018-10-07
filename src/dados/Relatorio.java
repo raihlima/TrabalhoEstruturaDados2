@@ -6,8 +6,10 @@
 package dados;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -164,9 +166,20 @@ public class Relatorio implements Serializable {
     public void geraTexto() {
         try {
             new File("Relatorios/" + tipoOrganizacao).mkdirs();
-            FileWriter arq = new FileWriter("Relatorios/" + this.tipoOrganizacao + "/" + this.tipoAlgoritmo + this.tipoExecucao + ".txt", true);
+            File arquivo = new File("Relatorios/" + this.tipoOrganizacao + "/" + this.tipoAlgoritmo + this.tipoExecucao + ".txt");
+            FileWriter arq = new FileWriter(arquivo, true);
             PrintWriter gravarArq = new PrintWriter(arq);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy;HH:mm:ss");
+            
+            //Saber quantidade Linhas
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+            
+            if(totalLinhas==0){
+                gravarArq.println("Tipo;Data_Inicio;Hora_Inicio;Data_Termino;Hora_Termino;Sistema_Operacional;Tempo(ns);Tempo(ms);Gasto_Memoria(bytes);Linhas_Lidas;Algoritmo;Interacoes;Troca_ou_Colisao");
+            }
+            
             if (this.tipoExecucao.equalsIgnoreCase("Sementes")) {
                 gravarArq.print("Semente " + this.semente + ";");
             } else {
@@ -175,16 +188,17 @@ public class Relatorio implements Serializable {
             gravarArq.print(sdf.format(this.getDataInicio().getTime()) + ";");
             gravarArq.print(sdf.format(this.getDataFim().getTime()) + ";");
             gravarArq.print(this.getSistemaOperacional() + ";");
-            gravarArq.print(this.getTempoExecucao() + "ns" + " " + (this.dataFim.getTimeInMillis() - this.dataInicio.getTimeInMillis()) + "ms;");
+            gravarArq.print(this.getTempoExecucao() + ";" + (this.dataFim.getTimeInMillis() - this.dataInicio.getTimeInMillis()) + ";");
             Runtime rt = Runtime.getRuntime();
             this.usoMemoria = rt.maxMemory() - rt.freeMemory();
-            gravarArq.print(this.getUsoMemoria() + "bytes;");
+            gravarArq.print(this.getUsoMemoria() + ";");
             gravarArq.print(this.getQuantidadeLinhas() + ";");
             gravarArq.print(this.getDescricao() + ";");
             gravarArq.print(getInteracao() + ";");
             gravarArq.print(getTrocaColisao());
             gravarArq.println();
             arq.close();
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar o relatório", "Erro", JOptionPane.ERROR_MESSAGE);
         }
