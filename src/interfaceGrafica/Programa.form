@@ -1380,7 +1380,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="valorBusca" alignment="0" min="-2" pref="112" max="-2" attributes="0"/>
-                                  <Component id="botaoLinearOrdenacao1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoLinearBusca" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -1395,7 +1395,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="botaoLinearOrdenacao1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoLinearBusca" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="botaoAleatorioBusca" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1414,7 +1414,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="valorBuscaActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="botaoLinearOrdenacao1">
+                    <Component class="javax.swing.JRadioButton" name="botaoLinearBusca">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="grupoHashQuantidade"/>
@@ -1423,7 +1423,7 @@
                         <Property name="text" type="java.lang.String" value="Linear"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoLinearOrdenacao1ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoLinearBuscaActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="botaoAleatorioBusca">
@@ -1603,7 +1603,7 @@
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="grupoHashMetodo"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Sementes Aleat&#xf3;rias ( 5 vezes)"/>
+                        <Property name="text" type="java.lang.String" value="Sementes Aleat&#xf3;rias (10 vezes)"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioBuscaSementeActionPerformed"/>

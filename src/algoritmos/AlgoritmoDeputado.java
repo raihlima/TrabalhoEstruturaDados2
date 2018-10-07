@@ -592,6 +592,7 @@ public class AlgoritmoDeputado {
         int pos;
         int h = primo(deputados.getTamanho());
         Deputado[] tabela = tabela(deputados.getTamanho());
+
         for (int i = 0; i < deputados.getTamanho(); i++) {
             relatorio.incrementaInteracao();
             pos = (hash(deputados.retornaInfo(i).getId(), h));
@@ -609,8 +610,8 @@ public class AlgoritmoDeputado {
         return tabela;
     }
 
-    public static Deputado[] duploHashing(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
-        int pos;
+    public static void duploHashing(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
+        int pos = 0;
         int h = primo(deputados.getTamanho());
         Deputado[] tabela = tabela(deputados.getTamanho());
         for (int i = 0; i < deputados.getTamanho(); i++) {
@@ -627,7 +628,7 @@ public class AlgoritmoDeputado {
             tabela[pos] = deputados.retornaInfo(i);
         }
         relatorio.incrementaInteracao();
-        return tabela;
+
     }
 
     public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {

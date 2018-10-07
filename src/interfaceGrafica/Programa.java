@@ -20,13 +20,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import trabalhoed2.Deputado;
-import trabalhoed2.Generico;
 import trabalhoed2.Partido;
 import trabalhoed2.Recibo;
 
@@ -137,7 +135,7 @@ public class Programa extends javax.swing.JFrame {
         botaoPartidoOrdenacao2 = new javax.swing.JRadioButton();
         jPanel18 = new javax.swing.JPanel();
         valorBusca = new javax.swing.JTextField();
-        botaoLinearOrdenacao1 = new javax.swing.JRadioButton();
+        botaoLinearBusca = new javax.swing.JRadioButton();
         botaoAleatorioBusca = new javax.swing.JRadioButton();
         botaoTudo1 = new javax.swing.JButton();
         jPanel19 = new javax.swing.JPanel();
@@ -898,12 +896,12 @@ public class Programa extends javax.swing.JFrame {
             }
         });
 
-        grupoHashQuantidade.add(botaoLinearOrdenacao1);
-        botaoLinearOrdenacao1.setSelected(true);
-        botaoLinearOrdenacao1.setText("Linear");
-        botaoLinearOrdenacao1.addActionListener(new java.awt.event.ActionListener() {
+        grupoHashQuantidade.add(botaoLinearBusca);
+        botaoLinearBusca.setSelected(true);
+        botaoLinearBusca.setText("Linear");
+        botaoLinearBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoLinearOrdenacao1ActionPerformed(evt);
+                botaoLinearBuscaActionPerformed(evt);
             }
         });
 
@@ -925,7 +923,7 @@ public class Programa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(valorBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoLinearOrdenacao1))
+                    .addComponent(botaoLinearBusca))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoTudo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -936,7 +934,7 @@ public class Programa extends javax.swing.JFrame {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoLinearOrdenacao1)
+                    .addComponent(botaoLinearBusca)
                     .addComponent(botaoAleatorioBusca))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1021,7 +1019,7 @@ public class Programa extends javax.swing.JFrame {
         });
 
         grupoHashMetodo.add(radioBuscaSemente);
-        radioBuscaSemente.setText("Sementes Aleatórias ( 5 vezes)");
+        radioBuscaSemente.setText("Sementes Aleatórias (10 vezes)");
         radioBuscaSemente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioBuscaSementeActionPerformed(evt);
@@ -1464,9 +1462,9 @@ public class Programa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_valorBuscaActionPerformed
 
-    private void botaoLinearOrdenacao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLinearOrdenacao1ActionPerformed
+    private void botaoLinearBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLinearBuscaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoLinearOrdenacao1ActionPerformed
+    }//GEN-LAST:event_botaoLinearBuscaActionPerformed
 
     private void botaoAleatorioBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAleatorioBuscaActionPerformed
         // TODO add your handling code here:
@@ -1477,6 +1475,7 @@ public class Programa extends javax.swing.JFrame {
         if (radioBuscaSemente.isSelected()) {
             try {
                 JOptionPane.showMessageDialog(null, "A ordenação será executada.\n O programa poderá ficar travado até o termino da execução", "Info", JOptionPane.INFORMATION_MESSAGE);
+                executarBuscaSementesDeputado();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro ao Iniciar.\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -1515,12 +1514,25 @@ public class Programa extends javax.swing.JFrame {
 
     private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
         // TODO add your handling code here:
+        alteraBloqueioBusca(true);
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
     private void radioBuscaSementeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBuscaSementeActionPerformed
         // TODO add your handling code here:
+        alteraBloqueioBusca(false);
     }//GEN-LAST:event_radioBuscaSementeActionPerformed
 
+    public void alteraBloqueioBusca(boolean valor){
+        radioSondagemLinear.setEnabled(valor);
+        radioSondagemQuadratica.setEnabled(valor);
+        radioDuploHash.setEnabled(valor);
+        radioEncadeamentoCoalescido.setEnabled(valor);
+        radioEncadeamentoSeparado.setEnabled(valor);
+        botaoLinearBusca.setEnabled(valor);
+        botaoAleatorioBusca.setEnabled(valor);
+        botaoTudo1.setEnabled(valor);
+        valorBusca.setEnabled(valor);
+    }
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
         if (arquivo != null) {
@@ -2172,19 +2184,19 @@ public class Programa extends javax.swing.JFrame {
             String descricao = "";
 
             if (radioSondagemLinear.isSelected()) {
-                AlgoritmoDeputado.sondagemLinear(listaDeputado);
+                AlgoritmoDeputado.sondagemLinear(listaDeputado, relatorio);
                 descricao = radioSondagemLinear.getText();
             } else if (radioSondagemQuadratica.isSelected()) {
-                AlgoritmoDeputado.sondagemQuadratica(listaDeputado);
+                AlgoritmoDeputado.sondagemQuadratica(listaDeputado, relatorio);
                 descricao = radioSondagemQuadratica.getText();
             } else if (radioDuploHash.isSelected()) {
-                AlgoritmoDeputado.duploHashing(listaDeputado);
+                AlgoritmoDeputado.duploHashing(listaDeputado, relatorio);
                 descricao = radioDuploHash.getText();
             } else if (radioEncadeamentoSeparado.isSelected()) {
-                AlgoritmoDeputado.encadeamentoSeparado(listaDeputado);
+                AlgoritmoDeputado.encadeamentoSeparado(listaDeputado, relatorio);
                 descricao = radioEncadeamentoSeparado.getText();
             } else if (radioEncadeamentoCoalescido.isSelected()) {
-                AlgoritmoDeputado.encadeamentoCoalescido(listaDeputado);
+                AlgoritmoDeputado.encadeamentoCoalescido(listaDeputado, relatorio);
                 descricao = radioEncadeamentoCoalescido.getText();
             }
             relatorio.setDescricao(descricao);
@@ -2231,7 +2243,104 @@ public class Programa extends javax.swing.JFrame {
     }
 
     public void buscaSementeDeputado(int semente, int qtdLinhas) {
+        ListaEncadeada<Deputado> aux = new ListaEncadeada<>();
+        ListaEncadeada<Integer> listaInteira = new ListaEncadeada();
+        Relatorio relatorio;
+        //----------Sondagem Linear-------------
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
+            }
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Deputados");
+            AlgoritmoDeputado.sondagemLinear(aux, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Sondagem Linear", semente);
 
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.sondagemLinear(listaInteira, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Sondagem Linear", semente);
+
+            aux.deletarLista();
+            listaInteira.deletarLista();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro na Sondagem Linear, Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        //----------Sondagem Quadratica-------------
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
+            }
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Deputados");
+            AlgoritmoDeputado.sondagemQuadratica(aux, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Sondagem Quadratica", semente);
+
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.sondagemQuadratica(listaInteira, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Sondagem Quadratica", semente);
+
+            aux.deletarLista();
+            listaInteira.deletarLista();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro na Sondagem Quadratica, Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        //----------Duplo Hash-------------
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
+            }
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Deputados");
+            AlgoritmoDeputado.duploHashing(aux, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Duplo Hash", semente);
+
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.duploHashing(listaInteira, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Duplo Hash", semente);
+
+            aux.deletarLista();
+            listaInteira.deletarLista();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no Duplo Hash, Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        //----------Encadeamento Separado-------------
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
+            }
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Deputados");
+            AlgoritmoDeputado.encadeamentoSeparado(aux, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Encadeamento Separado", semente);
+
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.encadeamentoSeparado(listaInteira, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Encadeamento Separado", semente);
+
+            aux.deletarLista();
+            listaInteira.deletarLista();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no Encadeamento Separado, Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        //----------Encadeamento Coalescido-------------
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
+            }
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Deputados");
+            AlgoritmoDeputado.encadeamentoCoalescido(aux, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Encadeamento Coalescido", semente);
+
+            relatorio = new Relatorio(qtdLinhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.encadeamentoCoalescido(listaInteira, relatorio);
+            relatorio.setRelatorioFinal("Busca", "Encadeamento Coalescido", semente);
+
+            aux.deletarLista();
+            listaInteira.deletarLista();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no Encadeamento Coalescido, Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -2373,8 +2482,8 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JButton botaoComecar1;
     private javax.swing.JRadioButton botaoDeputadoOrdenacao;
     private javax.swing.JRadioButton botaoDeputadoOrdenacao2;
+    private javax.swing.JRadioButton botaoLinearBusca;
     private javax.swing.JRadioButton botaoLinearOrdenacao;
-    private javax.swing.JRadioButton botaoLinearOrdenacao1;
     private javax.swing.JRadioButton botaoPartidoOrdenacao2;
     private javax.swing.JButton botaoTudo;
     private javax.swing.JButton botaoTudo1;

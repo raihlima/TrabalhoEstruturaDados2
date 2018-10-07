@@ -449,7 +449,8 @@ public class AlgoritmoInteiro {
     }
 
     private static int hash(int k, int m) {
-        return k % m;
+        return k%m;
+
     }
 
     private static int hash2(int k, int j) {
@@ -477,6 +478,7 @@ public class AlgoritmoInteiro {
 
     /**
      * Funcoes de hashing
+     * 
      */
     public static Integer[] sondagemLinear(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
@@ -526,12 +528,21 @@ public class AlgoritmoInteiro {
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
             relatorio.incrementaInteracao();
             pos = (hash(listaInteiros.retornaInfo(i), h));
+            if (pos < 0) {
+                pos = pos * (-1);
+            }
             int j = 0;
             while (tabela[pos] != null) {
                 relatorio.incrementaInteracao();
                 j++;
                 pos = hash(hash(listaInteiros.retornaInfo(i), h) + j * hash2(listaInteiros.retornaInfo(i), j), listaInteiros.getTamanho());
                 relatorio.incrementaTrocaColisao();
+                if (pos < 0) {
+                    pos = pos * (-1);
+                }
+            }
+            if (pos < 0) {
+                pos = pos * (-1);
             }
             relatorio.incrementaInteracao();
             tabela[pos] = listaInteiros.retornaInfo(i);
