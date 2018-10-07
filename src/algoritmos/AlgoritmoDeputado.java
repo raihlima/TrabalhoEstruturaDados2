@@ -210,7 +210,7 @@ public class AlgoritmoDeputado {
             contInteracao++;
         }
         contInteracao++;
-        Deputado temp = deputados.retornaInfo(i + 1);
+        //Deputado temp = deputados.retornaInfo(i + 1);
         deputados.troca(i + 1, max, relatorio);
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
         return i + 1;
@@ -543,7 +543,8 @@ public class AlgoritmoDeputado {
     }
 
     private static int hash2(int k, int j) {
-        int aux = (k * k * j * j) + (j) + 11;
+        int aux = k * j + 1;
+        //int aux = k + j;
         return aux;
     }
 
@@ -597,10 +598,10 @@ public class AlgoritmoDeputado {
             relatorio.incrementaInteracao();
             pos = (hash(deputados.retornaInfo(i).getId(), h));
             int j = 0;
-            while (tabela[pos] != null) {
+            while (tabela[pos] != null && pos < 0) {
                 relatorio.incrementaInteracao();
                 j++;
-                pos = hash(pos + j * j, deputados.getTamanho());
+                pos = hash(pos + (j * j), deputados.getTamanho());
                 relatorio.incrementaTrocaColisao();
             }
             relatorio.incrementaInteracao();
@@ -618,10 +619,11 @@ public class AlgoritmoDeputado {
             relatorio.incrementaInteracao();
             pos = (hash(deputados.retornaInfo(i).getId(), h));
             int j = 0;
-            while (tabela[pos] != null) {
+            while (tabela[pos] != null && pos < 0) {
                 relatorio.incrementaInteracao();
                 j++;
-                pos = hash(hash(deputados.retornaInfo(i).getId(), h) + j * hash2(deputados.retornaInfo(i).getId(), j), deputados.getTamanho());
+                pos = hash(pos + hash2(pos, j), deputados.getTamanho());
+                //pos=hash(pos+1,tabela.length);
                 relatorio.incrementaTrocaColisao();
             }
             relatorio.incrementaInteracao();
