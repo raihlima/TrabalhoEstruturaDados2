@@ -27,17 +27,21 @@ public class Algoritmo {
      * @param deputados
      */
     public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados) {
-        //Collator collator = Collator.getInstance(new Locale("pt", "BR"));
-        //auxiliar.compare(string, string1)
+        int contIteracao = 0;
 
         for (int i = 0; i < deputados.getTamanho(); i++) {
+            contIteracao++;
             for (int j = 1; j < deputados.getTamanho() - i; j++) {
+                contIteracao++;
                 if (deputados.retornaInfo(j - 1).getTotalGasto() > deputados.retornaInfo(j).getTotalGasto()) {
-                    //if (deputados.get(j - 1).getNome().compareToIgnoreCase(deputados.get(j).getNome()) > 0) {
                     deputados.troca(j, j - 1);
+                    contIteracao++;
                 }
+                contIteracao++;
             }
+            contIteracao++;
         }
+        contIteracao++;
     }
 
     /**
@@ -50,17 +54,22 @@ public class Algoritmo {
     }
 
     private static void insertionSort(ListaEncadeada<Deputado> deputados, int min, int max) {
+        int contIteracao = 0;
 
         for (int i = min + 1; i < max; i++) {
+            contIteracao++;
             Deputado chave = deputados.retornaInfo(i);
             int j = i - 1;
 
             while (j >= 0 && deputados.retornaInfo(j).getTotalGasto() > chave.getTotalGasto()) {
+                contIteracao++;
                 deputados.altera(j + 1, deputados.retornaInfo(j));
                 j = j - 1;
             }
+            contIteracao++;
             deputados.altera((j + 1), chave);
         }
+        contIteracao++;
     }
 
     /**
@@ -91,44 +100,61 @@ public class Algoritmo {
         // Encontra os tamanhos dos dois sub arrays para serem mesclados
         int n1 = meio - esq + 1;
         int n2 = dir - meio;
+        int contInteracao = 0;
+
         // Cria os arrays temporarios
         ListaEncadeada<Deputado> esqArray = new ListaEncadeada();
         ListaEncadeada<Deputado> dirArray = new ListaEncadeada();
         // Copia os dados para o novo array
         for (int i = 0; i < n1; ++i) {
+            contInteracao++;
             esqArray.insereFinal(deputados.retornaInfo(esq + i));
         }
+        contInteracao++;
         for (int j = 0; j < n2; ++j) {
+            contInteracao++;
             dirArray.insereFinal(deputados.retornaInfo(meio + 1 + j));
         }
+        contInteracao++;
         // Junta os arrays temporarios
         // Indice inicial dos sub arrays
         int i = 0, j = 0;
         // Indice inicial dos sub arrays
         int k = esq;
         while (i < n1 && j < n2) {
+            contInteracao++;
             if (esqArray.retornaInfo(i).getTotalGasto() <= dirArray.retornaInfo(j).getTotalGasto()) {
                 deputados.altera(k, esqArray.retornaInfo(i));
+                contInteracao++;
                 i++;
             } else {
                 deputados.altera(k, dirArray.retornaInfo(j));
+                contInteracao++;
                 j++;
             }
+            contInteracao++;
             k++;
         }
+        contInteracao++;
         // Copia os elementos do vetor esq se houver
         while (i < n1) {
+            contInteracao++;
             deputados.altera(k, esqArray.retornaInfo(i));
+            contInteracao++;
             //deputados[k] = esqVet[i];
             i++;
             k++;
         }
+        contInteracao++;
         // Copia os elementos do vetor dir se houver
         while (j < n2) {
+            contInteracao++;
             deputados.altera(k, dirArray.retornaInfo(j));
+            contInteracao++;
             j++;
             k++;
         }
+        contInteracao++;
     }
 
     /**
@@ -154,17 +180,20 @@ public class Algoritmo {
 
     //Cria as particoes para o algoritmo
     private static int particionaQuickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
-
+        int contInteracao = 0;
         //Define o pivo como o maior da lista
         Deputado pivo = deputados.retornaInfo(max);
         int i = (min - 1); // indice do menor elemento
         for (int j = min; j < max; j++) {
+            contInteracao++;
             //Compara as strings
             if (deputados.retornaInfo(j).getTotalGasto() < pivo.getTotalGasto()) {
                 i++;//avanca o menor
                 deputados.troca(i, j);
             }
+            contInteracao++;
         }
+        contInteracao++;
         Deputado temp = deputados.retornaInfo(i + 1);
         deputados.troca(i + 1, max);
 
@@ -188,25 +217,32 @@ public class Algoritmo {
         float div = ((float) (fim - inicio)) / (float) (k - 1);
         float aux = 0;
         int[] indice = new int[k];
+        int contInteracao = 0;
         for (int i = 0; i < k; i++) {
+            contInteracao++;
             indice[i] = (int) aux;
             aux = aux + div;
             System.out.println(indice[i]);
         }
+        contInteracao++;
 
         int n = indice.length;
         int temp = 0;
         for (int i = 0; i < n; i++) {
+            contInteracao++;
             for (int j = 1; j < (n - i); j++) {
+                contInteracao++;
                 if (deputados.retornaInfo(indice[j - 1]).getTotalGasto() > deputados.retornaInfo(indice[j]).getTotalGasto()) {
                     //swap elements  
                     temp = indice[j - 1];
                     indice[j - 1] = indice[j];
                     indice[j] = temp;
                 }
-
+                contInteracao++;
             }
+            contInteracao++;
         }
+        contInteracao++;
         int medianaIndice = (inicio + fim) / 2;
         //coloca o elemento da mediana no fim para poder usar o Quicksort de Cormen
         trocaDeputados(deputados, medianaIndice, fim);
@@ -221,11 +257,14 @@ public class Algoritmo {
          * Esses elementos são colocados na partição esquerda.         
          */
         for (int j = inicio; j <= fim - 1; j++) {
+            contInteracao++;
             if (deputados.retornaInfo(j).getTotalGasto() <= pivo.getTotalGasto()) {
                 i = i + 1;
                 trocaDeputados(deputados, i, j);
             }
+            contInteracao++;
         }
+        contInteracao++;
         //coloca o pivô na posição de ordenação
         trocaDeputados(deputados, i + 1, fim);
         return i + 1; //retorna a posição do pivô
@@ -233,6 +272,7 @@ public class Algoritmo {
 
     //Funcao principal do algoritmo, executa a recursao
     private static void quicksortMedianaK(ListaEncadeada<Deputado> deputados, int inicio, int fim, int k) {
+        int contInteracao = 0;
         if (inicio < fim) {
             //realiza a partição
             int q = particionaMedianaK(deputados, inicio, fim, k);
@@ -241,6 +281,8 @@ public class Algoritmo {
             //ordena a partição direita
             quicksortMedianaK(deputados, q + 1, fim, k);
         }
+        contInteracao++;
+
     }
 
     /**
@@ -256,11 +298,12 @@ public class Algoritmo {
     }
 
     public static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int k) {
-        quickSortHibrido(deputados, 0, deputados.getTamanho() - 1,k);
+        quickSortHibrido(deputados, 0, deputados.getTamanho() - 1, k);
     }
 
     private static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int min, int max, int k) {
         int size = (max + 1) - min;
+        int contInteracao = 0;
         if (size <= k) { // inserion sort se o tamanho for menor que 10
             insertionSort(deputados, min, size);
         } else // quicksort se for maior
@@ -269,6 +312,7 @@ public class Algoritmo {
             quickSortRec(deputados, min, pivo - 1);
             quickSortRec(deputados, pivo + 1, max);
         }
+        contInteracao++;
     }
 
     /**
@@ -280,16 +324,21 @@ public class Algoritmo {
     public static void heapSort(ListaEncadeada<Deputado> deputados) {
         int n = deputados.getTamanho();
         // Constroi a Heap
+        int contInteracao = 0;
         for (int i = n / 2 - 1; i >= 0; i--) {
+            contInteracao++;
             heapify(deputados, n, i);
         }
+        contInteracao++;
         // Extrai um elemento por vez da heap
         for (int i = n - 1; i >= 0; i--) {
+            contInteracao++;
             // Move a raiz para o fim
             deputados.troca(0, i);
             // heapify a heap reduzida
             heapify(deputados, i, 0);
         }
+        contInteracao++;
     }
 
     //Funcao principal do algoritmo de Heap Sort
@@ -297,21 +346,25 @@ public class Algoritmo {
         int maior = i;  // Inicializa o maior como raiz
         int esq = 2 * i + 1;
         int dir = 2 * i + 2;
+        int contInteracao = 0;
 
         // Se filho da esq é maior que a raiz
         if (esq < n && ((deputados.retornaInfo(esq).getTotalGasto() > deputados.retornaInfo(maior).getTotalGasto()))) {
             maior = esq;
         }
+        contInteracao++;
         // Se filho da dir é maior que a raiz
         if (dir < n && ((deputados.retornaInfo(dir).getTotalGasto() > deputados.retornaInfo(maior).getTotalGasto()))) {
             maior = dir;
         }
+        contInteracao++;
         // Se maior nao e raiz
         if (maior != i) {
             deputados.troca(i, maior);
             // Heapify recursivamente a sub arvore afetada
             heapify(deputados, n, maior);
         }
+        contInteracao++;
     }
 
     /**
@@ -323,27 +376,38 @@ public class Algoritmo {
     public static void shellSort(ListaEncadeada<Deputado> deputados) {
         int h = 1;
         int n = deputados.getTamanho();
+        int contInteracao = 0;
         // Define o h para o while
         while (h < n) {
+            contInteracao++;
             h = h * 3 + 1;
         }
-        //
+        contInteracao++;
+        
         h = h / 3;
         Deputado c;
         int j;
 
         while (h > 0) {
+            contInteracao++;
             for (int i = h; i < n; i++) {
+                contInteracao++;
                 c = deputados.retornaInfo(i);
                 j = i;
                 while (j >= h && (deputados.retornaInfo(j - h).getTotalGasto() >= c.getTotalGasto())) {
+                    contInteracao++;
                     deputados.altera(j, deputados.retornaInfo(j - h));
+                    contInteracao++;
                     j = j - h;
                 }
+                contInteracao++;
                 deputados.altera(j, c);
+                contInteracao++;
             }
+            contInteracao++;
             h = h / 2;
         }
+        contInteracao++;
     }
 
     /*
