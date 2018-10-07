@@ -1386,38 +1386,39 @@ public class Programa extends javax.swing.JFrame {
         if (sementesOrdenacao.isSelected()) {
             try {
                 executarSementesOrdenacao();
-            } catch (IOException ex) {
-                Logger.getLogger(Programa.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
-        }
-        try {
-            int qtdLinhas = Integer.parseInt(valorOrdenacao.getText());
+        } else {
+            try {
+                int qtdLinhas = Integer.parseInt(valorOrdenacao.getText());
 
-            if (qtdLinhas < 1) {
-                JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
-            } else {
+                if (qtdLinhas < 1) {
+                    JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
 
-                if (qtdLinhas > 500000) {
-                    int resposta = JOptionPane.showConfirmDialog(null, "Acima de 500000 linhas pode ocorrer erros por falta de memória.\nTem certeza que deseja executar?", "Confirmação", JOptionPane.YES_NO_OPTION);
-                    if (resposta == JOptionPane.YES_OPTION) {
-                        cardLayout.show(jPanelPrincipal, "execucao");
+                    if (qtdLinhas > 500000) {
+                        int resposta = JOptionPane.showConfirmDialog(null, "Acima de 500000 linhas pode ocorrer erros por falta de memória.\nTem certeza que deseja executar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                        if (resposta == JOptionPane.YES_OPTION) {
+                            cardLayout.show(jPanelPrincipal, "execucao");
 
-                        JOptionPane.showMessageDialog(null, "A leitura do arquivo começou!", "Info", JOptionPane.INFORMATION_MESSAGE);
-                        executarOrdenacao(qtdLinhas);
+                            JOptionPane.showMessageDialog(null, "A leitura do arquivo começou!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                            executarOrdenacao(qtdLinhas);
+                        } else {
+
+                        }
                     } else {
+                        cardLayout.show(jPanelPrincipal, "execucao");
+                        JOptionPane.showMessageDialog(null, "A leitura do arquivo começou!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        //jPanelPrincipal.revalidate();
+                        //progressoStatus.setText("Lendo o arquivo");
+                        executarOrdenacao(qtdLinhas);
 
                     }
-                } else {
-                    cardLayout.show(jPanelPrincipal, "execucao");
-                    JOptionPane.showMessageDialog(null, "A leitura do arquivo começou!", "Info", JOptionPane.INFORMATION_MESSAGE);
-                    //jPanelPrincipal.revalidate();
-                    //progressoStatus.setText("Lendo o arquivo");
-                    executarOrdenacao(qtdLinhas);
-
                 }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoComecarActionPerformed
 
@@ -1598,49 +1599,26 @@ public class Programa extends javax.swing.JFrame {
                     linha = reader.readLine();
                     if (contadorLinhas == numAleatorios.get(i)) {
                         aux = linha;
-                        //System.out.println(linha);
 
                         partes = aux.split(";");
-                        //System.out.println(partes[]);
+
                         preencherDeputados(partes);
                         i++;
                     }
                     contadorLinhas++;
                 }
             } else {
-                //linha = reader.readLine();
+
                 for (int i = 1; i < qtdLinhas; i++) {
 
                     linha = reader.readLine();
                     aux = linha;
-                    //System.out.println(linha);
-
                     partes = aux.split(";");
-                    //System.out.println(partes[]);
+
                     preencherDeputados(partes);
 
-                    //deputados.add(new Deputado(partes[5], partes[3], partes[4], 12));
                 }
             }
-
-
-            /*
-            while (linha != null) {
-                cont++;
-                if (cont == 1) {
-                    System.out.println("Arquivo sendo executado");
-                }
-                //System.out.println(linha);
-                linha = reader.readLine();
-                partes = linha.split(";");
-                if (partes[0].equals("0") || partes[0].equals("1")) {
-                    preencheDeputados(deputados, partes);
-                }
-            
-
-                //System.out.println(cont);
-            }//*/
-            //System.out.println("Terminou");
             progressoStatus.setText("Ordenando a lista");
             barraProgresso.setValue(50);
             ordenarDeputados();
@@ -1728,33 +1706,55 @@ public class Programa extends javax.swing.JFrame {
             deputado.addRecibo(recibo);
             deputado.setTotalGasto((deputado.getTotalGasto() + Float.parseFloat(partes[9])));
             listaDeputado.insereFinal(deputado);
-        } else if (listaDeputado.retornaFim().getId() != deputado.getId()) {
-            deputado.addRecibo(recibo);
-            deputado.setTotalGasto((deputado.getTotalGasto() + Float.parseFloat(partes[9])));
-            listaDeputado.insereFinal(deputado);
-        } else {
+        } else if(listaDeputado.retornaFim().getId()==deputado.getId()){
             listaDeputado.retornaFim().addRecibo(recibo);
             listaDeputado.retornaFim().setTotalGasto((listaDeputado.retornaFim().getTotalGasto() + Float.parseFloat(partes[9])));
+        }else {
+            int indexDeputado = retornaIndexDeputado(deputado);
+             if (indexDeputado == listaDeputado.getTamanho()) {
+                deputado.addRecibo(recibo);
+                deputado.setTotalGasto((deputado.getTotalGasto() + Float.parseFloat(partes[9])));
+                listaDeputado.insereFinal(deputado);
+            } else {
+                listaDeputado.retornaInfo(indexDeputado).addRecibo(recibo);
+                listaDeputado.retornaInfo(indexDeputado).setTotalGasto((listaDeputado.retornaFim().getTotalGasto() + Float.parseFloat(partes[9])));
+            }
         }
 
     }
 
-    private void executarSementesOrdenacao() throws IOException {
+    private int retornaIndexDeputado(Deputado deputado) {
+        for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+            if (listaDeputado.retornaInfo(i).getId() == deputado.getId()) {
+                return i;
+            }
+        }
+        return listaDeputado.getTamanho();
+    }
+
+    private void executarSementesOrdenacao() {
         int semente;
         //N=1000, 5000, 10000, 50000, 100000 e 500000, no mínimo.
-        for (semente = 1; semente <= 5; semente++) {
-            leDadosAleatorios(1000);
-            ordenaSementesDeputado(semente, 1000);
-            leDadosAleatorios(5000);
-            ordenaSementesDeputado(semente, 5000);
-            leDadosAleatorios(10000);
-            ordenaSementesDeputado(semente, 10000);
-            leDadosAleatorios(50000);
-            ordenaSementesDeputado(semente, 50000);
-            leDadosAleatorios(100000);
-            ordenaSementesDeputado(semente, 100000);
-            leDadosAleatorios(500000);
-            ordenaSementesDeputado(semente, 500000);
+        try {
+            for (semente = 1; semente <= 5; semente++) {
+                leDadosAleatorios(1000);
+                ordenaSementesDeputado(semente, 1000);
+                leDadosAleatorios(5000);
+                ordenaSementesDeputado(semente, 5000);
+                leDadosAleatorios(10000);
+                ordenaSementesDeputado(semente, 10000);
+                leDadosAleatorios(50000);
+                ordenaSementesDeputado(semente, 50000);
+                leDadosAleatorios(100000);
+                ordenaSementesDeputado(semente, 100000);
+                leDadosAleatorios(500000);
+                ordenaSementesDeputado(semente, 500000);
+            }
+            JOptionPane.showMessageDialog(null, "Execução completa, voltando ao inicio", "Info", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            cardLayout.show(jPanelPrincipal, "arquivoAberto");
         }
 
     }
@@ -1810,144 +1810,188 @@ public class Programa extends javax.swing.JFrame {
         }
     }
 
-    public void ordenaSementesDeputado(int semente, int linhas) throws IOException {
+    public void ordenaSementesDeputado(int semente, int linhas) {
         ListaEncadeada<Deputado> aux = new ListaEncadeada<>();
-
+        System.out.println(listaDeputado.getTamanho());
+        Relatorio relatorio;
         //----------Bubble Sort-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            //Ordena bubbleSort
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            relatorio.setSemente(semente);
+            Algoritmo.bubbleSortDeputados(aux);
+            relatorio.setRelatorioFinal("Ordenacao", "Bubble Sort", semente);
+
+            aux.deletarLista();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no BubbleSort Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        //Ordena bubbleSort
-        Relatorio relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
-        Algoritmo.bubbleSortDeputados(aux);
-        relatorio.setRelatorioFinal("Ordenacao", "Bubble Sort", semente);
-
-        aux.deletarLista();
-
-        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
 
         //----------Insertion Sort-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
-        }
-        Algoritmo.insertionSort(aux);
-        relatorio.setRelatorioFinal("Ordenacao", "Insertion Sort", semente);
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.insertionSort(aux);
+            relatorio.setSemente(semente);
+            relatorio.setRelatorioFinal("Ordenacao", "Insertion Sort", semente);
 
-        aux.deletarLista();
-        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
+            aux.deletarLista();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no InsertionSort Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
 
         //----------Merge Sort-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.mergeSort(aux);
+            relatorio.setSemente(semente);
+            relatorio.setRelatorioFinal("Ordenacao", "Merge Sort", semente);
+
+            aux.deletarLista();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no MergeSort Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        Algoritmo.mergeSort(aux);
-        relatorio.setRelatorioFinal("Ordenacao", "Merge Sort", semente);
-
-        aux.deletarLista();
-        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
-
         //----------Heap Sort-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.heapSort(aux);
+            relatorio.setSemente(semente);
+            relatorio.setRelatorioFinal("Ordenacao", "Heap Sort", semente);
+
+            aux.deletarLista();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no HeapSort Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        Algoritmo.heapSort(aux);
-        relatorio.setRelatorioFinal("Ordenacao", "Heap Sort", semente);
-
-        aux.deletarLista();
-        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
-
         //----------Shell Sort-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.shellSort(aux);
+            relatorio.setSemente(semente);
+            relatorio.setRelatorioFinal("Ordenacao", "Shell Sort", semente);
+
+            aux.deletarLista();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no ShellSort Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        Algoritmo.shellSort(aux);
-        relatorio.setRelatorioFinal("Ordenacao", "Shell Sort", semente);
-
-        aux.deletarLista();
-        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
-
         //----------Quick Sort Recursivo-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.quickSortRec(aux);
+            relatorio.setSemente(semente);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Recursivo", semente);
+
+            aux.deletarLista();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no QuickSortRecursivo Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        Algoritmo.quickSortRec(aux);
-        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Recursivo", semente);
-
-        aux.deletarLista();
-        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
-
         //----------Quick Sort MedianaK-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.quicksortMedianaK(aux, 3);
+            relatorio.setSemente(semente);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 3, semente);
+
+            aux.deletarLista();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no QuickSortMediana3 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
-        Algoritmo.quicksortMedianaK(aux, 3);
-        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 3, semente);
-
-        aux.deletarLista();
-        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
-
         //----------Quick Sort MedianaK-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.quicksortMedianaK(aux, 5);
+            relatorio.setSemente(semente);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 5, semente);
+
+            aux.deletarLista();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no QuicksortMediana5 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
-        Algoritmo.quicksortMedianaK(aux, 5);
-        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 5, semente);
-
-        aux.deletarLista();
-        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
-
         //----------Quick Sort MedianaK-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.quicksortMedianaK(aux, 7);
+            relatorio.setSemente(semente);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 7, semente);
+
+            aux.deletarLista();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no QuickSortMediana7 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
-        Algoritmo.quicksortMedianaK(aux, 7);
-        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 7, semente);
-
-        aux.deletarLista();
-        relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-        relatorio.setSemente(semente);
-
         //----------Quick Sort Hibrido-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.quickSortHibrido(aux, 10);
+            relatorio.setSemente(semente);
+            aux.deletarLista();
+
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 10, semente);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no QuickSortHibrido10 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
-        Algoritmo.quickSortHibrido(aux, 10);
-        aux.deletarLista();
-        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 10, semente);
-        relatorio.setSemente(semente);
-
         //----------Quick Sort Hibrido-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.quickSortHibrido(aux, 100);
+            relatorio.setSemente(semente);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 100, semente);
+            aux.deletarLista();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no QuickSOrtHibrido100 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
-        Algoritmo.quickSortHibrido(aux, 100);
-        aux.deletarLista();
-        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 100, semente);
-        relatorio.setSemente(semente);
-
         //----------Quick Sort Hibrido-------------
-        for (int i = 0; i < aux.getTamanho(); i++) {
-            aux.insereFinal(listaDeputado.retornaInfo(i));
-        }
+        try {
+            for (int i = 0; i < listaDeputado.getTamanho(); i++) {
+                aux.insereFinal(listaDeputado.retornaInfo(i));
+            }
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
+            Algoritmo.quickSortHibrido(aux, 200);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 200, semente);
+            relatorio.setSemente(semente);
+            aux.deletarLista();
 
-        Algoritmo.quickSortHibrido(aux, 200);
-        aux.deletarLista();
-        relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 200, semente);
-        relatorio.setSemente(semente);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro no QuickSortHibrido200 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 

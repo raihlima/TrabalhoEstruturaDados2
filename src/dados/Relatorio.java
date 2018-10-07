@@ -41,6 +41,7 @@ public class Relatorio implements Serializable {
         this.dataInicio = Calendar.getInstance();
         this.sistemaOperacional = System.getProperty("os.name");
         this.tempoIni = System.nanoTime();
+        this.interacao = 0;
     }
 
     public Relatorio(int quantidadeLinhas, String tipoExecucao, String tipoLeitura, String tipoOrganizacao) {
@@ -51,6 +52,7 @@ public class Relatorio implements Serializable {
         this.tipoLeitura = tipoLeitura;
         this.tipoOrganizacao = tipoOrganizacao;
         this.tempoIni = System.nanoTime();
+        this.interacao = 0;
     }
 
     public Relatorio(String descricao) {
@@ -58,6 +60,7 @@ public class Relatorio implements Serializable {
         this.descricao = descricao;
         this.sistemaOperacional = System.getProperty("os.name");
         this.tempoIni = System.nanoTime();
+        this.interacao = 0;
     }
 
     public Calendar getDataInicio() {
@@ -96,11 +99,12 @@ public class Relatorio implements Serializable {
         long miliseg = (dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) % 1000;
         this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
          */
-        this.tempoExecucao = Long.toString((this.tempoFim-this.tempoIni));
+        this.tempoExecucao = Long.toString((this.tempoFim - this.tempoIni));
         geraTexto();
     }
 
     public void setRelatorioFinal(String algoritmo, String descricao, int semente) throws IOException {
+        this.tempoFim = System.nanoTime();
         this.semente = semente;
         this.descricao = descricao;
         this.dataFim = Calendar.getInstance();
@@ -110,9 +114,10 @@ public class Relatorio implements Serializable {
         long min = (((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) / 60) % 60;
         long seg = ((dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) / 1000) % 60;
         long miliseg = (dataFim.getTimeInMillis() - dataInicio.getTimeInMillis()) % 1000;
-        */
-        this.tempoExecucao = Long.toString((this.tempoFim-this.tempoIni));
-       // this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
+         */
+        this.tempoExecucao = Long.toString((this.tempoFim - this.tempoIni));
+
+        // this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
         geraTexto();
     }
 
@@ -170,13 +175,17 @@ public class Relatorio implements Serializable {
         FileWriter arq = new FileWriter("Relatorios/" + tipoOrganizacao + "/" + tipoAlgoritmo + tipoExecucao + ".txt", true);
         PrintWriter gravarArq = new PrintWriter(arq);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy;HH:mm:ss");
-        gravarArq.print(this.getTipoLeitura() + ";");
+        if (tipoExecucao.equalsIgnoreCase("Sementes")) {
+            gravarArq.print("Semente "+this.semente + ";");
+        } else {
+            gravarArq.print(this.getTipoLeitura() + ";");
+        }
         gravarArq.print(sdf.format(this.getDataInicio().getTime()) + ";");
         gravarArq.print(sdf.format(this.getDataFim().getTime()) + ";");
         gravarArq.print(this.getSistemaOperacional() + ";");
-        gravarArq.print(this.getTempoExecucao() + "ns;");
-        Runtime rt = Runtime.getRuntime();  
-        this.usoMemoria = rt.maxMemory() -rt.freeMemory();
+        gravarArq.print(this.getTempoExecucao() + "ns"+" "+(this.dataFim.getTimeInMillis()-this.dataInicio.getTimeInMillis()) +"ms;");
+        Runtime rt = Runtime.getRuntime();
+        this.usoMemoria = rt.maxMemory() - rt.freeMemory();
         gravarArq.print(this.getUsoMemoria() + "bytes;");
         gravarArq.print(this.getQuantidadeLinhas() + ";");
         gravarArq.print(this.getDescricao());
@@ -196,10 +205,12 @@ public class Relatorio implements Serializable {
         return interacao;
     }
 
+    public void incrementaInteracao() {
+        this.interacao = this.interacao + 1;
+    }
+
     public void setInteracao(long interacao) {
         this.interacao = interacao;
     }
-    
-    
 
 }
