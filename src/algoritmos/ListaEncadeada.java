@@ -21,6 +21,8 @@ public class ListaEncadeada<Class> implements Serializable {
     private int tamanho;
 
     public ListaEncadeada() {
+        this.inicio = null;
+        this.fim = null;
         this.tamanho = 0;
     }
 
