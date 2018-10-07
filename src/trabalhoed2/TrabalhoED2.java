@@ -5,7 +5,7 @@
  */
 package trabalhoed2;
 
-import algoritmos.Algoritmo;
+import algoritmos.AlgoritmoDeputado;
 import algoritmos.ListaEncadeada;
 import interfaceGrafica.Programa;
 import java.io.*;
@@ -25,7 +25,7 @@ public class TrabalhoED2 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Algoritmo algoritmo = new Algoritmo();
+        AlgoritmoDeputado algoritmo = new AlgoritmoDeputado();
         ListaEncadeada<Deputado> deputados;
         deputados = new ListaEncadeada<>();
         clearConsole();

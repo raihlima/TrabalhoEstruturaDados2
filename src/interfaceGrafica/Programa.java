@@ -5,7 +5,8 @@
  */
 package interfaceGrafica;
 
-import algoritmos.Algoritmo;
+import algoritmos.AlgoritmoDeputado;
+import algoritmos.AlgoritmoInteiro;
 import algoritmos.ListaEncadeada;
 import dados.Relatorio;
 import java.awt.CardLayout;
@@ -1386,6 +1387,7 @@ public class Programa extends javax.swing.JFrame {
         if (sementesOrdenacao.isSelected()) {
             try {
                 executarSementesOrdenacao();
+                JOptionPane.showMessageDialog(null, "A ordenação será executada.\n O programa poderá ficar travado até o termino da execução", "Info", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -1522,12 +1524,8 @@ public class Programa extends javax.swing.JFrame {
                 String[] partes;
                 String aux;
                 while ((linha = reader.readLine()) != null) {
-                    //System.out.println(linha);
                     partes = linha.split(";");
                     modelo.addRow(new Object[]{partes[0], partes[1], partes[2], partes[6], partes[8], partes[7], "implementar", partes[7], partes[9]});
-                    System.out.println(linha);
-
-                    //System.out.println(cont);
                 }
 
                 //modelo.addRow(new Object[]{listaDeputado.retornaInfo(i).getNome(), listaDeputado.retornaInfo(i).getPartido(), df.format(listaDeputado.retornaInfo(i).getTotalGasto())});
@@ -1591,7 +1589,7 @@ public class Programa extends javax.swing.JFrame {
                 }
                 Collections.shuffle(numAleatorios);
                 numAleatorios = numAleatorios.subList(0, qtdLinhas);
-                Algoritmo.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
+                AlgoritmoDeputado.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
                 int contadorLinhas = 1;
 
                 for (int i = 0; i < qtdLinhas;) {
@@ -1634,8 +1632,6 @@ public class Programa extends javax.swing.JFrame {
                 System.err.println("Erro ao ler o arquivo na linha " + cont);
             } else {
                 long elapsed = System.currentTimeMillis() - start;
-                System.out.println("Arquivo lido com sucesso!");
-                System.out.println(elapsed);
             }
         }
     }
@@ -1652,32 +1648,32 @@ public class Programa extends javax.swing.JFrame {
         Relatorio relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
         String descricao = "";
         if (radioBubble.isSelected()) {
-            Algoritmo.bubbleSortDeputados(listaDeputado);
+            AlgoritmoDeputado.bubbleSortDeputados(listaDeputado);
             descricao = radioBubble.getText();
         } else if (radioInsertion.isSelected()) {
-            Algoritmo.insertionSort(listaDeputado);
+            AlgoritmoDeputado.insertionSort(listaDeputado);
             descricao = radioInsertion.getText();
         } else if (radioQuick1.isSelected()) {
-            Algoritmo.quickSortRec(listaDeputado);
+            AlgoritmoDeputado.quickSortRec(listaDeputado);
             descricao = radioQuick1.getText();
         } else if (radioQuick2.isSelected()) {
             quantidade = JOptionPane.showInputDialog(null, "Digite o valor de k para calcular a mediana:", "Digite um valor", JOptionPane.QUESTION_MESSAGE);
             relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
-            Algoritmo.quicksortMedianaK(listaDeputado, Integer.parseInt(quantidade));
+            AlgoritmoDeputado.quicksortMedianaK(listaDeputado, Integer.parseInt(quantidade));
             descricao = radioQuick2.getText() + quantidade;
         } else if (radioQuick3.isSelected()) {
             quantidade = JOptionPane.showInputDialog(null, "Digite o valor de k para executar o Insertion Sort:", "Digite um valor", JOptionPane.QUESTION_MESSAGE);
             relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
-            Algoritmo.quickSortHibrido(listaDeputado, Integer.parseInt(quantidade));
+            AlgoritmoDeputado.quickSortHibrido(listaDeputado, Integer.parseInt(quantidade));
             descricao = radioQuick3.getText() + quantidade;
         } else if (radioMerge.isSelected()) {
-            Algoritmo.mergeSort(listaDeputado);
+            AlgoritmoDeputado.mergeSort(listaDeputado);
             descricao = radioMerge.getText();
         } else if (radioHeap.isSelected()) {
-            Algoritmo.heapSort(listaDeputado);
+            AlgoritmoDeputado.heapSort(listaDeputado);
             descricao = radioHeap.getText();
         } else if (radioShell.isSelected()) {
-            Algoritmo.shellSort(listaDeputado);
+            AlgoritmoDeputado.shellSort(listaDeputado);
             descricao = radioShell.getText();
         }
         relatorio.setDescricao(descricao);
@@ -1706,19 +1702,19 @@ public class Programa extends javax.swing.JFrame {
             deputado.addRecibo(recibo);
             deputado.setTotalGasto((deputado.getTotalGasto() + Float.parseFloat(partes[9])));
             listaDeputado.insereFinal(deputado);
-        } else if(listaDeputado.retornaFim().getId()==deputado.getId()){
+        } else if (listaDeputado.retornaFim().getId() == deputado.getId()) {
             listaDeputado.retornaFim().addRecibo(recibo);
             listaDeputado.retornaFim().setTotalGasto((listaDeputado.retornaFim().getTotalGasto() + Float.parseFloat(partes[9])));
-        }else {
+        } else {
             int indexDeputado = retornaIndexDeputado(deputado);
-             if (indexDeputado == listaDeputado.getTamanho()) {
+            if (indexDeputado == listaDeputado.getTamanho()) {
                 deputado.addRecibo(recibo);
                 deputado.setTotalGasto((deputado.getTotalGasto() + Float.parseFloat(partes[9])));
                 listaDeputado.insereFinal(deputado);
             } else {
                 listaDeputado.retornaInfo(indexDeputado).addRecibo(recibo);
                 listaDeputado.retornaInfo(indexDeputado).setTotalGasto((listaDeputado.retornaFim().getTotalGasto() + Float.parseFloat(partes[9])));
-                listaDeputado.troca(indexDeputado, listaDeputado.getTamanho()-1);
+                listaDeputado.troca(indexDeputado, listaDeputado.getTamanho() - 1);
             }
         }
 
@@ -1737,19 +1733,27 @@ public class Programa extends javax.swing.JFrame {
         int semente;
         //N=1000, 5000, 10000, 50000, 100000 e 500000, no mínimo.
         try {
-            for (semente = 1; semente <= 5; semente++) {
+            for (semente = 1; semente <= 10; semente++) {
                 leDadosAleatorios(1000);
                 ordenaSementesDeputado(semente, 1000);
+
                 leDadosAleatorios(5000);
                 ordenaSementesDeputado(semente, 5000);
+
                 leDadosAleatorios(10000);
                 ordenaSementesDeputado(semente, 10000);
+
                 leDadosAleatorios(50000);
                 ordenaSementesDeputado(semente, 50000);
+
                 leDadosAleatorios(100000);
                 ordenaSementesDeputado(semente, 100000);
+
                 leDadosAleatorios(500000);
                 ordenaSementesDeputado(semente, 500000);
+
+                leDadosAleatorios(1000000);
+                ordenaSementesDeputado(semente, 1000000);
             }
             JOptionPane.showMessageDialog(null, "Execução completa, voltando ao inicio", "Info", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
@@ -1762,12 +1766,8 @@ public class Programa extends javax.swing.JFrame {
 
     public void leDadosAleatorios(int qtdLinhas) {
         listaDeputado.deletarLista();
-        progressoStatus.setText("Lendo o arquivo");
-        int cont = 0;
 
-        long start = System.currentTimeMillis();
         // faz o trabalho a ser medido
-
         try (FileInputStream fi = new FileInputStream(arquivo)) {
             //System.out.println("Tentando ler o arquivo");
 
@@ -1791,42 +1791,52 @@ public class Programa extends javax.swing.JFrame {
             }
             Collections.shuffle(numAleatorios);
             numAleatorios = numAleatorios.subList(0, qtdLinhas);
-            Algoritmo.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
+            AlgoritmoDeputado.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
             int contadorLinhas = 1;
 
             for (int i = 0; i < qtdLinhas;) {
 
                 linha = reader.readLine();
+
                 if (contadorLinhas == numAleatorios.get(i)) {
                     aux = linha;
                     partes = aux.split(";");
                     preencherDeputados(partes);
+
                     i++;
                 }
                 contadorLinhas++;
             }
-
+            reader.close();
+            bis.close();
+            fi.close();
         } catch (Exception e) {
-
+            System.out.println("Erro!");
         }
+
     }
 
     public void ordenaSementesDeputado(int semente, int linhas) {
         ListaEncadeada<Deputado> aux = new ListaEncadeada<>();
-        System.out.println(listaDeputado.getTamanho());
+        ListaEncadeada<Integer> listaInteira = new ListaEncadeada();
         Relatorio relatorio;
         //----------Bubble Sort-------------
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             //Ordena bubbleSort
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            relatorio.setSemente(semente);
-            Algoritmo.bubbleSortDeputados(aux);
+            AlgoritmoDeputado.bubbleSortDeputados(aux);
+            relatorio.setRelatorioFinal("Ordenacao", "Bubble Sort", semente);
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.bubbleSort(listaInteira);
             relatorio.setRelatorioFinal("Ordenacao", "Bubble Sort", semente);
 
             aux.deletarLista();
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no BubbleSort Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1835,14 +1845,18 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.insertionSort(aux);
-            relatorio.setSemente(semente);
+            AlgoritmoDeputado.insertionSort(aux);
+            relatorio.setRelatorioFinal("Ordenacao", "Insertion Sort", semente);
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.insertionSort(listaInteira);
             relatorio.setRelatorioFinal("Ordenacao", "Insertion Sort", semente);
 
             aux.deletarLista();
-
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no InsertionSort Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1851,14 +1865,18 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.mergeSort(aux);
-            relatorio.setSemente(semente);
+            AlgoritmoDeputado.mergeSort(aux);
+            relatorio.setRelatorioFinal("Ordenacao", "Merge Sort", semente);
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.mergeSort(listaInteira);
             relatorio.setRelatorioFinal("Ordenacao", "Merge Sort", semente);
 
             aux.deletarLista();
-
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no MergeSort Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1866,14 +1884,18 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.heapSort(aux);
-            relatorio.setSemente(semente);
+            AlgoritmoDeputado.heapSort(aux);
+            relatorio.setRelatorioFinal("Ordenacao", "Heap Sort", semente);
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.heapSort(listaInteira);
             relatorio.setRelatorioFinal("Ordenacao", "Heap Sort", semente);
 
             aux.deletarLista();
-
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no HeapSort Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1881,14 +1903,18 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.shellSort(aux);
-            relatorio.setSemente(semente);
+            AlgoritmoDeputado.shellSort(aux);
+            relatorio.setRelatorioFinal("Ordenacao", "Shell Sort", semente);
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.shellSort(listaInteira);
             relatorio.setRelatorioFinal("Ordenacao", "Shell Sort", semente);
 
             aux.deletarLista();
-
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no ShellSort Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1896,29 +1922,37 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.quickSortRec(aux);
-            relatorio.setSemente(semente);
+            AlgoritmoDeputado.quickSortRec(aux);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Recursivo", semente);
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.quickSortRec(listaInteira);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Recursivo", semente);
 
             aux.deletarLista();
-
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no QuickSortRecursivo Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        //----------Quick Sort MedianaK-------------
+        //----------Quick Sort MedianaK3-------------
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.quicksortMedianaK(aux, 3);
-            relatorio.setSemente(semente);
+            AlgoritmoDeputado.quicksortMedianaK(aux, 3);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 3, semente);
 
-            aux.deletarLista();
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.quicksortMedianaK(listaInteira, 3);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de 3", semente);
 
+            aux.deletarLista();
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no QuickSortMediana3 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1926,14 +1960,18 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.quicksortMedianaK(aux, 5);
-            relatorio.setSemente(semente);
+            AlgoritmoDeputado.quicksortMedianaK(aux, 5);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 5, semente);
 
-            aux.deletarLista();
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.quicksortMedianaK(listaInteira, 5);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de 5", semente);
 
+            aux.deletarLista();
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no QuicksortMediana5 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1941,13 +1979,18 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.quicksortMedianaK(aux, 7);
-            relatorio.setSemente(semente);
+            AlgoritmoDeputado.quicksortMedianaK(aux, 7);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 7, semente);
 
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.quicksortMedianaK(listaInteira, 7);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de 7", semente);
+
             aux.deletarLista();
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no QuickSortMediana7 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1955,13 +1998,19 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.quickSortHibrido(aux, 10);
-            relatorio.setSemente(semente);
-            aux.deletarLista();
-
+            AlgoritmoDeputado.quickSortHibrido(aux, 10);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 10, semente);
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.quickSortHibrido(listaInteira, 10);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 10, semente);
+
+            aux.deletarLista();
+            listaInteira.deletarLista();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no QuickSortHibrido10 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1969,13 +2018,18 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.quickSortHibrido(aux, 100);
-            relatorio.setSemente(semente);
+            AlgoritmoDeputado.quickSortHibrido(aux, 100);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 100, semente);
-            aux.deletarLista();
 
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.quickSortHibrido(listaInteira, 100);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 100, semente);
+
+            aux.deletarLista();
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no QuickSOrtHibrido100 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -1983,13 +2037,18 @@ public class Programa extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listaDeputado.getTamanho(); i++) {
                 aux.insereFinal(listaDeputado.retornaInfo(i));
+                listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            Algoritmo.quickSortHibrido(aux, 200);
+            AlgoritmoDeputado.quickSortHibrido(aux, 200);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 200, semente);
-            relatorio.setSemente(semente);
-            aux.deletarLista();
 
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
+            AlgoritmoInteiro.quickSortHibrido(listaInteira, 200);
+            relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 200, semente);
+
+            aux.deletarLista();
+            listaInteira.deletarLista();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro no QuickSortHibrido200 Semente:" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
