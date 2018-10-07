@@ -28,14 +28,14 @@ public class AlgoritmoDeputado {
      */
     public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int contIteracao = 0;
-       
+
         for (int i = 0; i < deputados.getTamanho(); i++) {
             contIteracao++;
             for (int j = 1; j < deputados.getTamanho() - i; j++) {
                 contIteracao++;
                 if (deputados.retornaInfo(j - 1).getTotalGasto() > deputados.retornaInfo(j).getTotalGasto()) {
-                    deputados.troca(j, j - 1,relatorio);
-                   
+                    deputados.troca(j, j - 1, relatorio);
+
                     contIteracao++;
                 }
                 contIteracao++;
@@ -44,7 +44,7 @@ public class AlgoritmoDeputado {
         }
         contIteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
-        
+
     }
 
     /**
@@ -59,7 +59,7 @@ public class AlgoritmoDeputado {
 
     private static void insertionSort(ListaEncadeada<Deputado> deputados, int min, int max, Relatorio relatorio) {
         int contIteracao = 1;
-        
+
         for (int i = min + 1; i < max; i++) {
             contIteracao++;
             Deputado chave = deputados.retornaInfo(i);
@@ -205,7 +205,7 @@ public class AlgoritmoDeputado {
             //Compara as strings
             if (deputados.retornaInfo(j).getTotalGasto() < pivo.getTotalGasto()) {
                 i++;//avanca o menor
-                deputados.troca(i, j,relatorio);
+                deputados.troca(i, j, relatorio);
             }
             contInteracao++;
         }
@@ -252,7 +252,7 @@ public class AlgoritmoDeputado {
                     temp = indice[j - 1];
                     indice[j - 1] = indice[j];
                     indice[j] = temp;
-                    
+
                 }
                 contInteracao++;
             }
@@ -261,7 +261,6 @@ public class AlgoritmoDeputado {
         contInteracao++;
         int medianaIndice = (inicio + fim) / 2;
         deputados.troca(medianaIndice, fim, relatorio);
-        
 
         //o pivo é o elemento final
         Deputado pivo = deputados.retornaInfo(fim);
@@ -271,9 +270,9 @@ public class AlgoritmoDeputado {
             contInteracao++;
             if (deputados.retornaInfo(j).getTotalGasto() <= pivo.getTotalGasto()) {
                 i = i + 1;
-                deputados.troca(i, j,relatorio);
+                deputados.troca(i, j, relatorio);
                 contInteracao++;
-               
+
             }
             contInteracao++;
         }
@@ -308,15 +307,15 @@ public class AlgoritmoDeputado {
         int size = (max + 1) - min;
         int contInteracao = 1;
         if (size <= k) { // inserion sort se o tamanho for menor que 10
-            insertionSort(deputados, min, size,relatorio);
+            insertionSort(deputados, min, size, relatorio);
         } else // quicksort se for maior
         {
-            int pivo = particionaQuickSortRec(deputados, min, max,relatorio);
-            quickSortRec(deputados, min, pivo - 1,relatorio);
-            quickSortRec(deputados, pivo + 1, max,relatorio);
+            int pivo = particionaQuickSortRec(deputados, min, max, relatorio);
+            quickSortRec(deputados, min, pivo - 1, relatorio);
+            quickSortRec(deputados, pivo + 1, max, relatorio);
         }
         contInteracao++;
-        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     /**
@@ -331,19 +330,19 @@ public class AlgoritmoDeputado {
         int contInteracao = 0;
         for (int i = n / 2 - 1; i >= 0; i--) {
             contInteracao++;
-            heapify(deputados, n, i,relatorio);
+            heapify(deputados, n, i, relatorio);
         }
         contInteracao++;
         // Extrai um elemento por vez da heap
         for (int i = n - 1; i >= 0; i--) {
             contInteracao++;
             // Move a raiz para o fim
-            deputados.troca(0, i,relatorio);
+            deputados.troca(0, i, relatorio);
             // heapify a heap reduzida
             heapify(deputados, i, 0, relatorio);
         }
         contInteracao++;
-        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     //Funcao principal do algoritmo de Heap Sort
@@ -365,12 +364,12 @@ public class AlgoritmoDeputado {
         contInteracao++;
         // Se maior nao e raiz
         if (maior != i) {
-            deputados.troca(i, maior,relatorio);
+            deputados.troca(i, maior, relatorio);
             // Heapify recursivamente a sub arvore afetada
-            heapify(deputados, n, maior,relatorio);
+            heapify(deputados, n, maior, relatorio);
         }
         contInteracao++;
-        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     /**
@@ -415,7 +414,7 @@ public class AlgoritmoDeputado {
             h = h / 2;
         }
         contInteracao++;
-        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     /*
@@ -569,21 +568,23 @@ public class AlgoritmoDeputado {
     /**
      * Funcoes de hashing
      */
-    
-    
-    public static Deputado[] sondagemLinear(ListaEncadeada<Deputado> deputados,Relatorio relatorio) {
+    public static Deputado[] sondagemLinear(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
         int h = primo(deputados.getTamanho());
         Deputado[] tabela = tabela(deputados.getTamanho());
         for (int i = 0; i < deputados.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(deputados.retornaInfo(i).getId(), h));
             //Colisões
             while (tabela[pos] != null) {
+                relatorio.incrementaInteracao();
                 pos = hash(pos + 1, deputados.getTamanho());
                 relatorio.incrementaTrocaColisao();
             }
+            relatorio.incrementaInteracao();
             tabela[pos] = deputados.retornaInfo(i);
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
@@ -592,15 +593,19 @@ public class AlgoritmoDeputado {
         int h = primo(deputados.getTamanho());
         Deputado[] tabela = tabela(deputados.getTamanho());
         for (int i = 0; i < deputados.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(deputados.retornaInfo(i).getId(), h));
             int j = 0;
             while (tabela[pos] != null) {
+                relatorio.incrementaInteracao();
                 j++;
                 pos = hash(pos + j * j, deputados.getTamanho());
                 relatorio.incrementaTrocaColisao();
             }
+            relatorio.incrementaInteracao();
             tabela[pos] = deputados.retornaInfo(i);
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
@@ -609,15 +614,19 @@ public class AlgoritmoDeputado {
         int h = primo(deputados.getTamanho());
         Deputado[] tabela = tabela(deputados.getTamanho());
         for (int i = 0; i < deputados.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(deputados.retornaInfo(i).getId(), h));
             int j = 0;
             while (tabela[pos] != null) {
+                relatorio.incrementaInteracao();
                 j++;
                 pos = hash(hash(deputados.retornaInfo(i).getId(), h) + j * hash2(deputados.retornaInfo(i).getId(), j), deputados.getTamanho());
                 relatorio.incrementaTrocaColisao();
             }
+            relatorio.incrementaInteracao();
             tabela[pos] = deputados.retornaInfo(i);
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
@@ -625,12 +634,15 @@ public class AlgoritmoDeputado {
         int pos;
         ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(50);
         for (int i = 0; i < deputados.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(deputados.retornaInfo(i).getId(), 50));
             tabela[pos].insereFinal(deputados.retornaInfo(i));
-            if(tabela[pos].retornaFim()!=null){
+            if (tabela[pos].retornaFim() != null) {
                 relatorio.incrementaTrocaColisao();
             }
+            relatorio.incrementaInteracao();
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
@@ -639,13 +651,16 @@ public class AlgoritmoDeputado {
         int h = primo(deputados.getTamanho());
         Deputado[][] tabela = tabelaCoalescida(deputados.getTamanho());
         for (int i = 0; i < deputados.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(deputados.retornaInfo(i).getId(), h));
             if (tabela[pos][0] != null) {
                 pos = deputados.getTamanho() - 1;
                 while (tabela[pos][0] != null) {
+                    relatorio.incrementaInteracao();
                     pos = pos - 1;
                     relatorio.incrementaTrocaColisao();
                 }
+                relatorio.incrementaInteracao();
                 tabela[pos][0] = deputados.retornaInfo(i);
                 //Cria um dep aux que usa o id como posicao para o proximo
                 //TODO Expandir o comentario acima
@@ -655,94 +670,123 @@ public class AlgoritmoDeputado {
             } else {
                 tabela[pos][0] = deputados.retornaInfo(i);
             }
+            relatorio.incrementaInteracao();
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
     /**
      * Funcoes de busca de hashing
      */
-    private static Deputado buscaSondagemLinear(Deputado deputado, Deputado[] tabela) {
+    private static Deputado buscaSondagemLinear(Deputado deputado, Deputado[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
         int pos = (hash(deputado.getId(), h));
         if (tabela[pos].getId() == deputado.getId()) {
+            relatorio.incrementaInteracao();
             return tabela[pos];//Encontrou o Deputado requerido na primeira iteração(não há colisões)
         } else {
+            relatorio.incrementaInteracao();
             int cont = 0; //Contador para verificar se o dep nao foi encontrado
             while (tabela[pos].getId() != deputado.getId() && cont < tabela.length) {
+                relatorio.incrementaInteracao();
                 pos = hash(pos + 1, tabela.length);
                 cont++;
             }
+            relatorio.incrementaInteracao();
             if (cont < tabela.length) {
+                relatorio.incrementaInteracao();
                 return tabela[pos];//Encontrou o Deputado Requerido(há colisões)
+
             } else {
+                relatorio.incrementaInteracao();
                 return null;//Não Encontrou o Deputado Requerido
             }
         }
     }
 
-    private static Deputado buscaSondagemQuadratica(Deputado deputado, Deputado[] tabela) {
+    private static Deputado buscaSondagemQuadratica(Deputado deputado, Deputado[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
         int pos = (hash(deputado.getId(), h));
         if (tabela[pos].getId() == deputado.getId()) {
+            relatorio.incrementaInteracao();
             return tabela[pos];
         } else {
+            relatorio.incrementaInteracao();
             int cont = 0; //contador para verificar se o dep nao foi encontrado
             int j = 0;
             while (tabela[pos].getId() != deputado.getId() && cont < tabela.length) { //TODO Revisar a condicao de parada (cont)
+                relatorio.incrementaInteracao();
                 j++;
                 pos = hash(pos + j * j, tabela.length);
                 cont++;
             }
+            relatorio.incrementaInteracao();
             if (cont < tabela.length) {
+                relatorio.incrementaInteracao();
                 return tabela[pos];
             } else {
+                relatorio.incrementaInteracao();
                 return null;
             }
         }
     }
 
-    private static Deputado buscaDuploHashing(Deputado deputado, Deputado[] tabela) {
+    private static Deputado buscaDuploHashing(Deputado deputado, Deputado[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
         int pos = (hash(deputado.getId(), h));
         if (tabela[pos].getId() == deputado.getId()) {
+            relatorio.incrementaInteracao();
             return tabela[pos];
         } else {
+            relatorio.incrementaInteracao();
             int cont = 0; //contador para verificar se o dep nao foi encontrado
             int j = 0;
             while (tabela[pos].getId() != deputado.getId() && cont < tabela.length) { //TODO Revisar a condicao de parada (cont)
+
+                relatorio.incrementaInteracao();
                 j++;
                 cont++;
                 pos = hash(hash(deputado.getId(), h) + j * hash2(deputado.getId(), j), tabela.length);
             }
+            relatorio.incrementaInteracao();
             if (cont < tabela.length) {
+                relatorio.incrementaInteracao();
                 return tabela[pos];
             } else {
+                relatorio.incrementaInteracao();
                 return null;
             }
         }
     }
 
-    private static Deputado buscaEncadeamentoSeparado(Deputado deputado, ListaEncadeada<Deputado>[] tabela) {
+    private static Deputado buscaEncadeamentoSeparado(Deputado deputado, ListaEncadeada<Deputado>[] tabela, Relatorio relatorio) {
         int pos = (hash(deputado.getId(), tabela.length));
         for (int j = 0; j < tabela[pos].getTamanho(); j++) {
+            relatorio.incrementaInteracao();
             if (tabela[pos].retornaInfo(j).getId() == deputado.getId()) {
+                relatorio.incrementaInteracao();
                 return tabela[pos].retornaInfo(j);
             }
         }
+        relatorio.incrementaInteracao();
         return null;
     }
 
-    private static Deputado buscaEncadeamentoCoalescido(Deputado deputado, Deputado[][] tabela) {
+    private static Deputado buscaEncadeamentoCoalescido(Deputado deputado, Deputado[][] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
         int pos = (hash(deputado.getId(), h));
         while (tabela[pos][0].getId() != deputado.getId()) {
+            relatorio.incrementaInteracao();
             if (tabela[pos][1] != null) {
+                relatorio.incrementaInteracao();
                 pos = tabela[pos][1].getId();
             } else {
+                relatorio.incrementaInteracao();
                 return null;
             }
         }
+        relatorio.incrementaInteracao();
         return tabela[pos][0];
     }
 }

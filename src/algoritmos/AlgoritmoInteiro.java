@@ -25,14 +25,14 @@ public class AlgoritmoInteiro {
      */
     public static void bubbleSort(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int contIteracao = 0;
-       
+
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
             contIteracao++;
             for (int j = 1; j < listaInteiros.getTamanho() - i; j++) {
                 contIteracao++;
                 if (listaInteiros.retornaInfo(j - 1) > listaInteiros.retornaInfo(j)) {
-                    listaInteiros.troca(j, j - 1,relatorio);
-                   
+                    listaInteiros.troca(j, j - 1, relatorio);
+
                     contIteracao++;
                 }
                 contIteracao++;
@@ -41,7 +41,7 @@ public class AlgoritmoInteiro {
         }
         contIteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
-        
+
     }
 
     /**
@@ -56,7 +56,7 @@ public class AlgoritmoInteiro {
 
     private static void insertionSort(ListaEncadeada<Integer> listaInteiros, int min, int max, Relatorio relatorio) {
         int contIteracao = 1;
-        
+
         for (int i = min + 1; i < max; i++) {
             contIteracao++;
             Integer chave = listaInteiros.retornaInfo(i);
@@ -204,7 +204,7 @@ public class AlgoritmoInteiro {
             //Compara as strings
             if (listaInteiros.retornaInfo(j) < pivo) {
                 i++;//avanca o menor
-                listaInteiros.troca(i, j,relatorio);
+                listaInteiros.troca(i, j, relatorio);
             }
             contInteracao++;
         }
@@ -252,7 +252,7 @@ public class AlgoritmoInteiro {
                     temp = indice[j - 1];
                     indice[j - 1] = indice[j];
                     indice[j] = temp;
-                    
+
                 }
                 contInteracao++;
             }
@@ -261,7 +261,6 @@ public class AlgoritmoInteiro {
         contInteracao++;
         int medianaIndice = (inicio + fim) / 2;
         listaInteiros.troca(medianaIndice, fim, relatorio);
-        
 
         //o pivo é o elemento final
         Integer pivo = listaInteiros.retornaInfo(fim);
@@ -271,9 +270,9 @@ public class AlgoritmoInteiro {
             contInteracao++;
             if (listaInteiros.retornaInfo(j) <= pivo) {
                 i = i + 1;
-                listaInteiros.troca(i, j,relatorio);
+                listaInteiros.troca(i, j, relatorio);
                 contInteracao++;
-               
+
             }
             contInteracao++;
         }
@@ -308,15 +307,15 @@ public class AlgoritmoInteiro {
         int size = (max + 1) - min;
         int contInteracao = 1;
         if (size <= k) { // inserion sort se o tamanho for menor que 10
-            insertionSort(listaInteiros, min, size,relatorio);
+            insertionSort(listaInteiros, min, size, relatorio);
         } else // quicksort se for maior
         {
-            int pivo = particionaQuickSortRec(listaInteiros, min, max,relatorio);
-            quickSortRec(listaInteiros, min, pivo - 1,relatorio);
-            quickSortRec(listaInteiros, pivo + 1, max,relatorio);
+            int pivo = particionaQuickSortRec(listaInteiros, min, max, relatorio);
+            quickSortRec(listaInteiros, min, pivo - 1, relatorio);
+            quickSortRec(listaInteiros, pivo + 1, max, relatorio);
         }
         contInteracao++;
-        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     /**
@@ -332,19 +331,19 @@ public class AlgoritmoInteiro {
         int contInteracao = 0;
         for (int i = n / 2 - 1; i >= 0; i--) {
             contInteracao++;
-            heapify(listaInteiros, n, i,relatorio);
+            heapify(listaInteiros, n, i, relatorio);
         }
         contInteracao++;
         // Extrai um elemento por vez da heap
         for (int i = n - 1; i >= 0; i--) {
             contInteracao++;
             // Move a raiz para o fim
-            listaInteiros.troca(0, i,relatorio);
+            listaInteiros.troca(0, i, relatorio);
             // heapify a heap reduzida
             heapify(listaInteiros, i, 0, relatorio);
         }
         contInteracao++;
-        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     //Funcao principal do algoritmo de Heap Sort
@@ -366,12 +365,12 @@ public class AlgoritmoInteiro {
         contInteracao++;
         // Se maior nao e raiz
         if (maior != i) {
-            listaInteiros.troca(i, maior,relatorio);
+            listaInteiros.troca(i, maior, relatorio);
             // Heapify recursivamente a sub arvore afetada
-            heapify(listaInteiros, n, maior,relatorio);
+            heapify(listaInteiros, n, maior, relatorio);
         }
         contInteracao++;
-        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     /**
@@ -417,7 +416,7 @@ public class AlgoritmoInteiro {
             h = h / 2;
         }
         contInteracao++;
-        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     //TODO Java Doc a partir daqui
@@ -479,170 +478,224 @@ public class AlgoritmoInteiro {
     /**
      * Funcoes de hashing
      */
-    public static Integer[] sondagemLinear(ListaEncadeada<Integer> listaInteiros) {
+    public static Integer[] sondagemLinear(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
         int h = primo(listaInteiros.getTamanho());
         Integer[] tabela = tabela(listaInteiros.getTamanho());
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(listaInteiros.retornaInfo(i), h));
+            //Colisões
             while (tabela[pos] != null) {
+                relatorio.incrementaInteracao();
                 pos = hash(pos + 1, listaInteiros.getTamanho());
+                relatorio.incrementaTrocaColisao();
             }
+            relatorio.incrementaInteracao();
             tabela[pos] = listaInteiros.retornaInfo(i);
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
-    public static Integer[] sondagemQuadratica(ListaEncadeada<Integer> listaInteiros) {
+    public static Integer[] sondagemQuadratica(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
         int h = primo(listaInteiros.getTamanho());
         Integer[] tabela = tabela(listaInteiros.getTamanho());
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(listaInteiros.retornaInfo(i), h));
             int j = 0;
             while (tabela[pos] != null) {
+                relatorio.incrementaInteracao();
                 j++;
                 pos = hash(pos + j * j, listaInteiros.getTamanho());
+                relatorio.incrementaTrocaColisao();
             }
+            relatorio.incrementaInteracao();
             tabela[pos] = listaInteiros.retornaInfo(i);
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
-    public static Integer[] duploHashing(ListaEncadeada<Integer> listaInteiros) {
+    public static Integer[] duploHashing(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
         int h = primo(listaInteiros.getTamanho());
         Integer[] tabela = tabela(listaInteiros.getTamanho());
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(listaInteiros.retornaInfo(i), h));
             int j = 0;
             while (tabela[pos] != null) {
+                relatorio.incrementaInteracao();
                 j++;
                 pos = hash(hash(listaInteiros.retornaInfo(i), h) + j * hash2(listaInteiros.retornaInfo(i), j), listaInteiros.getTamanho());
+                relatorio.incrementaTrocaColisao();
             }
+            relatorio.incrementaInteracao();
             tabela[pos] = listaInteiros.retornaInfo(i);
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
-    public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Integer> listaInteiros) {
+    public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
         ListaEncadeada<Integer>[] tabela = tabelaEncadeada(50);
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(listaInteiros.retornaInfo(i), 50));
             tabela[pos].insereFinal(listaInteiros.retornaInfo(i));
+            if (tabela[pos].retornaFim() != null) {
+                relatorio.incrementaTrocaColisao();
+            }
+            relatorio.incrementaInteracao();
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
-    public static Integer[][] encadeamentoCoalescido(ListaEncadeada<Integer> listaInteiros) {
+    public static Integer[][] encadeamentoCoalescido(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
         int h = primo(listaInteiros.getTamanho());
         Integer[][] tabela = tabelaCoalescida(listaInteiros.getTamanho());
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
             pos = (hash(listaInteiros.retornaInfo(i), h));
             if (tabela[pos][0] != null) {
                 pos = listaInteiros.getTamanho() - 1;
                 while (tabela[pos][0] != null) {
+                    relatorio.incrementaInteracao();
                     pos = pos - 1;
+                    relatorio.incrementaTrocaColisao();
                 }
+                relatorio.incrementaInteracao();
                 tabela[pos][0] = listaInteiros.retornaInfo(i);
                 //Cria um dep aux que usa o id como posicao para o proximo
                 //TODO Expandir o comentario acima
-                int aux;
-                aux=pos;
+                int aux = pos;
                 tabela[hash(listaInteiros.retornaInfo(i), h)][1] = aux;
             } else {
                 tabela[pos][0] = listaInteiros.retornaInfo(i);
             }
+            relatorio.incrementaInteracao();
         }
+        relatorio.incrementaInteracao();
         return tabela;
     }
 
     /**
      * Funcoes de busca de hashing
      */
-    public static Integer buscaSondagemLinear(Integer inteiro, Integer[] tabela) {
+    private static Integer buscaSondagemLinear(Integer valor, Integer[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
-        int pos = (hash(inteiro, h));
-        if (tabela[pos] == inteiro) {
+        int pos = (hash(valor, h));
+        if (tabela[pos] == valor) {
+            relatorio.incrementaInteracao();
             return tabela[pos];//Encontrou o Integer requerido na primeira iteração(não há colisões)
         } else {
+            relatorio.incrementaInteracao();
             int cont = 0; //Contador para verificar se o dep nao foi encontrado
-            while (tabela[pos] != inteiro && cont < tabela.length) {
+            while (tabela[pos] != valor && cont < tabela.length) {
+                relatorio.incrementaInteracao();
                 pos = hash(pos + 1, tabela.length);
                 cont++;
             }
+            relatorio.incrementaInteracao();
             if (cont < tabela.length) {
+                relatorio.incrementaInteracao();
                 return tabela[pos];//Encontrou o Integer Requerido(há colisões)
+
             } else {
+                relatorio.incrementaInteracao();
                 return null;//Não Encontrou o Integer Requerido
             }
         }
     }
 
-    public static Integer buscaSondagemQuadratica(Integer inteiro, Integer[] tabela) {
+    private static Integer buscaSondagemQuadratica(Integer valor, Integer[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
-        int pos = (hash(inteiro, h));
-        if (tabela[pos] == inteiro) {
+        int pos = (hash(valor, h));
+        if (tabela[pos] == valor) {
+            relatorio.incrementaInteracao();
             return tabela[pos];
         } else {
+            relatorio.incrementaInteracao();
             int cont = 0; //contador para verificar se o dep nao foi encontrado
             int j = 0;
-            while (tabela[pos] != inteiro && cont < tabela.length) { //TODO Revisar a condicao de parada (cont)
+            while (tabela[pos] != valor && cont < tabela.length) { //TODO Revisar a condicao de parada (cont)
+                relatorio.incrementaInteracao();
                 j++;
                 pos = hash(pos + j * j, tabela.length);
                 cont++;
             }
+            relatorio.incrementaInteracao();
             if (cont < tabela.length) {
+                relatorio.incrementaInteracao();
                 return tabela[pos];
             } else {
+                relatorio.incrementaInteracao();
                 return null;
             }
         }
     }
 
-    public static Integer buscaDuploHashing(Integer inteiro, Integer[] tabela) {
+    private static Integer buscaDuploHashing(Integer valor, Integer[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
-        int pos = (hash(inteiro, h));
-        if (tabela[pos] == inteiro) {
+        int pos = (hash(valor, h));
+        if (tabela[pos] == valor) {
+            relatorio.incrementaInteracao();
             return tabela[pos];
         } else {
+            relatorio.incrementaInteracao();
             int cont = 0; //contador para verificar se o dep nao foi encontrado
             int j = 0;
-            while (tabela[pos] != inteiro && cont < tabela.length) { //TODO Revisar a condicao de parada (cont)
+            while (tabela[pos] != valor && cont < tabela.length) { //TODO Revisar a condicao de parada (cont)
+
+                relatorio.incrementaInteracao();
                 j++;
                 cont++;
-                pos = hash(hash(inteiro, h) + j * hash2(inteiro, j), tabela.length);
+                pos = hash(hash(valor, h) + j * hash2(valor, j), tabela.length);
             }
+            relatorio.incrementaInteracao();
             if (cont < tabela.length) {
+                relatorio.incrementaInteracao();
                 return tabela[pos];
             } else {
+                relatorio.incrementaInteracao();
                 return null;
             }
         }
     }
 
-    public static Integer buscaEncadeamentoSeparado(Integer inteiro, ListaEncadeada<Integer>[] tabela) {
-        int pos = (hash(inteiro, tabela.length));
+    private static Integer buscaEncadeamentoSeparado(Integer valor, ListaEncadeada<Integer>[] tabela, Relatorio relatorio) {
+        int pos = (hash(valor, tabela.length));
         for (int j = 0; j < tabela[pos].getTamanho(); j++) {
-            if (tabela[pos].retornaInfo(j) == inteiro) {
+            relatorio.incrementaInteracao();
+            if (tabela[pos].retornaInfo(j) == valor) {
+                relatorio.incrementaInteracao();
                 return tabela[pos].retornaInfo(j);
             }
         }
+        relatorio.incrementaInteracao();
         return null;
     }
 
-    public static Integer buscaEncadeamentoCoalescido(Integer inteiro, Integer[][] tabela) {
+    private static Integer buscaEncadeamentoCoalescido(Integer valor, Integer[][] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
-        int pos = (hash(inteiro, h));
-        while (tabela[pos][0] != inteiro) {
+        int pos = (hash(valor, h));
+        while (tabela[pos][0] != valor) {
+            relatorio.incrementaInteracao();
             if (tabela[pos][1] != null) {
+                relatorio.incrementaInteracao();
                 pos = tabela[pos][1];
             } else {
+                relatorio.incrementaInteracao();
                 return null;
             }
         }
+        relatorio.incrementaInteracao();
         return tabela[pos][0];
     }
 }
