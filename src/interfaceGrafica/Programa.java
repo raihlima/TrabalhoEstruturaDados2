@@ -150,7 +150,7 @@ public class Programa extends javax.swing.JFrame {
         jButton14 = new javax.swing.JButton();
         jPanel20 = new javax.swing.JPanel();
         jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
+        radioBuscaSemente = new javax.swing.JRadioButton();
         jPanelRelatorioOrdenacao = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -1020,11 +1020,11 @@ public class Programa extends javax.swing.JFrame {
             }
         });
 
-        grupoHashMetodo.add(jRadioButton6);
-        jRadioButton6.setText("Sementes Aleatórias ( 5 vezes)");
-        jRadioButton6.addActionListener(new java.awt.event.ActionListener() {
+        grupoHashMetodo.add(radioBuscaSemente);
+        radioBuscaSemente.setText("Sementes Aleatórias ( 5 vezes)");
+        radioBuscaSemente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton6ActionPerformed(evt);
+                radioBuscaSementeActionPerformed(evt);
             }
         });
 
@@ -1036,7 +1036,7 @@ public class Programa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jRadioButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton6)
+                .addComponent(radioBuscaSemente)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
@@ -1044,7 +1044,7 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton5)
-                    .addComponent(jRadioButton6))
+                    .addComponent(radioBuscaSemente))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -1386,8 +1386,9 @@ public class Programa extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (sementesOrdenacao.isSelected()) {
             try {
-                executarSementesOrdenacao();
                 JOptionPane.showMessageDialog(null, "A ordenação será executada.\n O programa poderá ficar travado até o termino da execução", "Info", JOptionPane.INFORMATION_MESSAGE);
+                executarSementesOrdenacao();
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -1476,6 +1477,20 @@ public class Programa extends javax.swing.JFrame {
 
     private void botaoComecar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoComecar1ActionPerformed
         // TODO add your handling code here:
+        if (radioBuscaSemente.isSelected()) {
+            try {
+
+            } catch (Exception e) {
+
+            }
+        } else {
+
+            try {
+
+            } catch (Exception e) {
+
+            }
+        }
     }//GEN-LAST:event_botaoComecar1ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
@@ -1487,9 +1502,9 @@ public class Programa extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
-    private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
+    private void radioBuscaSementeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBuscaSementeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton6ActionPerformed
+    }//GEN-LAST:event_radioBuscaSementeActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         // TODO add your handling code here:
@@ -1648,32 +1663,32 @@ public class Programa extends javax.swing.JFrame {
         Relatorio relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
         String descricao = "";
         if (radioBubble.isSelected()) {
-            AlgoritmoDeputado.bubbleSortDeputados(listaDeputado);
+            AlgoritmoDeputado.bubbleSortDeputados(listaDeputado, relatorio);
             descricao = radioBubble.getText();
         } else if (radioInsertion.isSelected()) {
-            AlgoritmoDeputado.insertionSort(listaDeputado);
+            AlgoritmoDeputado.insertionSort(listaDeputado, relatorio);
             descricao = radioInsertion.getText();
         } else if (radioQuick1.isSelected()) {
-            AlgoritmoDeputado.quickSortRec(listaDeputado);
+            AlgoritmoDeputado.quickSortRec(listaDeputado, relatorio);
             descricao = radioQuick1.getText();
         } else if (radioQuick2.isSelected()) {
             quantidade = JOptionPane.showInputDialog(null, "Digite o valor de k para calcular a mediana:", "Digite um valor", JOptionPane.QUESTION_MESSAGE);
             relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
-            AlgoritmoDeputado.quicksortMedianaK(listaDeputado, Integer.parseInt(quantidade));
+            AlgoritmoDeputado.quicksortMedianaK(listaDeputado, Integer.parseInt(quantidade), relatorio);
             descricao = radioQuick2.getText() + quantidade;
         } else if (radioQuick3.isSelected()) {
             quantidade = JOptionPane.showInputDialog(null, "Digite o valor de k para executar o Insertion Sort:", "Digite um valor", JOptionPane.QUESTION_MESSAGE);
             relatorio = new Relatorio(Integer.parseInt(valorOrdenacao.getText()), "Customizado", tipoExecucao, "Deputados");
-            AlgoritmoDeputado.quickSortHibrido(listaDeputado, Integer.parseInt(quantidade));
+            AlgoritmoDeputado.quickSortHibrido(listaDeputado, Integer.parseInt(quantidade), relatorio);
             descricao = radioQuick3.getText() + quantidade;
         } else if (radioMerge.isSelected()) {
-            AlgoritmoDeputado.mergeSort(listaDeputado);
+            AlgoritmoDeputado.mergeSort(listaDeputado, relatorio);
             descricao = radioMerge.getText();
         } else if (radioHeap.isSelected()) {
-            AlgoritmoDeputado.heapSort(listaDeputado);
+            AlgoritmoDeputado.heapSort(listaDeputado, relatorio);
             descricao = radioHeap.getText();
         } else if (radioShell.isSelected()) {
-            AlgoritmoDeputado.shellSort(listaDeputado);
+            AlgoritmoDeputado.shellSort(listaDeputado, relatorio);
             descricao = radioShell.getText();
         }
         relatorio.setDescricao(descricao);
@@ -1755,7 +1770,7 @@ public class Programa extends javax.swing.JFrame {
                 leDadosAleatorios(1000000);
                 ordenaSementesDeputado(semente, 1000000);
             }
-            JOptionPane.showMessageDialog(null, "Execução completa, voltando ao inicio", "Info", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Execução completa, o relatório foi gerado, voltando ao inicio", "Info", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -1828,11 +1843,11 @@ public class Programa extends javax.swing.JFrame {
             }
             //Ordena bubbleSort
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.bubbleSortDeputados(aux);
+            AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Bubble Sort", semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.bubbleSort(listaInteira);
+            AlgoritmoInteiro.bubbleSort(listaInteira, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Bubble Sort", semente);
 
             aux.deletarLista();
@@ -1848,11 +1863,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.insertionSort(aux);
+            AlgoritmoDeputado.insertionSort(aux, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Insertion Sort", semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.insertionSort(listaInteira);
+            AlgoritmoInteiro.insertionSort(listaInteira, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Insertion Sort", semente);
 
             aux.deletarLista();
@@ -1868,11 +1883,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.mergeSort(aux);
+            AlgoritmoDeputado.mergeSort(aux, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Merge Sort", semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.mergeSort(listaInteira);
+            AlgoritmoInteiro.mergeSort(listaInteira, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Merge Sort", semente);
 
             aux.deletarLista();
@@ -1887,11 +1902,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.heapSort(aux);
+            AlgoritmoDeputado.heapSort(aux, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Heap Sort", semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.heapSort(listaInteira);
+            AlgoritmoInteiro.heapSort(listaInteira, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Heap Sort", semente);
 
             aux.deletarLista();
@@ -1906,11 +1921,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.shellSort(aux);
+            AlgoritmoDeputado.shellSort(aux, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Shell Sort", semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.shellSort(listaInteira);
+            AlgoritmoInteiro.shellSort(listaInteira, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Shell Sort", semente);
 
             aux.deletarLista();
@@ -1925,11 +1940,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.quickSortRec(aux);
+            AlgoritmoDeputado.quickSortRec(aux, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Recursivo", semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.quickSortRec(listaInteira);
+            AlgoritmoInteiro.quickSortRec(listaInteira, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Recursivo", semente);
 
             aux.deletarLista();
@@ -1944,11 +1959,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.quicksortMedianaK(aux, 3);
+            AlgoritmoDeputado.quicksortMedianaK(aux, 3, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 3, semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.quicksortMedianaK(listaInteira, 3);
+            AlgoritmoInteiro.quicksortMedianaK(listaInteira, 3, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de 3", semente);
 
             aux.deletarLista();
@@ -1963,11 +1978,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.quicksortMedianaK(aux, 5);
+            AlgoritmoDeputado.quicksortMedianaK(aux, 5, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 5, semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.quicksortMedianaK(listaInteira, 5);
+            AlgoritmoInteiro.quicksortMedianaK(listaInteira, 5, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de 5", semente);
 
             aux.deletarLista();
@@ -1982,11 +1997,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.quicksortMedianaK(aux, 7);
+            AlgoritmoDeputado.quicksortMedianaK(aux, 7, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de " + 7, semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.quicksortMedianaK(listaInteira, 7);
+            AlgoritmoInteiro.quicksortMedianaK(listaInteira, 7, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Mediana de 7", semente);
 
             aux.deletarLista();
@@ -2001,11 +2016,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.quickSortHibrido(aux, 10);
+            AlgoritmoDeputado.quickSortHibrido(aux, 10, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 10, semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.quickSortHibrido(listaInteira, 10);
+            AlgoritmoInteiro.quickSortHibrido(listaInteira, 10, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 10, semente);
 
             aux.deletarLista();
@@ -2021,11 +2036,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.quickSortHibrido(aux, 100);
+            AlgoritmoDeputado.quickSortHibrido(aux, 100, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 100, semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.quickSortHibrido(listaInteira, 100);
+            AlgoritmoInteiro.quickSortHibrido(listaInteira, 100, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 100, semente);
 
             aux.deletarLista();
@@ -2040,11 +2055,11 @@ public class Programa extends javax.swing.JFrame {
                 listaInteira.insereFinal(aux.retornaFim().getId());
             }
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Deputados");
-            AlgoritmoDeputado.quickSortHibrido(aux, 200);
+            AlgoritmoDeputado.quickSortHibrido(aux, 200, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 200, semente);
 
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "Inteiro");
-            AlgoritmoInteiro.quickSortHibrido(listaInteira, 200);
+            AlgoritmoInteiro.quickSortHibrido(listaInteira, 200, relatorio);
             relatorio.setRelatorioFinal("Ordenacao", "Quick Sort Hibrido k" + 200, semente);
 
             aux.deletarLista();
@@ -2262,7 +2277,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -2282,6 +2296,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JLabel nomeArquivoStatus;
     private javax.swing.JLabel progressoStatus;
     private javax.swing.JRadioButton radioBubble;
+    private javax.swing.JRadioButton radioBuscaSemente;
     private javax.swing.JRadioButton radioDuploHash;
     private javax.swing.JRadioButton radioEncadeamentoCoalescido;
     private javax.swing.JRadioButton radioEncadeamentoSeparado;

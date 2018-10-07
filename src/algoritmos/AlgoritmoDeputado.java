@@ -6,6 +6,7 @@
 //TODO terminar os comentarios das funcoes
 package algoritmos;
 
+import dados.Relatorio;
 import java.util.ArrayList;
 import java.util.List;
 import trabalhoed2.Deputado;
@@ -26,7 +27,7 @@ public class AlgoritmoDeputado {
      *
      * @param deputados
      */
-    public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados) {
+    public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int contIteracao = 0;
 
         for (int i = 0; i < deputados.getTamanho(); i++) {
@@ -42,6 +43,7 @@ public class AlgoritmoDeputado {
             contIteracao++;
         }
         contIteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
     }
 
     /**
@@ -49,12 +51,12 @@ public class AlgoritmoDeputado {
      *
      * @param deputados
      */
-    public static void insertionSort(ListaEncadeada<Deputado> deputados) {
-        insertionSort(deputados, 0, deputados.getTamanho());
+    public static void insertionSort(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
+        insertionSort(deputados, 0, deputados.getTamanho(), relatorio);
     }
 
-    private static void insertionSort(ListaEncadeada<Deputado> deputados, int min, int max) {
-        int contIteracao = 0;
+    private static void insertionSort(ListaEncadeada<Deputado> deputados, int min, int max, Relatorio relatorio) {
+        int contIteracao = 1;
 
         for (int i = min + 1; i < max; i++) {
             contIteracao++;
@@ -70,6 +72,7 @@ public class AlgoritmoDeputado {
             deputados.altera((j + 1), chave);
         }
         contIteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
     }
 
     /**
@@ -78,29 +81,32 @@ public class AlgoritmoDeputado {
      * @param deputados
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
-    public static void mergeSort(ListaEncadeada<Deputado> deputados) {
-        mergeSort(deputados, 0, deputados.getTamanho() - 1);
+    public static void mergeSort(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
+        mergeSort(deputados, 0, deputados.getTamanho() - 1, relatorio);
     }
 
     //Funcao de chamada recursiva do algoritmo Merge Sort
-    private static void mergeSort(ListaEncadeada<Deputado> deputados, int esq, int dir) {
+    private static void mergeSort(ListaEncadeada<Deputado> deputados, int esq, int dir, Relatorio relatorio) {
+        int contInteracao = 1;
         if (esq < dir) {
             // Encontra o termo do meio
             int meio = (esq + dir) / 2;
             // Ordena primeira e segunda metade
-            mergeSort(deputados, esq, meio);
-            mergeSort(deputados, meio + 1, dir);
+            mergeSort(deputados, esq, meio, relatorio);
+            mergeSort(deputados, meio + 1, dir, relatorio);
             // Junta as metades
-            merge(deputados, esq, meio, dir);
+            merge(deputados, esq, meio, dir, relatorio);
         }
+        contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     //Funcao principal do algoritmo Merge Sort
-    private static void merge(ListaEncadeada<Deputado> deputados, int esq, int meio, int dir) {
+    private static void merge(ListaEncadeada<Deputado> deputados, int esq, int meio, int dir, Relatorio relatorio) {
         // Encontra os tamanhos dos dois sub arrays para serem mesclados
         int n1 = meio - esq + 1;
         int n2 = dir - meio;
-        int contInteracao = 0;
+        int contInteracao = 1;
 
         // Cria os arrays temporarios
         ListaEncadeada<Deputado> esqArray = new ListaEncadeada();
@@ -155,6 +161,7 @@ public class AlgoritmoDeputado {
             k++;
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     /**
@@ -163,24 +170,28 @@ public class AlgoritmoDeputado {
      * @param deputados
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao da recurcao
-    public static void quickSortRec(ListaEncadeada<Deputado> deputados) {
-        quickSortRec(deputados, 0, deputados.getTamanho() - 1);
+    public static void quickSortRec(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
+        quickSortRec(deputados, 0, deputados.getTamanho() - 1, relatorio);
     }
 
     //Executa a funcao recursivamente em todos os vetores apos as particoes
-    private static void quickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
+    private static void quickSortRec(ListaEncadeada<Deputado> deputados, int min, int max, Relatorio relatorio) {
+        int contInteracao = 1;
         if (min < max) {
+            contInteracao++;
             //define o indice da particao (ip)
-            int ip = particionaQuickSortRec(deputados, min, max);
+            int ip = particionaQuickSortRec(deputados, min, max, relatorio);
             // Recusividade para ordenar os elementos antes e depois da particao
-            quickSortRec(deputados, min, ip - 1);
-            quickSortRec(deputados, ip + 1, max);
+            quickSortRec(deputados, min, ip - 1, relatorio);
+            quickSortRec(deputados, ip + 1, max, relatorio);
         }
+        contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     //Cria as particoes para o algoritmo
-    private static int particionaQuickSortRec(ListaEncadeada<Deputado> deputados, int min, int max) {
-        int contInteracao = 0;
+    private static int particionaQuickSortRec(ListaEncadeada<Deputado> deputados, int min, int max, Relatorio relatorio) {
+        int contInteracao = 1;
         //Define o pivo como o maior da lista
         Deputado pivo = deputados.retornaInfo(max);
         int i = (min - 1); // indice do menor elemento
@@ -196,7 +207,7 @@ public class AlgoritmoDeputado {
         contInteracao++;
         Deputado temp = deputados.retornaInfo(i + 1);
         deputados.troca(i + 1, max);
-
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
         return i + 1;
     }
 
@@ -207,17 +218,17 @@ public class AlgoritmoDeputado {
      * @param deputados
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
-    public static void quicksortMedianaK(ListaEncadeada<Deputado> deputados, int k) {
-        quicksortMedianaK(deputados, 0, deputados.getTamanho() - 1, k);
+    public static void quicksortMedianaK(ListaEncadeada<Deputado> deputados, int k, Relatorio relatorio) {
+        quicksortMedianaK(deputados, 0, deputados.getTamanho() - 1, k, relatorio);
     }
 
     //Método de partição do Quick Sort Mediana de 3
-    private static int particionaMedianaK(ListaEncadeada<Deputado> deputados, int inicio, int fim, int k) {
+    private static int particionaMedianaK(ListaEncadeada<Deputado> deputados, int inicio, int fim, int k, Relatorio relatorio) {
         //procura a mediana entre inicio, meio e fim
         float div = ((float) (fim - inicio)) / (float) (k - 1);
         float aux = 0;
         int[] indice = new int[k];
-        int contInteracao = 0;
+        int contInteracao = 1;
         for (int i = 0; i < k; i++) {
             contInteracao++;
             indice[i] = (int) aux;
@@ -243,44 +254,40 @@ public class AlgoritmoDeputado {
         }
         contInteracao++;
         int medianaIndice = (inicio + fim) / 2;
-        //coloca o elemento da mediana no fim para poder usar o Quicksort de Cormen
-        trocaDeputados(deputados, medianaIndice, fim);
+        trocaDeputados(deputados, medianaIndice, fim, relatorio);
 
-        //*******************ALGORITMO DE PARTIÇÃO DE CORMEN*********************
         //o pivo é o elemento final
         Deputado pivo = deputados.retornaInfo(fim);
         int i = inicio - 1;
-        /*
-         * Este laço irá varrer os vetores da esquerda para direira
-         * procurando os elementos que são menores ou iguais ao pivô.
-         * Esses elementos são colocados na partição esquerda.         
-         */
+
         for (int j = inicio; j <= fim - 1; j++) {
             contInteracao++;
             if (deputados.retornaInfo(j).getTotalGasto() <= pivo.getTotalGasto()) {
                 i = i + 1;
-                trocaDeputados(deputados, i, j);
+                trocaDeputados(deputados, i, j, relatorio);
             }
             contInteracao++;
         }
         contInteracao++;
         //coloca o pivô na posição de ordenação
-        trocaDeputados(deputados, i + 1, fim);
+        trocaDeputados(deputados, i + 1, fim, relatorio);
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
         return i + 1; //retorna a posição do pivô
     }
 
     //Funcao principal do algoritmo, executa a recursao
-    private static void quicksortMedianaK(ListaEncadeada<Deputado> deputados, int inicio, int fim, int k) {
-        int contInteracao = 0;
+    private static void quicksortMedianaK(ListaEncadeada<Deputado> deputados, int inicio, int fim, int k, Relatorio relatorio) {
+        int contInteracao = 1;
         if (inicio < fim) {
             //realiza a partição
-            int q = particionaMedianaK(deputados, inicio, fim, k);
+            int q = particionaMedianaK(deputados, inicio, fim, k, relatorio);
             //ordena a partição esquerda
-            quicksortMedianaK(deputados, inicio, q - 1, k);
+            quicksortMedianaK(deputados, inicio, q - 1, k, relatorio);
             //ordena a partição direita
-            quicksortMedianaK(deputados, q + 1, fim, k);
+            quicksortMedianaK(deputados, q + 1, fim, k, relatorio);
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
 
     }
 
@@ -290,28 +297,31 @@ public class AlgoritmoDeputado {
      *
      * @param deputados
      */
-    private static void trocaDeputados(ListaEncadeada<Deputado> deputados, int i, int j) {
+    private static void trocaDeputados(ListaEncadeada<Deputado> deputados, int i, int j, Relatorio relatorio) {
         Deputado aux = deputados.retornaInfo(i);
         deputados.altera(i, deputados.retornaInfo(j));
         deputados.altera(j, aux);
+        int contInteracao = 2;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
-    public static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int k) {
-        quickSortHibrido(deputados, 0, deputados.getTamanho() - 1, k);
+    public static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int k, Relatorio relatorio) {
+        quickSortHibrido(deputados, 0, deputados.getTamanho() - 1, k, relatorio);
     }
 
-    private static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int min, int max, int k) {
+    private static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int min, int max, int k, Relatorio relatorio) {
         int size = (max + 1) - min;
-        int contInteracao = 0;
+        int contInteracao = 1;
         if (size <= k) { // inserion sort se o tamanho for menor que 10
-            insertionSort(deputados, min, size);
+            insertionSort(deputados, min, size,relatorio);
         } else // quicksort se for maior
         {
-            int pivo = particionaQuickSortRec(deputados, min, max);
-            quickSortRec(deputados, min, pivo - 1);
-            quickSortRec(deputados, pivo + 1, max);
+            int pivo = particionaQuickSortRec(deputados, min, max,relatorio);
+            quickSortRec(deputados, min, pivo - 1,relatorio);
+            quickSortRec(deputados, pivo + 1, max,relatorio);
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
     }
 
     /**
@@ -320,13 +330,13 @@ public class AlgoritmoDeputado {
      * @param deputados
      */
     //Chamada da funcao principal
-    public static void heapSort(ListaEncadeada<Deputado> deputados) {
+    public static void heapSort(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int n = deputados.getTamanho();
         // Constroi a Heap
         int contInteracao = 0;
         for (int i = n / 2 - 1; i >= 0; i--) {
             contInteracao++;
-            heapify(deputados, n, i);
+            heapify(deputados, n, i,relatorio);
         }
         contInteracao++;
         // Extrai um elemento por vez da heap
@@ -335,13 +345,14 @@ public class AlgoritmoDeputado {
             // Move a raiz para o fim
             deputados.troca(0, i);
             // heapify a heap reduzida
-            heapify(deputados, i, 0);
+            heapify(deputados, i, 0, relatorio);
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
     }
 
     //Funcao principal do algoritmo de Heap Sort
-    private static void heapify(ListaEncadeada<Deputado> deputados, int n, int i) {
+    private static void heapify(ListaEncadeada<Deputado> deputados, int n, int i, Relatorio relatorio) {
         int maior = i;  // Inicializa o maior como raiz
         int esq = 2 * i + 1;
         int dir = 2 * i + 2;
@@ -361,9 +372,10 @@ public class AlgoritmoDeputado {
         if (maior != i) {
             deputados.troca(i, maior);
             // Heapify recursivamente a sub arvore afetada
-            heapify(deputados, n, maior);
+            heapify(deputados, n, maior,relatorio);
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
     }
 
     /**
@@ -372,7 +384,7 @@ public class AlgoritmoDeputado {
      * @param deputados
      */
     //Funcao principal do algoritmo de Shell Sort
-    public static void shellSort(ListaEncadeada<Deputado> deputados) {
+    public static void shellSort(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int h = 1;
         int n = deputados.getTamanho();
         int contInteracao = 0;
@@ -382,7 +394,7 @@ public class AlgoritmoDeputado {
             h = h * 3 + 1;
         }
         contInteracao++;
-        
+
         h = h / 3;
         Deputado c;
         int j;
@@ -407,6 +419,7 @@ public class AlgoritmoDeputado {
             h = h / 2;
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
     }
 
     /*

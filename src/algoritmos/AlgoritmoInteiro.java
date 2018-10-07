@@ -6,8 +6,11 @@
 //TODO terminar os comentarios das funcoes
 package algoritmos;
 
+import dados.Relatorio;
 import java.util.ArrayList;
 import java.util.List;
+import trabalhoed2.Generico;
+import trabalhoed2.Partido;
 
 /**
  *
@@ -21,17 +24,17 @@ public class AlgoritmoInteiro {
     /**
      * Esta função contém o código para execução do algoritmo de Bubble Sort
      *
-     * @param listaInteiros
+     * @param listaInteiro
      */
-    public static void bubbleSort(ListaEncadeada<Integer> listaInteiros) {
+    public static void bubbleSort(ListaEncadeada<Integer> listaInteiro, Relatorio relatorio) {
         int contIteracao = 0;
 
-        for (int i = 0; i < listaInteiros.getTamanho(); i++) {
+        for (int i = 0; i < listaInteiro.getTamanho(); i++) {
             contIteracao++;
-            for (int j = 1; j < listaInteiros.getTamanho() - i; j++) {
+            for (int j = 1; j < listaInteiro.getTamanho() - i; j++) {
                 contIteracao++;
-                if (listaInteiros.retornaInfo(j - 1) > listaInteiros.retornaInfo(j)) {
-                    listaInteiros.troca(j, j - 1);
+                if (listaInteiro.retornaInfo(j - 1) > listaInteiro.retornaInfo(j)) {
+                    listaInteiro.troca(j, j - 1);
                     contIteracao++;
                 }
                 contIteracao++;
@@ -39,65 +42,70 @@ public class AlgoritmoInteiro {
             contIteracao++;
         }
         contIteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
     }
 
     /**
      * Esta função contém o código para execução do algoritmo de Insertion Sort
      *
-     * @param listaInteiros
+     * @param listaInteiro
      */
-    public static void insertionSort(ListaEncadeada<Integer> listaInteiros) {
-        insertionSort(listaInteiros, 0, listaInteiros.getTamanho());
+    public static void insertionSort(ListaEncadeada<Integer> listaInteiro, Relatorio relatorio) {
+        insertionSort(listaInteiro, 0, listaInteiro.getTamanho(), relatorio);
     }
 
-    private static void insertionSort(ListaEncadeada<Integer> listaInteiros, int min, int max) {
-        int contIteracao = 0;
+    private static void insertionSort(ListaEncadeada<Integer> listaInteiro, int min, int max, Relatorio relatorio) {
+        int contIteracao = 1;
 
         for (int i = min + 1; i < max; i++) {
             contIteracao++;
-            Integer chave = listaInteiros.retornaInfo(i);
+            Integer chave = listaInteiro.retornaInfo(i);
             int j = i - 1;
 
-            while (j >= 0 && listaInteiros.retornaInfo(j) > chave) {
+            while (j >= 0 && listaInteiro.retornaInfo(j) > chave) {
                 contIteracao++;
-                listaInteiros.altera(j + 1, listaInteiros.retornaInfo(j));
+                listaInteiro.altera(j + 1, listaInteiro.retornaInfo(j));
                 j = j - 1;
             }
             contIteracao++;
-            listaInteiros.altera((j + 1), chave);
+            listaInteiro.altera((j + 1), chave);
         }
         contIteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
     }
 
     /**
      * Estas funções contém o código para execução do algoritmo de Merge Sort
      *
-     * @param listaInteiros
+     * @param listaInteiro
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
-    public static void mergeSort(ListaEncadeada<Integer> listaInteiros) {
-        mergeSort(listaInteiros, 0, listaInteiros.getTamanho() - 1);
+    public static void mergeSort(ListaEncadeada<Integer> listaInteiro, Relatorio relatorio) {
+        mergeSort(listaInteiro, 0, listaInteiro.getTamanho() - 1, relatorio);
     }
 
     //Funcao de chamada recursiva do algoritmo Merge Sort
-    private static void mergeSort(ListaEncadeada<Integer> listaInteiros, int esq, int dir) {
+    private static void mergeSort(ListaEncadeada<Integer> listaInteiro, int esq, int dir, Relatorio relatorio) {
+        int contInteracao = 1;
         if (esq < dir) {
             // Encontra o termo do meio
             int meio = (esq + dir) / 2;
             // Ordena primeira e segunda metade
-            mergeSort(listaInteiros, esq, meio);
-            mergeSort(listaInteiros, meio + 1, dir);
+            mergeSort(listaInteiro, esq, meio, relatorio);
+            mergeSort(listaInteiro, meio + 1, dir, relatorio);
             // Junta as metades
-            merge(listaInteiros, esq, meio, dir);
+            merge(listaInteiro, esq, meio, dir, relatorio);
         }
+        contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     //Funcao principal do algoritmo Merge Sort
-    private static void merge(ListaEncadeada<Integer> listaInteiros, int esq, int meio, int dir) {
+    private static void merge(ListaEncadeada<Integer> listaInteiro, int esq, int meio, int dir, Relatorio relatorio) {
         // Encontra os tamanhos dos dois sub arrays para serem mesclados
         int n1 = meio - esq + 1;
         int n2 = dir - meio;
-        int contInteracao = 0;
+        int contInteracao = 1;
 
         // Cria os arrays temporarios
         ListaEncadeada<Integer> esqArray = new ListaEncadeada();
@@ -105,12 +113,12 @@ public class AlgoritmoInteiro {
         // Copia os dados para o novo array
         for (int i = 0; i < n1; ++i) {
             contInteracao++;
-            esqArray.insereFinal(listaInteiros.retornaInfo(esq + i));
+            esqArray.insereFinal(listaInteiro.retornaInfo(esq + i));
         }
         contInteracao++;
         for (int j = 0; j < n2; ++j) {
             contInteracao++;
-            dirArray.insereFinal(listaInteiros.retornaInfo(meio + 1 + j));
+            dirArray.insereFinal(listaInteiro.retornaInfo(meio + 1 + j));
         }
         contInteracao++;
         // Junta os arrays temporarios
@@ -121,11 +129,11 @@ public class AlgoritmoInteiro {
         while (i < n1 && j < n2) {
             contInteracao++;
             if (esqArray.retornaInfo(i) <= dirArray.retornaInfo(j)) {
-                listaInteiros.altera(k, esqArray.retornaInfo(i));
+                listaInteiro.altera(k, esqArray.retornaInfo(i));
                 contInteracao++;
                 i++;
             } else {
-                listaInteiros.altera(k, dirArray.retornaInfo(j));
+                listaInteiro.altera(k, dirArray.retornaInfo(j));
                 contInteracao++;
                 j++;
             }
@@ -136,9 +144,9 @@ public class AlgoritmoInteiro {
         // Copia os elementos do vetor esq se houver
         while (i < n1) {
             contInteracao++;
-            listaInteiros.altera(k, esqArray.retornaInfo(i));
+            listaInteiro.altera(k, esqArray.retornaInfo(i));
             contInteracao++;
-            //listaInteiros[k] = esqVet[i];
+            //listaInteiro[k] = esqVet[i];
             i++;
             k++;
         }
@@ -146,54 +154,59 @@ public class AlgoritmoInteiro {
         // Copia os elementos do vetor dir se houver
         while (j < n2) {
             contInteracao++;
-            listaInteiros.altera(k, dirArray.retornaInfo(j));
+            listaInteiro.altera(k, dirArray.retornaInfo(j));
             contInteracao++;
             j++;
             k++;
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     /**
      * Estas funções contém o código para execução do algoritmo de Quick Sort
      *
-     * @param listaInteiros
+     * @param listaInteiro
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao da recurcao
-    public static void quickSortRec(ListaEncadeada<Integer> listaInteiros) {
-        quickSortRec(listaInteiros, 0, listaInteiros.getTamanho() - 1);
+    public static void quickSortRec(ListaEncadeada<Integer> listaInteiro, Relatorio relatorio) {
+        quickSortRec(listaInteiro, 0, listaInteiro.getTamanho() - 1, relatorio);
     }
 
     //Executa a funcao recursivamente em todos os vetores apos as particoes
-    private static void quickSortRec(ListaEncadeada<Integer> listaInteiros, int min, int max) {
+    private static void quickSortRec(ListaEncadeada<Integer> listaInteiro, int min, int max, Relatorio relatorio) {
+        int contInteracao = 1;
         if (min < max) {
+            contInteracao++;
             //define o indice da particao (ip)
-            int ip = particionaQuickSortRec(listaInteiros, min, max);
+            int ip = particionaQuickSortRec(listaInteiro, min, max, relatorio);
             // Recusividade para ordenar os elementos antes e depois da particao
-            quickSortRec(listaInteiros, min, ip - 1);
-            quickSortRec(listaInteiros, ip + 1, max);
+            quickSortRec(listaInteiro, min, ip - 1, relatorio);
+            quickSortRec(listaInteiro, ip + 1, max, relatorio);
         }
+        contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
     //Cria as particoes para o algoritmo
-    private static int particionaQuickSortRec(ListaEncadeada<Integer> listaInteiros, int min, int max) {
-        int contInteracao = 0;
+    private static int particionaQuickSortRec(ListaEncadeada<Integer> listaInteiro, int min, int max, Relatorio relatorio) {
+        int contInteracao = 1;
         //Define o pivo como o maior da lista
-        Integer pivo = listaInteiros.retornaInfo(max);
+        Integer pivo = listaInteiro.retornaInfo(max);
         int i = (min - 1); // indice do menor elemento
         for (int j = min; j < max; j++) {
             contInteracao++;
             //Compara as strings
-            if (listaInteiros.retornaInfo(j) < pivo) {
+            if (listaInteiro.retornaInfo(j) < pivo) {
                 i++;//avanca o menor
-                listaInteiros.troca(i, j);
+                listaInteiro.troca(i, j);
             }
             contInteracao++;
         }
         contInteracao++;
-        Integer temp = listaInteiros.retornaInfo(i + 1);
-        listaInteiros.troca(i + 1, max);
-
+        Integer temp = listaInteiro.retornaInfo(i + 1);
+        listaInteiro.troca(i + 1, max);
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
         return i + 1;
     }
 
@@ -201,20 +214,20 @@ public class AlgoritmoInteiro {
      * Estas funções contém o código para execução do algoritmo de Quick Sort
      * Mediana de 3
      *
-     * @param listaInteiros
+     * @param listaInteiro
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
-    public static void quicksortMedianaK(ListaEncadeada<Integer> listaInteiros, int k) {
-        quicksortMedianaK(listaInteiros, 0, listaInteiros.getTamanho() - 1, k);
+    public static void quicksortMedianaK(ListaEncadeada<Integer> listaInteiro, int k, Relatorio relatorio) {
+        quicksortMedianaK(listaInteiro, 0, listaInteiro.getTamanho() - 1, k, relatorio);
     }
 
     //Método de partição do Quick Sort Mediana de 3
-    private static int particionaMedianaK(ListaEncadeada<Integer> listaInteiros, int inicio, int fim, int k) {
+    private static int particionaMedianaK(ListaEncadeada<Integer> listaInteiro, int inicio, int fim, int k, Relatorio relatorio) {
         //procura a mediana entre inicio, meio e fim
         float div = ((float) (fim - inicio)) / (float) (k - 1);
         float aux = 0;
         int[] indice = new int[k];
-        int contInteracao = 0;
+        int contInteracao = 1;
         for (int i = 0; i < k; i++) {
             contInteracao++;
             indice[i] = (int) aux;
@@ -228,7 +241,7 @@ public class AlgoritmoInteiro {
             contInteracao++;
             for (int j = 1; j < (n - i); j++) {
                 contInteracao++;
-                if (listaInteiros.retornaInfo(indice[j - 1]) > listaInteiros.retornaInfo(indice[j])) {
+                if (listaInteiro.retornaInfo(indice[j - 1]) > listaInteiro.retornaInfo(indice[j])) {
                     //swap elements  
                     temp = indice[j - 1];
                     indice[j - 1] = indice[j];
@@ -240,44 +253,40 @@ public class AlgoritmoInteiro {
         }
         contInteracao++;
         int medianaIndice = (inicio + fim) / 2;
-        //coloca o elemento da mediana no fim para poder usar o Quicksort de Cormen
-        trocaDeputados(listaInteiros, medianaIndice, fim);
+        trocaDeputados(listaInteiro, medianaIndice, fim, relatorio);
 
-        //*******************ALGORITMO DE PARTIÇÃO DE CORMEN*********************
         //o pivo é o elemento final
-        Integer pivo = listaInteiros.retornaInfo(fim);
+        Integer pivo = listaInteiro.retornaInfo(fim);
         int i = inicio - 1;
-        /*
-         * Este laço irá varrer os vetores da esquerda para direira
-         * procurando os elementos que são menores ou iguais ao pivô.
-         * Esses elementos são colocados na partição esquerda.         
-         */
+
         for (int j = inicio; j <= fim - 1; j++) {
             contInteracao++;
-            if (listaInteiros.retornaInfo(j) <= pivo) {
+            if (listaInteiro.retornaInfo(j) <= pivo) {
                 i = i + 1;
-                trocaDeputados(listaInteiros, i, j);
+                trocaDeputados(listaInteiro, i, j, relatorio);
             }
             contInteracao++;
         }
         contInteracao++;
         //coloca o pivô na posição de ordenação
-        trocaDeputados(listaInteiros, i + 1, fim);
+        trocaDeputados(listaInteiro, i + 1, fim, relatorio);
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
         return i + 1; //retorna a posição do pivô
     }
 
     //Funcao principal do algoritmo, executa a recursao
-    private static void quicksortMedianaK(ListaEncadeada<Integer> listaInteiros, int inicio, int fim, int k) {
-        int contInteracao = 0;
+    private static void quicksortMedianaK(ListaEncadeada<Integer> listaInteiro, int inicio, int fim, int k, Relatorio relatorio) {
+        int contInteracao = 1;
         if (inicio < fim) {
             //realiza a partição
-            int q = particionaMedianaK(listaInteiros, inicio, fim, k);
+            int q = particionaMedianaK(listaInteiro, inicio, fim, k, relatorio);
             //ordena a partição esquerda
-            quicksortMedianaK(listaInteiros, inicio, q - 1, k);
+            quicksortMedianaK(listaInteiro, inicio, q - 1, k, relatorio);
             //ordena a partição direita
-            quicksortMedianaK(listaInteiros, q + 1, fim, k);
+            quicksortMedianaK(listaInteiro, q + 1, fim, k, relatorio);
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
 
     }
 
@@ -285,93 +294,98 @@ public class AlgoritmoInteiro {
      * Esta função contém o código para execução da troca (swap) de objetos no
      * vetor
      *
-     * @param listaInteiros
+     * @param listaInteiro
      */
-    private static void trocaDeputados(ListaEncadeada<Integer> listaInteiros, int i, int j) {
-        Integer aux = listaInteiros.retornaInfo(i);
-        listaInteiros.altera(i, listaInteiros.retornaInfo(j));
-        listaInteiros.altera(j, aux);
+    private static void trocaDeputados(ListaEncadeada<Integer> listaInteiro, int i, int j, Relatorio relatorio) {
+        Integer aux = listaInteiro.retornaInfo(i);
+        listaInteiro.altera(i, listaInteiro.retornaInfo(j));
+        listaInteiro.altera(j, aux);
+        int contInteracao = 2;
+        relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
-    public static void quickSortHibrido(ListaEncadeada<Integer> listaInteiros, int k) {
-        quickSortHibrido(listaInteiros, 0, listaInteiros.getTamanho() - 1, k);
+    public static void quickSortHibrido(ListaEncadeada<Integer> listaInteiro, int k, Relatorio relatorio) {
+        quickSortHibrido(listaInteiro, 0, listaInteiro.getTamanho() - 1, k, relatorio);
     }
 
-    private static void quickSortHibrido(ListaEncadeada<Integer> listaInteiros, int min, int max, int k) {
+    private static void quickSortHibrido(ListaEncadeada<Integer> listaInteiro, int min, int max, int k, Relatorio relatorio) {
         int size = (max + 1) - min;
-        int contInteracao = 0;
+        int contInteracao = 1;
         if (size <= k) { // inserion sort se o tamanho for menor que 10
-            insertionSort(listaInteiros, min, size);
+            insertionSort(listaInteiro, min, size,relatorio);
         } else // quicksort se for maior
         {
-            int pivo = particionaQuickSortRec(listaInteiros, min, max);
-            quickSortRec(listaInteiros, min, pivo - 1);
-            quickSortRec(listaInteiros, pivo + 1, max);
+            int pivo = particionaQuickSortRec(listaInteiro, min, max,relatorio);
+            quickSortRec(listaInteiro, min, pivo - 1,relatorio);
+            quickSortRec(listaInteiro, pivo + 1, max,relatorio);
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
     }
 
     /**
      * Estas funções contém o código para execução do algoritmo de Heap Sort
      *
-     * @param listaInteiros
+     * @param listaInteiro
      */
     //Chamada da funcao principal
-    public static void heapSort(ListaEncadeada<Integer> listaInteiros) {
-        int n = listaInteiros.getTamanho();
+    public static void heapSort(ListaEncadeada<Integer> listaInteiro, Relatorio relatorio) {
+        int n = listaInteiro.getTamanho();
         // Constroi a Heap
         int contInteracao = 0;
         for (int i = n / 2 - 1; i >= 0; i--) {
             contInteracao++;
-            heapify(listaInteiros, n, i);
+            heapify(listaInteiro, n, i,relatorio);
         }
         contInteracao++;
         // Extrai um elemento por vez da heap
         for (int i = n - 1; i >= 0; i--) {
             contInteracao++;
             // Move a raiz para o fim
-            listaInteiros.troca(0, i);
+            listaInteiro.troca(0, i);
             // heapify a heap reduzida
-            heapify(listaInteiros, i, 0);
+            heapify(listaInteiro, i, 0, relatorio);
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
     }
 
     //Funcao principal do algoritmo de Heap Sort
-    private static void heapify(ListaEncadeada<Integer> listaInteiros, int n, int i) {
+    private static void heapify(ListaEncadeada<Integer> listaInteiro, int n, int i, Relatorio relatorio) {
         int maior = i;  // Inicializa o maior como raiz
         int esq = 2 * i + 1;
         int dir = 2 * i + 2;
         int contInteracao = 0;
 
         // Se filho da esq é maior que a raiz
-        if (esq < n && ((listaInteiros.retornaInfo(esq) > listaInteiros.retornaInfo(maior)))) {
+        if (esq < n && ((listaInteiro.retornaInfo(esq) > listaInteiro.retornaInfo(maior)))) {
             maior = esq;
         }
         contInteracao++;
         // Se filho da dir é maior que a raiz
-        if (dir < n && ((listaInteiros.retornaInfo(dir) > listaInteiros.retornaInfo(maior)))) {
+        if (dir < n && ((listaInteiro.retornaInfo(dir) > listaInteiro.retornaInfo(maior)))) {
             maior = dir;
         }
         contInteracao++;
         // Se maior nao e raiz
         if (maior != i) {
-            listaInteiros.troca(i, maior);
+            listaInteiro.troca(i, maior);
             // Heapify recursivamente a sub arvore afetada
-            heapify(listaInteiros, n, maior);
+            heapify(listaInteiro, n, maior,relatorio);
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
     }
 
     /**
      * Esta função contém o código para execução do algoritmo de Shell Sort
      *
-     * @param listaInteiros
+     * @param listaInteiro
      */
     //Funcao principal do algoritmo de Shell Sort
-    public static void shellSort(ListaEncadeada<Integer> listaInteiros) {
+    public static void shellSort(ListaEncadeada<Integer> listaInteiro, Relatorio relatorio) {
         int h = 1;
-        int n = listaInteiros.getTamanho();
+        int n = listaInteiro.getTamanho();
         int contInteracao = 0;
         // Define o h para o while
         while (h < n) {
@@ -379,7 +393,7 @@ public class AlgoritmoInteiro {
             h = h * 3 + 1;
         }
         contInteracao++;
-        
+
         h = h / 3;
         Integer c;
         int j;
@@ -388,24 +402,24 @@ public class AlgoritmoInteiro {
             contInteracao++;
             for (int i = h; i < n; i++) {
                 contInteracao++;
-                c = listaInteiros.retornaInfo(i);
+                c = listaInteiro.retornaInfo(i);
                 j = i;
-                while (j >= h && (listaInteiros.retornaInfo(j - h) >= c)) {
+                while (j >= h && (listaInteiro.retornaInfo(j - h) >= c)) {
                     contInteracao++;
-                    listaInteiros.altera(j, listaInteiros.retornaInfo(j - h));
+                    listaInteiro.altera(j, listaInteiro.retornaInfo(j - h));
                     contInteracao++;
                     j = j - h;
                 }
                 contInteracao++;
-                listaInteiros.altera(j, c);
+                listaInteiro.altera(j, c);
                 contInteracao++;
             }
             contInteracao++;
             h = h / 2;
         }
         contInteracao++;
+        relatorio.setInteracao((relatorio.getInteracao()+contInteracao));
     }
-
     /*
     *   AlgoritmoDeputado para ordenar lista inteira
      */

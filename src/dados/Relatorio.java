@@ -188,7 +188,8 @@ public class Relatorio implements Serializable {
         this.usoMemoria = rt.maxMemory() - rt.freeMemory();
         gravarArq.print(this.getUsoMemoria() + "bytes;");
         gravarArq.print(this.getQuantidadeLinhas() + ";");
-        gravarArq.print(this.getDescricao());
+        gravarArq.print(this.getDescricao()+ ";");
+        gravarArq.print(getInteracao());
         gravarArq.println();
         arq.close();
     }
