@@ -454,7 +454,7 @@ public class AlgoritmoInteiro {
     }
 
     private static int hash2(int k, int j) {
-        int aux =k*j+1;
+        int aux = k * j + 1;
         return aux;
     }
 
@@ -533,14 +533,14 @@ public class AlgoritmoInteiro {
     }
 
     public static Integer[] duploHashing(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
-       int pos = 0;
+        int pos = 0;
         int h = primo(listaInteiros.getTamanho());
-        Integer [] tabela = tabela(listaInteiros.getTamanho());
+        Integer[] tabela = tabela(listaInteiros.getTamanho());
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
             relatorio.incrementaInteracao();
             pos = (hash(listaInteiros.retornaInfo(i), h));
-            if(pos<0){
-                pos=pos+tabela.length;
+            if (pos < 0) {
+                pos = pos + tabela.length;
             }
             int j = 0;
             while (tabela[pos] != null && pos < 0) {
@@ -549,12 +549,12 @@ public class AlgoritmoInteiro {
                 pos = hash(pos + hash2(pos, j), listaInteiros.getTamanho());
                 //pos=hash(pos+1,tabela.length);
                 relatorio.incrementaTrocaColisao();
-                            if(pos<0){
-                pos=pos+tabela.length;
+                if (pos < 0) {
+                    pos = pos + tabela.length;
+                }
             }
-            }
-                        if(pos<0){
-                pos=pos+tabela.length;
+            if (pos < 0) {
+                pos = pos + tabela.length;
             }
             relatorio.incrementaInteracao();
             tabela[pos] = listaInteiros.retornaInfo(i);
@@ -565,10 +565,10 @@ public class AlgoritmoInteiro {
 
     public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
-        ListaEncadeada<Integer>[] tabela = tabelaEncadeada(50);
+        ListaEncadeada<Integer>[] tabela = tabelaEncadeada(listaInteiros.getTamanho() / 2);
         for (int i = 0; i < listaInteiros.getTamanho(); i++) {
             relatorio.incrementaInteracao();
-            pos = (hash(listaInteiros.retornaInfo(i), 50));
+            pos = (hash(listaInteiros.retornaInfo(i), listaInteiros.getTamanho() / 2));
             tabela[pos].insereFinal(listaInteiros.retornaInfo(i));
             if (tabela[pos].retornaFim() != null) {
                 relatorio.incrementaTrocaColisao();

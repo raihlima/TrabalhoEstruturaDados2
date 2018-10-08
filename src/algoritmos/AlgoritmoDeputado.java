@@ -8,6 +8,7 @@ package algoritmos;
 
 import dados.Relatorio;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import trabalhoed2.Deputado;
 
@@ -654,10 +655,10 @@ public class AlgoritmoDeputado {
 
     public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
-        ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(50);
+        ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(deputados.getTamanho() / 2);
         for (int i = 0; i < deputados.getTamanho(); i++) {
             relatorio.incrementaInteracao();
-            pos = (hash(deputados.retornaInfo(i).getId(), 50));
+            pos = (hash(deputados.retornaInfo(i).getId(), deputados.getTamanho() / 2));
             tabela[pos].insereFinal(deputados.retornaInfo(i));
             if (tabela[pos].retornaFim() != null) {
                 relatorio.incrementaTrocaColisao();
@@ -811,4 +812,37 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return tabela[pos][0];
     }
+
+    private static int hashASCII(String k, int m) {
+        int soma = 0;
+        try {
+            String texto = k;
+            // translating text String to 7 bit ASCII encoding
+            byte[] bytes = texto.getBytes("US-ASCII");
+            for (int i = 0; i < bytes.length; i++) {
+                soma = soma + bytes[i];
+            }
+        } catch (java.io.UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return soma % m;
+    }
+
+    public static ListaEncadeada[] encadeamentoSeparadoASCII(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
+        int pos;
+        ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(deputados.getTamanho() / 2);
+        for (int i = 0; i < deputados.getTamanho(); i++) {
+            relatorio.incrementaInteracao();
+            pos = (hashASCII(deputados.retornaInfo(i).getNome(), deputados.getTamanho() / 2));
+            tabela[pos].insereFinal(deputados.retornaInfo(i));
+            if (tabela[pos].retornaFim() != null) {
+                relatorio.incrementaTrocaColisao();
+            }
+            relatorio.incrementaInteracao();
+        }
+        relatorio.incrementaInteracao();
+        return tabela;
+    }
+
 }
