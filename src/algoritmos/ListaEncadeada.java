@@ -128,7 +128,7 @@ public class ListaEncadeada<Class> implements Serializable {
         } else if (index == this.tamanho - 1) {
             return (Class) this.fim.getObjeto();
         } else if (index < 0 || index >= this.tamanho) {
-            throw new NullPointerException("Index fora do escopo");
+            throw new NullPointerException("Index de valor "+index +", está fora do escopo");
 
         } else {
             No aux;
@@ -183,14 +183,14 @@ public class ListaEncadeada<Class> implements Serializable {
             }
 
         } else {
-            throw new NullPointerException("Index fora do escopo");
+            throw new NullPointerException("Index "+index +"está fora do escopo");
         }
 
     }
 
     public void altera(int index, Class objeto) throws NullPointerException {
         if (index < 0 || index >= this.tamanho) {
-            throw new NullPointerException("Index inválido");
+            throw new NullPointerException("Index "+index +"está fora do escopo");
         } else {
             if (index == 0) {
                 this.inicio.setObjeto(objeto);
@@ -248,7 +248,7 @@ public class ListaEncadeada<Class> implements Serializable {
                 this.tamanho--;
             }
         } else {
-            throw new NullPointerException("Index fora do escopo");
+            throw new NullPointerException("Index "+index +"está fora do escopo");
         }
     }
 
@@ -264,7 +264,7 @@ public class ListaEncadeada<Class> implements Serializable {
             aux = (Class) fim.getObjeto();
             no1 = this.fim;
         } else if (index1 < 0 || index1 >= tamanho) {
-            throw new NullPointerException("Index fora do escopo");
+            throw new NullPointerException("Index1 "+index1 +"está fora do escopo");
         } else {
             if (index1 < tamanho / 2) {
                 no1 = this.inicio;
@@ -286,7 +286,7 @@ public class ListaEncadeada<Class> implements Serializable {
         } else if (index2 == tamanho - 1) {
             no2 = this.fim;
         } else if (index2 < 0 || index2 >= tamanho) {
-            throw new NullPointerException("Index fora do escopo");
+            throw new NullPointerException("Index2 "+index2 +"está fora do escopo");
         } else {
             if (index2 < tamanho / 2) {
                 no2 = this.inicio;
