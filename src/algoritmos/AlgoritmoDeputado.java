@@ -631,6 +631,7 @@ public class AlgoritmoDeputado {
             pos = (hash(deputados.retornaInfo(i).getId(), h));
             if (pos < 0) {
                 pos = pos + tabela.length;
+                relatorio.incrementaTrocaColisao();
             }
             int j = 0;
             while (tabela[pos] != null && pos < 0) {
@@ -641,10 +642,12 @@ public class AlgoritmoDeputado {
                 relatorio.incrementaTrocaColisao();
                 if (pos < 0) {
                     pos = pos + tabela.length;
+                   relatorio.incrementaTrocaColisao();
                 }
             }
             if (pos < 0) {
                 pos = pos + tabela.length;
+                relatorio.incrementaTrocaColisao();
             }
             relatorio.incrementaInteracao();
             tabela[pos] = deputados.retornaInfo(i);

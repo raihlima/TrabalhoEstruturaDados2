@@ -108,7 +108,6 @@ public class Programa extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jPanelInicio = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -153,7 +152,6 @@ public class Programa extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         radioRelatorioOrdenacaoDeputadoCustomizado = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaRelatorioOrdenacao = new javax.swing.JTable();
         jButton16 = new javax.swing.JButton();
@@ -193,11 +191,6 @@ public class Programa extends javax.swing.JFrame {
         menuBusca = new javax.swing.JMenuItem();
         menuRelatorio = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        menuAjuda = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem6 = new javax.swing.JMenuItem();
 
         fileChooser.setDialogTitle("Abrir");
 
@@ -543,8 +536,6 @@ public class Programa extends javax.swing.JFrame {
             }
         });
 
-        jButton12.setText("Relatório Busca Deputado");
-
         jButton7.setText("Busca ASCII");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -559,7 +550,6 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -584,8 +574,6 @@ public class Programa extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
                     .addComponent(jButton7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton12)
                 .addContainerGap())
         );
 
@@ -1119,8 +1107,6 @@ public class Programa extends javax.swing.JFrame {
 
         radioRelatorioOrdenacaoDeputadoCustomizado.setText("Customizado");
 
-        jRadioButton2.setText("Sementes Aleatórias");
-
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -1128,16 +1114,12 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(radioRelatorioOrdenacaoDeputadoCustomizado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addContainerGap(326, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioRelatorioOrdenacaoDeputadoCustomizado)
-                    .addComponent(jRadioButton2))
+                .addComponent(radioRelatorioOrdenacaoDeputadoCustomizado)
                 .addGap(0, 12, Short.MAX_VALUE))
         );
 
@@ -1618,26 +1600,7 @@ public class Programa extends javax.swing.JFrame {
         });
         menuRelatorio.add(jMenuItem15);
 
-        jMenuItem16.setText("Relatório Busca");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
-            }
-        });
-        menuRelatorio.add(jMenuItem16);
-
         jMenuBar1.add(menuRelatorio);
-
-        menuAjuda.setText("Ajuda");
-
-        jMenuItem5.setText("Conteúdo da Ajuda");
-        menuAjuda.add(jMenuItem5);
-        menuAjuda.add(jSeparator2);
-
-        jMenuItem6.setText("Sobre");
-        menuAjuda.add(jMenuItem6);
-
-        jMenuBar1.add(menuAjuda);
 
         setJMenuBar(jMenuBar1);
 
@@ -1681,12 +1644,6 @@ public class Programa extends javax.swing.JFrame {
         CardLayout c1 = (CardLayout) jPanelPrincipal.getLayout();
         c1.show(jPanelPrincipal, "card2");
     }//GEN-LAST:event_jMenuItem15ActionPerformed
-
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        // TODO add your handling code here:
-        CardLayout c1 = (CardLayout) jPanelPrincipal.getLayout();
-        c1.show(jPanelPrincipal, "card3");
-    }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -3004,7 +2961,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
@@ -3024,9 +2980,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -3064,7 +3017,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelRelatorioOrdenacao;
     private javax.swing.JPanel jPanelResultado;
     private javax.swing.JPanel jPanelResultadoASCII;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JScrollPane jScrollPane1;
@@ -3074,11 +3026,9 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTextField jTextValorN;
     private javax.swing.JLabel labelDespesasTotais;
     private javax.swing.JLabel labelQuantidadeDeputado;
-    private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuAlgoritmos;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenuItem menuArquivoAbrir;
