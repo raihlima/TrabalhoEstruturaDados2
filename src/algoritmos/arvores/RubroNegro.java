@@ -92,11 +92,13 @@ public class RubroNegro {
      }      
      private NoRubroNegro rotacionar(int id, NoRubroNegro pai)
      {
+         
          if(id < pai.getId())
-             return pai.setEsq(id < pai.getEsq().getId() ? rotacaoEsquerda(pai.getEsq()) : rotacaoDireita(pai.getEsq()) );  
+             return null;//pai.setEsq(id < pai.getEsq().getId() ? rotacaoEsquerda(pai.getEsq()) : rotacaoDireita(pai.getEsq()) );  
          else
-             return pai.setDir(id < pai.getDir().getId() ? rotacaoEsquerda(pai.getDir()) : rotacaoDireita(pai.getDir()));  
-     }
+             return null//pai.setDir(id < pai.getDir().getId() ? rotacaoEsquerda(pai.getDir()) : rotacaoDireita(pai.getDir()));  
+     ;
+         }
      /* Rotate binary tree node with esq child */
      private NoRubroNegro rotacaoEsquerda(NoRubroNegro k2)
      {

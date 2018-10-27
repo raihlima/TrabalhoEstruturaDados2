@@ -9,6 +9,8 @@ import algoritmos.AlgoritmoDeputado;
 import algoritmos.AlgoritmoInteiro;
 import algoritmos.AlgoritmoPartido;
 import algoritmos.ListaEncadeada;
+import algoritmos.arvores.ArvoreAVL;
+import algoritmos.arvores.Chave;
 import dados.Relatorio;
 import java.awt.CardLayout;
 import java.io.*;
@@ -202,7 +204,7 @@ public class Programa extends javax.swing.JFrame {
         jPanelArvore = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
         jPanel31 = new javax.swing.JPanel();
-        valorOrdenacao1 = new javax.swing.JTextField();
+        valorArvores = new javax.swing.JTextField();
         botaoLinearArvore = new javax.swing.JRadioButton();
         botaoAleatorioArvore = new javax.swing.JRadioButton();
         botaoTudo2 = new javax.swing.JButton();
@@ -599,10 +601,9 @@ public class Programa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton29, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                        .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1643,16 +1644,15 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel21Layout.createSequentialGroup()
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(jPanel21Layout.createSequentialGroup()
-                            .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1797,9 +1797,9 @@ public class Programa extends javax.swing.JFrame {
 
         jPanel31.setBorder(javax.swing.BorderFactory.createTitledBorder("Leitura de Linhas"));
 
-        valorOrdenacao1.addActionListener(new java.awt.event.ActionListener() {
+        valorArvores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                valorOrdenacao1ActionPerformed(evt);
+                valorArvoresActionPerformed(evt);
             }
         });
 
@@ -1830,7 +1830,7 @@ public class Programa extends javax.swing.JFrame {
                         .addGap(43, 43, 43)
                         .addComponent(botaoAleatorioArvore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel31Layout.createSequentialGroup()
-                        .addComponent(valorOrdenacao1)
+                        .addComponent(valorArvores)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoTudo2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -1844,7 +1844,7 @@ public class Programa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoTudo2)
-                    .addComponent(valorOrdenacao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(valorArvores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -2419,7 +2419,7 @@ public class Programa extends javax.swing.JFrame {
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
         // TODO add your handling code here:
-                this.arquivo = null;
+        this.arquivo = null;
         desativaMenu();
     }//GEN-LAST:event_jButton22ActionPerformed
 
@@ -2433,16 +2433,60 @@ public class Programa extends javax.swing.JFrame {
         cardLayout.show(jPanelPrincipal, "parte2");
     }//GEN-LAST:event_jButton20ActionPerformed
 
-    private void valorOrdenacao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorOrdenacao1ActionPerformed
+    private void valorArvoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorArvoresActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_valorOrdenacao1ActionPerformed
+    }//GEN-LAST:event_valorArvoresActionPerformed
 
     private void botaoTudo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTudo2ActionPerformed
         // TODO add your handling code here:
+        LineNumberReader linhaLeitura;
+        try {
+            linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int valor = linhaLeitura.getLineNumber();
+            valorArvores.setText(Integer.toString(valor));
+        } catch (Exception ex) {
+            Logger.getLogger(Programa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_botaoTudo2ActionPerformed
 
     private void botaoComecar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoComecar2ActionPerformed
         // TODO add your handling code here:
+        if (sementesArvores.isSelected()) {
+            try {
+                JOptionPane.showMessageDialog(null, "As árvores serão executadas.\n O programa poderá ficar travado até o termino da execução", "Info", JOptionPane.INFORMATION_MESSAGE);
+                executarSementesOrdenacao();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            try {
+                int qtdLinhas = Integer.parseInt(valorArvores.getText());
+
+                if (qtdLinhas < 1) {
+                    JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+
+                    if (qtdLinhas > 500000) {
+                        int resposta = JOptionPane.showConfirmDialog(null, "Acima de 500000 linhas pode ocorrer erros por falta de memória.\nTem certeza que deseja executar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                        if (resposta == JOptionPane.YES_OPTION) {
+                            JOptionPane.showMessageDialog(null, "A leitura do arquivo começou!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                            executarArvores(qtdLinhas);
+                        } else {
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "A leitura do arquivo começou!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        executarArvores(qtdLinhas);
+
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_botaoComecar2ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
@@ -2546,6 +2590,134 @@ public class Programa extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro inesperado!\n" + e, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void executarArvores(int qtdLinhas) {
+        ArvoreAVL arvoreAVL = new ArvoreAVL();
+
+        listaDeputado.deletarLista();
+        int cont = 0;
+        try (FileInputStream fi = new FileInputStream(arquivo)) {
+            //System.out.println("Tentando ler o arquivo");
+
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            //String
+            String[] partes;
+            String aux;
+
+            if (botaoAleatorioArvore.isSelected()) {
+                //linha = reader.readLine();
+                List<Integer> numAleatorios = new ArrayList<>();
+                for (int i = 1; i < totalLinhas; i++) {
+                    numAleatorios.add(i);
+                }
+                Collections.shuffle(numAleatorios);
+                numAleatorios = numAleatorios.subList(0, qtdLinhas);
+                AlgoritmoDeputado.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
+                int contadorLinhas = 1;
+
+                for (int i = 0; i < qtdLinhas;) {
+
+                    linha = reader.readLine();
+                    if (contadorLinhas == numAleatorios.get(i)) {
+                        String hora;
+                        String data;
+                        aux = linha;
+
+                        partes = aux.split(";");
+                        if (partes[0].equals("0")) {
+                            String[] div = partes[1].split(" ");
+                            data = div[0];
+                            hora = div[1];
+
+                        } else {
+                            data = partes[1] + "-01-01";
+                            hora = "00:00:00";
+                        }
+
+                        int depId = Integer.parseInt(partes[2]);
+                        long cnpj = Long.parseLong(partes[7]);
+                        float gasto = Float.parseFloat(partes[10]);
+                        
+                        
+                        Chave chave = new Chave(data, hora, depId, partes[3], partes[4], partes[5], cnpj, partes[7], partes[8], gasto);
+
+                        if (radioArvoreAVL.isSelected()) {
+                            arvoreAVL.inserir(i, chave);
+                        } else if (radioArvoreVermelhoPreto.isSelected()) {
+
+                        } else if (radioArvoreSplay.isSelected()) {
+
+                        } else if (radioArvoreB.isSelected()) {
+
+                        } else if (radioArvoreCustomizado.isSelected()) {
+
+                        }
+                        i++;
+                    }
+                    contadorLinhas++;
+                }
+            } else {
+
+                for (int i = 1; i < qtdLinhas; i++) {
+
+                    linha = reader.readLine();
+                    aux = linha;
+                    partes = aux.split(";");
+                    String hora;
+                    String data;
+                    aux = linha;
+
+                    partes = aux.split(";");
+                    if (partes[0].equals("0")) {
+                        String[] div = partes[1].split(" ");
+                        data = div[0];
+                        hora = div[1];
+
+                    } else {
+                        data = partes[1] + "-01-01";
+                        hora = "00:00:00";
+                    }
+
+                    Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], Long.parseLong(partes[6]), partes[7], partes[8], Float.parseFloat(partes[9]));
+
+                    if (radioArvoreAVL.isSelected()) {
+                        arvoreAVL.inserir(i, chave);
+                    } else if (radioArvoreVermelhoPreto.isSelected()) {
+
+                    } else if (radioArvoreSplay.isSelected()) {
+
+                    } else if (radioArvoreB.isSelected()) {
+
+                    } else if (radioArvoreCustomizado.isSelected()) {
+
+                    }
+
+                }
+            }
+
+           
+            cardLayout.show(jPanelPrincipal, "parte2");
+        } catch (Exception e) {
+            //System.out.println(cont);
+            JOptionPane.showMessageDialog(this, "Erro inesperado!", "Erro", JOptionPane.ERROR_MESSAGE);
+            if (cont == 0) {
+                System.err.println("Erro ao ler o arquivo.");
+            }
+            if (cont < 3014904) {
+                System.err.println("Erro ao ler o arquivo na linha " + cont);
+            } else {
+
+            }
         }
     }
 
@@ -3640,10 +3812,10 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JTable tabelaPartidoMaiorGasto;
     private javax.swing.JTable tabelaPartidoMenorGasto;
     private javax.swing.JTable tabelaRelatorioOrdenacao;
+    private javax.swing.JTextField valorArvores;
     private javax.swing.JTextField valorBusca;
     private javax.swing.JLabel valorN;
     private javax.swing.JTextField valorOrdenacao;
-    private javax.swing.JTextField valorOrdenacao1;
     private javax.swing.JLabel valorTotalGasto;
     // End of variables declaration//GEN-END:variables
 }

@@ -734,11 +734,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jButton29" pref="268" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jButton5" alignment="0" pref="268" max="32767" attributes="0"/>
-                                      <Component id="jButton9" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jButton7" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jButton5" alignment="0" pref="268" max="32767" attributes="0"/>
+                                  <Component id="jButton9" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jButton7" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -2340,18 +2338,16 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jButton12" min="-2" pref="300" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton20" min="-2" pref="300" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jButton21" min="-2" pref="300" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="jButton22" min="-2" pref="300" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jButton12" min="-2" pref="300" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButton20" min="-2" pref="300" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jButton21" min="-2" pref="300" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jButton22" min="-2" pref="300" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jPanel28" alignment="0" max="32767" attributes="0"/>
                           </Group>
@@ -2710,7 +2706,7 @@
                                       <Component id="botaoAleatorioArvore" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="valorOrdenacao1" max="32767" attributes="0"/>
+                                      <Component id="valorArvores" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="botaoTudo2" min="-2" pref="174" max="-2" attributes="0"/>
                                   </Group>
@@ -2729,7 +2725,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="botaoTudo2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="valorOrdenacao1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="valorArvores" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -2737,9 +2733,9 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JTextField" name="valorOrdenacao1">
+                    <Component class="javax.swing.JTextField" name="valorArvores">
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="valorOrdenacao1ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="valorArvoresActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="botaoLinearArvore">
