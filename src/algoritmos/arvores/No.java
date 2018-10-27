@@ -14,16 +14,18 @@ class No {
     private int altura;
     private No dir;
     private No esq;
+    private Chave chave;
 
     public No() {
         this.dir = null;
         this.esq = null;
     }
 
-    public No(int id) {
+    public No(int id,Chave chave) {
         this.id = id;
         this.dir = null;
         this.esq = null;
+        this.chave = chave;
     }
 
     public int getId() {
