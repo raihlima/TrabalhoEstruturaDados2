@@ -10,6 +10,7 @@ import algoritmos.AlgoritmoInteiro;
 import algoritmos.AlgoritmoPartido;
 import algoritmos.ListaEncadeada;
 import algoritmos.arvores.ArvoreAVL;
+import algoritmos.arvores.ArvoreSplay;
 import algoritmos.arvores.Chave;
 import dados.Relatorio;
 import java.awt.CardLayout;
@@ -2595,6 +2596,7 @@ public class Programa extends javax.swing.JFrame {
 
     private void executarArvores(int qtdLinhas) {
         ArvoreAVL arvoreAVL = new ArvoreAVL();
+        ArvoreSplay arvoreSplay = new ArvoreSplay();
 
         listaDeputado.deletarLista();
         int cont = 0;
@@ -2644,19 +2646,13 @@ public class Programa extends javax.swing.JFrame {
                             hora = "00:00:00";
                         }
 
-                        int depId = Integer.parseInt(partes[2]);
-                        long cnpj = Long.parseLong(partes[7]);
-                        float gasto = Float.parseFloat(partes[10]);
-                        
-                        
-                        Chave chave = new Chave(data, hora, depId, partes[3], partes[4], partes[5], cnpj, partes[7], partes[8], gasto);
-
+                   Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
                         if (radioArvoreAVL.isSelected()) {
                             arvoreAVL.inserir(i, chave);
                         } else if (radioArvoreVermelhoPreto.isSelected()) {
 
                         } else if (radioArvoreSplay.isSelected()) {
-
+                            arvoreSplay.inserir(i, chave);
                         } else if (radioArvoreB.isSelected()) {
 
                         } else if (radioArvoreCustomizado.isSelected()) {
@@ -2668,7 +2664,7 @@ public class Programa extends javax.swing.JFrame {
                 }
             } else {
 
-                for (int i = 1; i < qtdLinhas; i++) {
+                for (int i = 0; i < qtdLinhas; i++) {
 
                     linha = reader.readLine();
                     aux = linha;
@@ -2688,14 +2684,15 @@ public class Programa extends javax.swing.JFrame {
                         hora = "00:00:00";
                     }
 
-                    Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], Long.parseLong(partes[6]), partes[7], partes[8], Float.parseFloat(partes[9]));
+
+                    Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
 
                     if (radioArvoreAVL.isSelected()) {
                         arvoreAVL.inserir(i, chave);
                     } else if (radioArvoreVermelhoPreto.isSelected()) {
 
                     } else if (radioArvoreSplay.isSelected()) {
-
+                        arvoreSplay.inserir(i, chave);
                     } else if (radioArvoreB.isSelected()) {
 
                     } else if (radioArvoreCustomizado.isSelected()) {
@@ -2705,7 +2702,6 @@ public class Programa extends javax.swing.JFrame {
                 }
             }
 
-           
             cardLayout.show(jPanelPrincipal, "parte2");
         } catch (Exception e) {
             //System.out.println(cont);

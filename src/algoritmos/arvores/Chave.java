@@ -16,7 +16,7 @@ public class Chave {
     private String partido;
     private String estado;
     private String deputado;
-    private long cnpj;
+    private String cnpj;
     private String descricao;
     private String empresa;
     private float gasto;
@@ -24,7 +24,7 @@ public class Chave {
     public Chave() {
     }
 
-    public Chave(String data, String hora, int idDeputado, String partido, String estado, String deputado, long cnpj, String descricao, String empresa, float gasto) {
+    public Chave(String data, String hora, int idDeputado, String partido, String estado, String deputado, String cnpj, String descricao, String empresa, float gasto) {
         this.data = data;
         this.hora = hora;
         this.idDeputado = idDeputado;
@@ -93,11 +93,11 @@ public class Chave {
         this.deputado = deputado;
     }
 
-    public long getCnpj() {
+    public String getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(long cnpj) {
+    public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
 

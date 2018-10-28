@@ -12,21 +12,23 @@ import java.util.Collections;
  *
  * @author ice
  */
-public class Deputado extends Generico {
-
+public class Deputado {
+    private String nome;
     private String partido;
     private String estado;
     private int id;
     private ArrayList<Recibo> recibos;
+    private float totalGasto;
 
 
     public Deputado() {
         this.recibos = new ArrayList<>();
-        super.setTotalGasto(0);
+        this.totalGasto = 0;
     }
 
     public Deputado(String nome, String partido, String estado, int id) {
-        super(nome,0);
+        this.nome = nome;
+        this.totalGasto = 0;
         this.partido = partido;
         this.estado = estado;
         this.id = id;
@@ -43,11 +45,11 @@ public class Deputado extends Generico {
     }
 
     public String getNome() {
-        return super.getNome();
+        return nome;
     }
 
     public void setNome(String nome) {
-        super.setNome(nome);
+        this.nome = nome;
     }
 
     public String getPartido() {
@@ -66,16 +68,8 @@ public class Deputado extends Generico {
         this.estado = estado;
     }
 
-    public float getTotalGasto() {
-        return super.getTotalGasto();
-    }
-
-    public void setTotalGasto(float totalGasto) {
-        super.setTotalGasto(totalGasto);
-    }
-
     public void imprimeDeputado() {
-        System.out.println("Nome: " + super.getNome() + " Partido: " + this.partido + " " + this.estado + " ID: " + this.id);
+        System.out.println("Nome: " + getNome() + " Partido: " + this.partido + " " + this.estado + " ID: " + this.id);
     }
 
     public ArrayList<Recibo> getRecibos() {
@@ -96,4 +90,13 @@ public class Deputado extends Generico {
         }
     }
 
+    public float getTotalGasto() {
+        return totalGasto;
+    }
+
+    public void setTotalGasto(float totalGasto) {
+        this.totalGasto = totalGasto;
+    }
+
+    
 }
