@@ -10,6 +10,7 @@ package algoritmos.arvores;
  * @author ice
  */
 public class Chave {
+
     private String data;
     private String hora;
     private int idDeputado;
@@ -20,6 +21,7 @@ public class Chave {
     private String descricao;
     private String empresa;
     private float gasto;
+    private int id;
 
     public Chave() {
     }
@@ -35,6 +37,21 @@ public class Chave {
         this.descricao = descricao;
         this.empresa = empresa;
         this.gasto = gasto;
+        this.id = -1;
+    }
+
+    public Chave(String data, String hora, int idDeputado, String partido, String estado, String deputado, String cnpj, String descricao, String empresa, float gasto, int id) {
+        this.data = data;
+        this.hora = hora;
+        this.idDeputado = idDeputado;
+        this.partido = partido;
+        this.estado = estado;
+        this.deputado = deputado;
+        this.cnpj = cnpj;
+        this.descricao = descricao;
+        this.empresa = empresa;
+        this.gasto = gasto;
+        this.id = id;
     }
 
     public float getGasto() {
@@ -116,7 +133,13 @@ public class Chave {
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
     }
-    
-    
-            
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }
