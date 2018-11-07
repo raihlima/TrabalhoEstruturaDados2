@@ -10,8 +10,10 @@ import algoritmos.AlgoritmoInteiro;
 import algoritmos.AlgoritmoPartido;
 import algoritmos.ListaEncadeada;
 import algoritmos.arvores.ArvoreAVL;
+import algoritmos.arvores.ArvoreB;
 import algoritmos.arvores.ArvoreSplay;
 import algoritmos.arvores.Chave;
+import algoritmos.arvores.RubroNegro;
 import dados.Relatorio;
 import java.awt.CardLayout;
 import java.io.*;
@@ -2595,8 +2597,28 @@ public class Programa extends javax.swing.JFrame {
     }
 
     private void executarArvores(int qtdLinhas) {
+        int ordem = 0;
         ArvoreAVL arvoreAVL = new ArvoreAVL();
         ArvoreSplay arvoreSplay = new ArvoreSplay();
+        RubroNegro arvoreRubroNegro = new RubroNegro();
+
+        //ARRUMAR E TRATATAR NÃO ESQUECER, SE ESQUECER A CULPA É DO JACÓ
+        if (radioArvoreB.isSelected()) {
+            boolean isInteiro = false;
+            while (isInteiro == false) {
+                try {
+                    ordem = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o valor da Ordem: ", "Digite um valor",JOptionPane.INFORMATION_MESSAGE));
+                    if(ordem <=1){
+                        throw new NumberFormatException("Número negativo!");
+                    }
+                    isInteiro = true;
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Digite um valor válido!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    isInteiro = false;
+                }
+            }
+        }
+        ArvoreB arvoreB = new ArvoreB(ordem);
 
         listaDeputado.deletarLista();
         int cont = 0;
@@ -2646,15 +2668,15 @@ public class Programa extends javax.swing.JFrame {
                             hora = "00:00:00";
                         }
 
-                   Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                        Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
                         if (radioArvoreAVL.isSelected()) {
                             arvoreAVL.inserir(i, chave);
                         } else if (radioArvoreVermelhoPreto.isSelected()) {
-
+                            arvoreRubroNegro.inserir(i, chave);
                         } else if (radioArvoreSplay.isSelected()) {
                             arvoreSplay.inserir(i, chave);
                         } else if (radioArvoreB.isSelected()) {
-
+                            arvoreB.inserir(i, chave);
                         } else if (radioArvoreCustomizado.isSelected()) {
 
                         }
@@ -2684,17 +2706,16 @@ public class Programa extends javax.swing.JFrame {
                         hora = "00:00:00";
                     }
 
-
                     Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
 
                     if (radioArvoreAVL.isSelected()) {
                         arvoreAVL.inserir(i, chave);
                     } else if (radioArvoreVermelhoPreto.isSelected()) {
-
+                        arvoreRubroNegro.inserir(i, chave);
                     } else if (radioArvoreSplay.isSelected()) {
                         arvoreSplay.inserir(i, chave);
                     } else if (radioArvoreB.isSelected()) {
-
+                        arvoreB.inserir(i, chave);
                     } else if (radioArvoreCustomizado.isSelected()) {
 
                     }
