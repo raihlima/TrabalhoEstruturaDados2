@@ -9,41 +9,28 @@ package algoritmos.arvores;
  *
  * @author rodri
  */
-public class NoRubroNegro {
+class NoRubroNegro {
 
-    private NoRubroNegro esq;
-    private NoRubroNegro dir;
     private int id;
     private int cor;
+    private NoRubroNegro esq;
+    private NoRubroNegro dir = null;
+    private NoRubroNegro pai = null;
     private Chave chave;
 
-    /* Constructor */
-    public NoRubroNegro(int id) {
-        this(id, null, null);
-    }
-
-    /* Constructor */
-    public NoRubroNegro(int id, NoRubroNegro esq, NoRubroNegro dir) {
-        this.esq = esq;
-        this.dir = dir;
+     NoRubroNegro(int id) {
         this.id = id;
-        this.cor = 1;
+        this.cor = -1;
+        this.dir = null;
+        this.esq = null;
     }
-
-    public NoRubroNegro getEsq() {
-        return esq;
-    }
-
-    public void setEsq(NoRubroNegro esq) {
-        this.esq = esq;
-    }
-
-    public NoRubroNegro getDir() {
-        return dir;
-    }
-
-    public void setDir(NoRubroNegro dir) {
-        this.dir = dir;
+    
+    public NoRubroNegro(int id, Chave chave) {
+        this.chave = chave;
+        this.id = id;
+        this.cor = -1;
+        this.dir = null;
+        this.esq = null;
     }
 
     public int getId() {
@@ -62,6 +49,30 @@ public class NoRubroNegro {
         this.cor = cor;
     }
 
+    public NoRubroNegro getEsq() {
+        return esq;
+    }
+
+    public void setEsq(NoRubroNegro esq) {
+        this.esq = esq;
+    }
+
+    public NoRubroNegro getDir() {
+        return dir;
+    }
+
+    public void setDir(NoRubroNegro dir) {
+        this.dir = dir;
+    }
+
+    public NoRubroNegro getPai() {
+        return pai;
+    }
+
+    public void setPai(NoRubroNegro pai) {
+        this.pai = pai;
+    }
+
     public Chave getChave() {
         return chave;
     }
@@ -69,6 +80,5 @@ public class NoRubroNegro {
     public void setChave(Chave chave) {
         this.chave = chave;
     }
-
+    
 }
-
