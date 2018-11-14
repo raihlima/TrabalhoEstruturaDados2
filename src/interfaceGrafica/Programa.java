@@ -18,6 +18,7 @@ import dados.Relatorio;
 import java.awt.CardLayout;
 import java.io.*;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,7 @@ import javax.swing.table.DefaultTableModel;
 import trabalhoed2.Deputado;
 import trabalhoed2.Partido;
 import trabalhoed2.Recibo;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -204,6 +206,7 @@ public class Programa extends javax.swing.JFrame {
         jPanel35 = new javax.swing.JPanel();
         jButton23 = new javax.swing.JButton();
         jButton24 = new javax.swing.JButton();
+        jButton25 = new javax.swing.JButton();
         jPanelArvore = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
         jPanel31 = new javax.swing.JPanel();
@@ -222,6 +225,16 @@ public class Programa extends javax.swing.JFrame {
         jPanel33 = new javax.swing.JPanel();
         radioArvoreCustomizado = new javax.swing.JRadioButton();
         sementesArvores = new javax.swing.JRadioButton();
+        jPanelBuscaGasto = new javax.swing.JPanel();
+        jPanel36 = new javax.swing.JPanel();
+        jButton26 = new javax.swing.JButton();
+        jPanel37 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jPanel38 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         menuArquivoAbrir = new javax.swing.JMenuItem();
@@ -1732,6 +1745,13 @@ public class Programa extends javax.swing.JFrame {
             }
         });
 
+        jButton25.setText("Busca por Gasto");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel35Layout = new javax.swing.GroupLayout(jPanel35);
         jPanel35.setLayout(jPanel35Layout);
         jPanel35Layout.setHorizontalGroup(
@@ -1740,18 +1760,22 @@ public class Programa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel35Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel35Layout.setVerticalGroup(
             jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel35Layout.createSequentialGroup()
-                .addComponent(jButton23)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel35Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton23)
+                    .addComponent(jButton25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton24)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
@@ -1780,9 +1804,9 @@ public class Programa extends javax.swing.JFrame {
         jPanelParte2Layout.setHorizontalGroup(
             jPanelParte2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelParte2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(376, Short.MAX_VALUE)
                 .addComponent(jPanel29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(376, Short.MAX_VALUE))
         );
         jPanelParte2Layout.setVerticalGroup(
             jPanelParte2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1927,7 +1951,8 @@ public class Programa extends javax.swing.JFrame {
         });
 
         grupoArvoreMetodo.add(sementesArvores);
-        sementesArvores.setText("Sementes Aleatórias ( 10 vezes)");
+        sementesArvores.setText("Sementes Aleatórias (5 vezes)");
+        sementesArvores.setToolTipText("");
         sementesArvores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sementesArvoresActionPerformed(evt);
@@ -1941,7 +1966,7 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(jPanel33Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(radioArvoreCustomizado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(sementesArvores)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -2004,6 +2029,119 @@ public class Programa extends javax.swing.JFrame {
         );
 
         jPanelPrincipal.add(jPanelArvore, "arvore");
+
+        jPanelBuscaGasto.setBackground(new java.awt.Color(33, 39, 132));
+
+        jPanel36.setBorder(new javax.swing.border.MatteBorder(null));
+
+        jButton26.setText("Voltar");
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton26ActionPerformed(evt);
+            }
+        });
+
+        jPanel37.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisa"));
+
+        jComboBox1.setEditable(true);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
+
+        javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
+        jPanel37.setLayout(jPanel37Layout);
+        jPanel37Layout.setHorizontalGroup(
+            jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel37Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel37Layout.setVerticalGroup(
+            jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel37Layout.createSequentialGroup()
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel38.setBorder(javax.swing.BorderFactory.createTitledBorder("Gasto"));
+
+        jLabel2.setText("Palavra Pesquisada:");
+
+        jLabel3.setText("Total Gasto:");
+
+        javax.swing.GroupLayout jPanel38Layout = new javax.swing.GroupLayout(jPanel38);
+        jPanel38.setLayout(jPanel38Layout);
+        jPanel38Layout.setHorizontalGroup(
+            jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel38Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel38Layout.setVerticalGroup(
+            jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
+                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel36Layout = new javax.swing.GroupLayout(jPanel36);
+        jPanel36.setLayout(jPanel36Layout);
+        jPanel36Layout.setHorizontalGroup(
+            jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel36Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel36Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel37, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel36Layout.setVerticalGroup(
+            jPanel36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel36Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel37, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton26)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanelBuscaGastoLayout = new javax.swing.GroupLayout(jPanelBuscaGasto);
+        jPanelBuscaGasto.setLayout(jPanelBuscaGastoLayout);
+        jPanelBuscaGastoLayout.setHorizontalGroup(
+            jPanelBuscaGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBuscaGastoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelBuscaGastoLayout.setVerticalGroup(
+            jPanelBuscaGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBuscaGastoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanelPrincipal.add(jPanelBuscaGasto, "buscaGasto");
 
         menuArquivo.setText("Arquivo");
 
@@ -2459,7 +2597,7 @@ public class Programa extends javax.swing.JFrame {
         if (sementesArvores.isSelected()) {
             try {
                 JOptionPane.showMessageDialog(null, "As árvores serão executadas.\n O programa poderá ficar travado até o termino da execução", "Info", JOptionPane.INFORMATION_MESSAGE);
-                executarSementesOrdenacao();
+                executarSementesArvores();
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -2524,6 +2662,77 @@ public class Programa extends javax.swing.JFrame {
         // TODO add your handling code here:
         cardLayout.show(jPanelPrincipal, "arvore");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(jPanelPrincipal, "buscaGasto");
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(jPanelPrincipal, "parte2");
+    }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void executarSementesArvores() {
+        criarArquivoInsercaoArvores(1000);
+        criarArquivoInsercaoArvores(5000);
+        criarArquivoInsercaoArvores(10000);
+        criarArquivoInsercaoArvores(50000);
+        criarArquivoInsercaoArvores(100000);
+        criarArquivoInsercaoArvores(500000);
+
+    }
+
+    private void criarArquivoInsercaoArvores(int qtdLinhas) {
+        for (int cont = 0; cont < 5; cont++) {
+            try (FileInputStream fi = new FileInputStream(arquivo)) {
+                //Leitura
+                BufferedInputStream bis = new BufferedInputStream(fi);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+                String linha = reader.readLine();
+
+                //Saber a quantidade de linhas          
+                LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+                linhaLeitura.skip(arquivo.length());
+                int totalLinhas = linhaLeitura.getLineNumber();
+
+                List<Integer> numAleatorios = new ArrayList<>();
+                for (int i = 1; i < totalLinhas; i++) {
+                    numAleatorios.add(i);
+                }
+
+                Collections.shuffle(numAleatorios);
+                numAleatorios = numAleatorios.subList(0, qtdLinhas);
+                AlgoritmoDeputado.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
+
+                int contadorLinhas = 1;
+
+                //Gravação
+                new File("Relatorios").mkdirs();
+                File arquivo = new File("Relatorios/entradaInsercao"+qtdLinhas+" Semente" + (cont+1) + ".txt");
+                FileWriter arq = new FileWriter(arquivo, true);
+                PrintWriter gravarArq = new PrintWriter(arq);
+
+                //Saber quantidade Linhas
+                LineNumberReader arqLinhaFinal = new LineNumberReader(new FileReader(arquivo));
+                arqLinhaFinal.skip(arquivo.length());
+
+                for (int i = 0; i < qtdLinhas;) {
+                    linha = reader.readLine();
+                    if (contadorLinhas == numAleatorios.get(i)) {
+                        gravarArq.println(linha);
+                        i++;
+                    }
+                    contadorLinhas++;
+
+                }
+                arq.close();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Inserção!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }
 
     private void preencherTabelaASCII(int n) {
         valorN.setText(jTextValorN.getText());
@@ -2597,19 +2806,23 @@ public class Programa extends javax.swing.JFrame {
     }
 
     private void executarArvores(int qtdLinhas) {
-        int ordem = 0;
+        int ordem = 1;
         ArvoreAVL arvoreAVL = new ArvoreAVL();
         ArvoreSplay arvoreSplay = new ArvoreSplay();
         RubroNegro arvoreRubroNegro = new RubroNegro();
+        ArvoreB arvoreB = new ArvoreB(ordem);
 
         //ARRUMAR E TRATATAR NÃO ESQUECER, SE ESQUECER A CULPA É DO JACÓ
         if (radioArvoreB.isSelected()) {
             boolean isInteiro = false;
             while (isInteiro == false) {
                 try {
-                    ordem = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o valor da Ordem: ", "Digite um valor",JOptionPane.INFORMATION_MESSAGE));
-                    if(ordem <=1){
+                    ordem = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o valor da Ordem: ", "Digite um valor", JOptionPane.INFORMATION_MESSAGE));
+
+                    if (ordem <= 1) {
                         throw new NumberFormatException("Número negativo!");
+                    } else {
+                        arvoreB = new ArvoreB(ordem);
                     }
                     isInteiro = true;
                 } catch (Exception e) {
@@ -2618,7 +2831,6 @@ public class Programa extends javax.swing.JFrame {
                 }
             }
         }
-        ArvoreB arvoreB = new ArvoreB(ordem);
 
         listaDeputado.deletarLista();
         int cont = 0;
@@ -2722,7 +2934,7 @@ public class Programa extends javax.swing.JFrame {
 
                 }
             }
-
+            JOptionPane.showMessageDialog(this, "Árvore executada com sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             cardLayout.show(jPanelPrincipal, "parte2");
         } catch (Exception e) {
             //System.out.println(cont);
@@ -3711,6 +3923,8 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton29;
     private javax.swing.JButton jButton3;
@@ -3720,7 +3934,10 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelNomeArquivo1;
     private javax.swing.JLabel jLabelNomeArquivo2;
     private javax.swing.JLabel jLabelNomeArquivo3;
@@ -3757,6 +3974,9 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel333;
     private javax.swing.JPanel jPanel34;
     private javax.swing.JPanel jPanel35;
+    private javax.swing.JPanel jPanel36;
+    private javax.swing.JPanel jPanel37;
+    private javax.swing.JPanel jPanel38;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -3767,6 +3987,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelArvore;
     private javax.swing.JPanel jPanelBusca;
     private javax.swing.JPanel jPanelBuscaACII;
+    private javax.swing.JPanel jPanelBuscaGasto;
     private javax.swing.JPanel jPanelExecutando;
     private javax.swing.JPanel jPanelInicio;
     private javax.swing.JPanel jPanelOrdenacao;
@@ -3786,6 +4007,8 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextValorN;
     private javax.swing.JLabel labelDespesasTotais;
     private javax.swing.JLabel labelQuantidadeDeputado;
