@@ -69,7 +69,7 @@ public class AlgoritmoInteiro {
             }
             contIteracao++;
             listaInteiros.altera((j + 1), chave);
-            relatorio.incrementaTrocaColisao();
+            relatorio.incrementaTrocaColisaoCopia();
         }
         contIteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
@@ -139,7 +139,7 @@ public class AlgoritmoInteiro {
                 contInteracao++;
                 j++;
             }
-            relatorio.incrementaTrocaColisao();
+            relatorio.incrementaTrocaColisaoCopia();
             contInteracao++;
             k++;
         }
@@ -162,7 +162,7 @@ public class AlgoritmoInteiro {
             j++;
             k++;
         }
-        relatorio.incrementaTrocaColisao();
+        relatorio.incrementaTrocaColisaoCopia();
         contInteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
@@ -410,7 +410,7 @@ public class AlgoritmoInteiro {
                 contInteracao++;
                 listaInteiros.altera(j, c);
                 contInteracao++;
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
             }
             contInteracao++;
             h = h / 2;
@@ -491,7 +491,7 @@ public class AlgoritmoInteiro {
             while (tabela[pos] != null) {
                 relatorio.incrementaInteracao();
                 pos = hash(pos + 1, listaInteiros.getTamanho());
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
             }
             relatorio.incrementaInteracao();
             tabela[pos] = listaInteiros.retornaInfo(i);
@@ -515,7 +515,7 @@ public class AlgoritmoInteiro {
                 relatorio.incrementaInteracao();
                 j++;
                 pos = hash(pos + (j * j), listaInteiros.getTamanho());
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
                 if (pos < 0) {
                     pos += tabela.length;
                 }
@@ -548,7 +548,7 @@ public class AlgoritmoInteiro {
                 j++;
                 pos = hash(pos + hash2(pos, j), listaInteiros.getTamanho());
                 //pos=hash(pos+1,tabela.length);
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
                 if (pos < 0) {
                     pos = pos + tabela.length;
                 }
@@ -571,7 +571,7 @@ public class AlgoritmoInteiro {
             pos = (hash(listaInteiros.retornaInfo(i), listaInteiros.getTamanho() / 2));
             tabela[pos].insereFinal(listaInteiros.retornaInfo(i));
             if (tabela[pos].retornaFim() != null) {
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
             }
             relatorio.incrementaInteracao();
         }
@@ -591,7 +591,7 @@ public class AlgoritmoInteiro {
                 while (tabela[pos][0] != null) {
                     relatorio.incrementaInteracao();
                     pos = pos - 1;
-                    relatorio.incrementaTrocaColisao();
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
                 relatorio.incrementaInteracao();
                 tabela[pos][0] = listaInteiros.retornaInfo(i);

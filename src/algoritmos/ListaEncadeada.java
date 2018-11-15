@@ -357,7 +357,7 @@ public class ListaEncadeada<Class> implements Serializable {
 
         no1.setObjeto((Class) no2.getObjeto());
         no2.setObjeto(aux);
-        relatorio.incrementaTrocaColisao();
+        relatorio.incrementaTrocaColisaoCopia();
     }
     
     public void deletarLista(){

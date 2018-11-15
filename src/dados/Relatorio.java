@@ -34,7 +34,7 @@ public class Relatorio implements Serializable {
     private String tipoOrganizacao; //Deputado ou Partido
     private String tipoExecucao; //Customizada ou Sementes
     private String tipoLeitura; //Linear ou Aleatória
-    private int trocaColisao; //Troca para ordenação e Colisão para Busca(Hash)
+    private int trocaColisaoCopia; //Troca para ordenação e Colisão para Busca(Hash)
     private String tempoExecucao;
     private String sistemaOperacional;
     private long tempoIni;
@@ -46,7 +46,7 @@ public class Relatorio implements Serializable {
         this.sistemaOperacional = System.getProperty("os.name");
         this.tempoIni = System.nanoTime();
         this.interacao = 0;
-        this.trocaColisao = 0;
+        this.trocaColisaoCopia = 0;
     }
 
     public Relatorio(int quantidadeLinhas, String tipoExecucao, String tipoLeitura, String tipoOrganizacao) {
@@ -58,7 +58,7 @@ public class Relatorio implements Serializable {
         this.tipoOrganizacao = tipoOrganizacao;
         this.tempoIni = System.nanoTime();
         this.interacao = 0;
-        this.trocaColisao = 0;
+        this.trocaColisaoCopia = 0;
     }
 
     public Relatorio(String descricao) {
@@ -67,7 +67,7 @@ public class Relatorio implements Serializable {
         this.sistemaOperacional = System.getProperty("os.name");
         this.tempoIni = System.nanoTime();
         this.interacao = 0;
-        this.trocaColisao = 0;
+        this.trocaColisaoCopia = 0;
     }
 
     public Calendar getDataInicio() {
@@ -177,7 +177,7 @@ public class Relatorio implements Serializable {
             int totalLinhas = linhaLeitura.getLineNumber();
             
             if(totalLinhas==0){
-                gravarArq.println("Tipo;Data_Inicio;Hora_Inicio;Data_Termino;Hora_Termino;Sistema_Operacional;Tempo(ns);Tempo(ms);Gasto_Memoria(bytes);Linhas_Lidas;Algoritmo;Interacoes;Troca_ou_Colisao");
+                gravarArq.println("Tipo;Data_Inicio;Hora_Inicio;Data_Termino;Hora_Termino;Sistema_Operacional;Tempo(ns);Tempo(ms);Gasto_Memoria(bytes);Linhas_Lidas;Algoritmo;Interacoes;Troca_ou_Colisao_ou_Copia");
             }
             
             if (this.tipoExecucao.equalsIgnoreCase("Sementes")) {
@@ -195,7 +195,7 @@ public class Relatorio implements Serializable {
             gravarArq.print(this.getQuantidadeLinhas() + ";");
             gravarArq.print(this.getDescricao() + ";");
             gravarArq.print(getInteracao() + ";");
-            gravarArq.print(getTrocaColisao());
+            gravarArq.print(getTrocaColisaoCopia());
             gravarArq.println();
             arq.close();
             
@@ -224,16 +224,17 @@ public class Relatorio implements Serializable {
         this.interacao = interacao;
     }
 
-    public int getTrocaColisao() {
-        return trocaColisao;
+    public int getTrocaColisaoCopia() {
+        return trocaColisaoCopia;
     }
 
-    public void setTrocaColisao(int trocaColisao) {
-        this.trocaColisao = trocaColisao;
+    public void setTrocaColisao(int trocaColisaoCopia) {
+        this.trocaColisaoCopia = trocaColisaoCopia;
     }
 
-    public void incrementaTrocaColisao() {
-        this.trocaColisao = this.trocaColisao + 1;
+    public void incrementaTrocaColisaoCopia() {
+        this.trocaColisaoCopia = this.trocaColisaoCopia + 1;
     }
+
 
 }

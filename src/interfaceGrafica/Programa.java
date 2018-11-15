@@ -13,6 +13,7 @@ import algoritmos.arvores.ArvoreAVL;
 import algoritmos.arvores.ArvoreB;
 import algoritmos.arvores.ArvoreSplay;
 import algoritmos.arvores.Chave;
+import algoritmos.arvores.MinhaArvore;
 import algoritmos.arvores.RubroNegro;
 import dados.Relatorio;
 import java.awt.CardLayout;
@@ -2681,6 +2682,9 @@ public class Programa extends javax.swing.JFrame {
         criarArquivoInsercaoArvores(100000);
         criarArquivoInsercaoArvores(500000);
 
+        JOptionPane.showMessageDialog(this, "Arquivos Criados com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+
+        cardLayout.show(jPanelPrincipal, "parte2");
     }
 
     private void criarArquivoInsercaoArvores(int qtdLinhas) {
@@ -2708,9 +2712,9 @@ public class Programa extends javax.swing.JFrame {
                 int contadorLinhas = 1;
 
                 //Gravação
-                new File("Relatorios").mkdirs();
-                File arquivo = new File("Relatorios/entradaInsercao"+qtdLinhas+" Semente" + (cont+1) + ".txt");
-                FileWriter arq = new FileWriter(arquivo, true);
+                new File("DadosEntrada/Semente" + (cont + 1)).mkdirs();
+                File arquivo = new File("DadosEntrada/Semente" + (cont + 1) + "/entradaInsercao" + qtdLinhas + ".txt");
+                FileWriter arq = new FileWriter(arquivo);
                 PrintWriter gravarArq = new PrintWriter(arq);
 
                 //Saber quantidade Linhas
@@ -2727,9 +2731,277 @@ public class Programa extends javax.swing.JFrame {
 
                 }
                 arq.close();
+
+                criarArquivoBusca(numAleatorios, cont + 1);
+                criarArquivoRemocao(numAleatorios, cont + 1);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Inserção!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
+        }
+
+    }
+
+    private void criarArquivoBusca(List<Integer> idGastos, int semente) {
+        //Criar Arquivo entradaBusca.txt
+        try (FileInputStream fi = new FileInputStream(arquivo)) {
+            //Leitura
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            List<Integer> numAleatorios = new ArrayList<>();
+            for (int i = 1; i < totalLinhas; i++) {
+                numAleatorios.add(i);
+            }
+
+            Collections.shuffle(numAleatorios);
+            numAleatorios = numAleatorios.subList(0, idGastos.size() / 2);
+
+            List<Integer> aux = new ArrayList<>();
+
+            Collections.shuffle(idGastos);
+            aux = idGastos.subList(0, idGastos.size() / 2);
+            numAleatorios.addAll(aux);
+//AlgoritmoDeputado.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
+
+            //Gravação
+            new File("DadosEntrada/Semente" + semente).mkdirs();
+            File arquivo = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + idGastos.size() + ".txt");
+            FileWriter arq = new FileWriter(arquivo);
+            PrintWriter gravarArq = new PrintWriter(arq);
+
+            //Saber quantidade Linhas
+            LineNumberReader arqLinhaFinal = new LineNumberReader(new FileReader(arquivo));
+            arqLinhaFinal.skip(arquivo.length());
+
+            for (int i = 0; i < numAleatorios.size(); i++) {
+                gravarArq.println(numAleatorios.get(i));
+
+            }
+            arq.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Busca!\n" + ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //Criar Arquivo entradaBuscaOrdenado
+        try (FileInputStream fi = new FileInputStream(arquivo)) {
+            //Leitura
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            List<Integer> numAleatorios = new ArrayList<>();
+
+            for (int i = 1; i < totalLinhas; i++) {
+                numAleatorios.add(i);
+            }
+            int totalLinha = idGastos.size();
+            int tamanhoArray = (int) (idGastos.size() * 0.35);
+
+            Collections.shuffle(numAleatorios);
+            numAleatorios = numAleatorios.subList(0, tamanhoArray);
+
+            List<Integer> aux = new ArrayList<>();
+
+            Collections.shuffle(idGastos);
+            aux = idGastos.subList(0, tamanhoArray);
+
+            numAleatorios.addAll(aux);
+
+            for (int i = numAleatorios.size(); i < totalLinha; i++) {
+                numAleatorios.add(numAleatorios.get((int) (Math.random() * numAleatorios.size())));
+            }
+
+            AlgoritmoDeputado.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
+
+            //Gravação
+            new File("DadosEntrada/Semente" + semente).mkdirs();
+            File arquivo = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + idGastos.size() + ".txt");
+            FileWriter arq = new FileWriter(arquivo);
+            PrintWriter gravarArq = new PrintWriter(arq);
+
+            //Saber quantidade Linhas
+            LineNumberReader arqLinhaFinal = new LineNumberReader(new FileReader(arquivo));
+            arqLinhaFinal.skip(arquivo.length());
+
+            for (int i = 0; i < numAleatorios.size(); i++) {
+                gravarArq.println(numAleatorios.get(i));
+
+            }
+            arq.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Busca Ordenado!\n" + ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void criarArquivoRemocao(List<Integer> idGastos, int semente) {
+        //Criar Arquivo entradaRemoção.txt
+        try (FileInputStream fi = new FileInputStream(arquivo)) {
+            //Leitura
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            List<Integer> numAleatorios = new ArrayList<>();
+            for (int i = 1; i < totalLinhas; i++) {
+                numAleatorios.add(i);
+            }
+
+            Collections.shuffle(numAleatorios);
+            numAleatorios = numAleatorios.subList(0, idGastos.size() / 2);
+
+            List<Integer> aux = new ArrayList<>();
+
+            Collections.shuffle(idGastos);
+            aux = idGastos.subList(0, idGastos.size() / 2);
+            numAleatorios.addAll(aux);
+//AlgoritmoDeputado.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
+
+            //Gravação
+            new File("DadosEntrada/Semente" + semente).mkdirs();
+            File arquivo = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + idGastos.size() + ".txt");
+            FileWriter arq = new FileWriter(arquivo);
+            PrintWriter gravarArq = new PrintWriter(arq);
+
+            //Saber quantidade Linhas
+            LineNumberReader arqLinhaFinal = new LineNumberReader(new FileReader(arquivo));
+            arqLinhaFinal.skip(arquivo.length());
+
+            for (int i = 0; i < numAleatorios.size(); i++) {
+                gravarArq.println(numAleatorios.get(i));
+
+            }
+            arq.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Remocao!\n" + ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //Criar Arquivo entradaBuscaOrdenado
+        try (FileInputStream fi = new FileInputStream(arquivo)) {
+            //Leitura
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            List<Integer> numAleatorios = new ArrayList<>();
+
+            for (int i = 1; i < totalLinhas; i++) {
+                numAleatorios.add(i);
+            }
+            int totalLinha = idGastos.size();
+            int tamanhoArray = (int) (idGastos.size() * 0.35);
+
+            Collections.shuffle(numAleatorios);
+            numAleatorios = numAleatorios.subList(0, tamanhoArray);
+
+            List<Integer> aux = new ArrayList<>();
+
+            Collections.shuffle(idGastos);
+            aux = idGastos.subList(0, tamanhoArray);
+
+            numAleatorios.addAll(aux);
+
+            for (int i = numAleatorios.size(); i < totalLinha; i++) {
+                numAleatorios.add(numAleatorios.get((int) (Math.random() * numAleatorios.size())));
+            }
+
+            AlgoritmoDeputado.mergeSortInteiro(numAleatorios, 0, numAleatorios.size() - 1);
+
+            //Gravação
+            new File("DadosEntrada/Semente" + semente).mkdirs();
+            File arquivo = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + idGastos.size() + ".txt");
+            FileWriter arq = new FileWriter(arquivo);
+            PrintWriter gravarArq = new PrintWriter(arq);
+
+            //Saber quantidade Linhas
+            LineNumberReader arqLinhaFinal = new LineNumberReader(new FileReader(arquivo));
+            arqLinhaFinal.skip(arquivo.length());
+
+            for (int i = 0; i < numAleatorios.size(); i++) {
+                gravarArq.println(numAleatorios.get(i));
+
+            }
+            arq.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Remocao Ordenado!\n" + ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void executarArvoresSementes(int semente, int linhas) {
+
+        Relatorio relatorio;
+        //----------Arvore AVL-------------
+        try {
+            
+            File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
+            FileInputStream fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            //String
+            String[] partes;
+            String aux;
+            
+            ArvoreAVL arvoreAVL = new ArvoreAVL();
+            
+            for (int i = 0; i < totalLinhas; i++) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                arvoreAVL.inserir(i, chave);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreAVL");
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreAVL", semente);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro na ArvoreAVL Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -2811,8 +3083,8 @@ public class Programa extends javax.swing.JFrame {
         ArvoreSplay arvoreSplay = new ArvoreSplay();
         RubroNegro arvoreRubroNegro = new RubroNegro();
         ArvoreB arvoreB = new ArvoreB(ordem);
+        MinhaArvore minhaArvore = new MinhaArvore();
 
-        //ARRUMAR E TRATATAR NÃO ESQUECER, SE ESQUECER A CULPA É DO JACÓ
         if (radioArvoreB.isSelected()) {
             boolean isInteiro = false;
             while (isInteiro == false) {
@@ -2890,7 +3162,7 @@ public class Programa extends javax.swing.JFrame {
                         } else if (radioArvoreB.isSelected()) {
                             arvoreB.inserir(i, chave);
                         } else if (radioArvoreCustomizado.isSelected()) {
-
+                            minhaArvore.inserir(i, chave);
                         }
                         i++;
                     }
@@ -2929,7 +3201,7 @@ public class Programa extends javax.swing.JFrame {
                     } else if (radioArvoreB.isSelected()) {
                         arvoreB.inserir(i, chave);
                     } else if (radioArvoreCustomizado.isSelected()) {
-
+                        minhaArvore.inserir(i, chave);
                     }
 
                 }

@@ -73,7 +73,7 @@ public class AlgoritmoDeputado {
             }
             contIteracao++;
             deputados.altera((j + 1), chave);
-            relatorio.incrementaTrocaColisao();
+            relatorio.incrementaTrocaColisaoCopia();
         }
         contIteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
@@ -142,7 +142,7 @@ public class AlgoritmoDeputado {
                 contInteracao++;
                 j++;
             }
-            relatorio.incrementaTrocaColisao();
+            relatorio.incrementaTrocaColisaoCopia();
             contInteracao++;
             k++;
         }
@@ -165,7 +165,7 @@ public class AlgoritmoDeputado {
             j++;
             k++;
         }
-        relatorio.incrementaTrocaColisao();
+        relatorio.incrementaTrocaColisaoCopia();
         contInteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
@@ -409,7 +409,7 @@ public class AlgoritmoDeputado {
                 contInteracao++;
                 deputados.altera(j, c);
                 contInteracao++;
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
             }
             contInteracao++;
             h = h / 2;
@@ -581,7 +581,7 @@ public class AlgoritmoDeputado {
             while (tabela[pos] != null) {
                 relatorio.incrementaInteracao();
                 pos = hash(pos + 1, deputados.getTamanho());
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
 
             }
 
@@ -607,7 +607,7 @@ public class AlgoritmoDeputado {
                 relatorio.incrementaInteracao();
                 j++;
                 pos = hash(pos + (j * j), deputados.getTamanho());
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
                 if (pos < 0) {
                     pos += tabela.length;
                 }
@@ -631,7 +631,7 @@ public class AlgoritmoDeputado {
             pos = (hash(deputados.retornaInfo(i).getId(), h));
             if (pos < 0) {
                 pos = pos + tabela.length;
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
             }
             int j = 0;
             while (tabela[pos] != null && pos < 0) {
@@ -639,15 +639,15 @@ public class AlgoritmoDeputado {
                 j++;
                 pos = hash(pos + hash2(pos, j), deputados.getTamanho());
                 //pos=hash(pos+1,tabela.length);
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
                 if (pos < 0) {
                     pos = pos + tabela.length;
-                   relatorio.incrementaTrocaColisao();
+                   relatorio.incrementaTrocaColisaoCopia();
                 }
             }
             if (pos < 0) {
                 pos = pos + tabela.length;
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
             }
             relatorio.incrementaInteracao();
             tabela[pos] = deputados.retornaInfo(i);
@@ -664,7 +664,7 @@ public class AlgoritmoDeputado {
             pos = (hash(deputados.retornaInfo(i).getId(), deputados.getTamanho() / 2));
             tabela[pos].insereFinal(deputados.retornaInfo(i));
             if (tabela[pos].retornaFim() != null) {
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
             }
             relatorio.incrementaInteracao();
         }
@@ -684,7 +684,7 @@ public class AlgoritmoDeputado {
                 while (tabela[pos][0] != null) {
                     relatorio.incrementaInteracao();
                     pos = pos - 1;
-                    relatorio.incrementaTrocaColisao();
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
                 relatorio.incrementaInteracao();
                 tabela[pos][0] = deputados.retornaInfo(i);
@@ -840,7 +840,7 @@ public class AlgoritmoDeputado {
             pos = (hashASCII(deputados.retornaInfo(i).getNome(), deputados.getTamanho() / 2));
             tabela[pos].insereFinal(deputados.retornaInfo(i));
             if (tabela[pos].retornaFim() != null) {
-                relatorio.incrementaTrocaColisao();
+                relatorio.incrementaTrocaColisaoCopia();
             }
             relatorio.incrementaInteracao();
         }
