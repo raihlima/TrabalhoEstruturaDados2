@@ -1,22 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos.arvores;
 
-/**
- *
- * @author carcara
- */
+import dados.Relatorio;
+
 public class ArvoreSplay {
 
     private No raiz;
     private int cont = 0;
 
-    /**
-     * Constructor *
-     */
     public ArvoreSplay() {
         raiz = null;
     }
@@ -30,52 +20,61 @@ public class ArvoreSplay {
         cont = 0;
     }
 
-
-    public void inserir(int id, Chave chave) {
+    public void inserir(int id, Chave chave, Relatorio relatorio) {
         No z = raiz;
         No p = null;
         while (z != null) {
+            relatorio.incrementaInteracao();
             p = z;
             if (id > p.getId()) {
+                relatorio.incrementaInteracao();
                 z = z.getDir();
             } else {
+                relatorio.incrementaInteracao();
                 z = z.getEsq();
             }
         }
-        z = new No(id,chave);       
+        z = new No(id, chave);
         z.setPai(p);
 
         if (p == null) {
+            relatorio.incrementaInteracao();
             this.raiz = z;
         } else if (id > p.getId()) {
+            relatorio.incrementaInteracao();
             p.setDir(z);
         } else {
+            relatorio.incrementaInteracao();
             p.setEsq(z);
         }
-        Splay(z);
+        Splay(z, relatorio);
         cont++;
     }
 
     /**
      * rotate makeLeftChildParent*
      */
-    public void rotacaoDireita(No c, No p) {
-
+    public void rotacaoDireita(No c, No p, Relatorio relatorio) {
+        relatorio.incrementaTrocaColisaoCopia();
         if ((c == null) || (p == null) || (p.getEsq() != c) || (c.getPai() != p)) {
+            relatorio.incrementaInteracao();
             throw new RuntimeException("WRONG");
         }
 
         if (p.getPai() != null) {
-
+            relatorio.incrementaInteracao();
             if (p == p.getPai().getEsq()) {
+                relatorio.incrementaInteracao();
                 p.getPai().setEsq(c);
             } else {
+                relatorio.incrementaInteracao();
                 p.getPai().setDir(c);
             }
 
         }
 
         if (c.getDir() != null) {
+            relatorio.incrementaInteracao();
             c.getDir().setPai(p);
         }
 
@@ -92,23 +91,27 @@ public class ArvoreSplay {
     /**
      * rotate makeRightChildParent *
      */
-    public void rotacaoEsquerda(No c, No p) {
-
+    public void rotacaoEsquerda(No c, No p, Relatorio relatorio) {
+        relatorio.incrementaTrocaColisaoCopia();
         if ((c == null) || (p == null) || (p.getDir() != c) || (c.getPai() != p)) {
+            relatorio.incrementaInteracao();
             throw new RuntimeException("WRONG");
         }
 
         if (p.getPai() != null) {
-
+            relatorio.incrementaInteracao();
             if (p == p.getPai().getEsq()) {
+                relatorio.incrementaInteracao();
                 p.getPai().setEsq(c);
             } else {
+                relatorio.incrementaInteracao();
                 p.getPai().setDir(c);
             }
 
         }
 
         if (c.getEsq() != null) {
+            relatorio.incrementaInteracao();
             c.getEsq().setPai(p);
         }
 
@@ -125,53 +128,55 @@ public class ArvoreSplay {
     /**
      * function splay *
      */
-    private void Splay(No x) {
+    private void Splay(No x, Relatorio relatorio) {
 
         while (x.getPai() != null) {
-
+            relatorio.incrementaInteracao();
             No pai = x.getPai();
 
             No avo = pai.getPai();
 
             if (avo == null) {
-
+                relatorio.incrementaInteracao();
                 if (x == pai.getEsq()) {
-                    rotacaoDireita(x, pai);
+                    relatorio.incrementaInteracao();
+                    rotacaoDireita(x, pai, relatorio);
                 } else {
-                    rotacaoEsquerda(x, pai);
+                    relatorio.incrementaInteracao();
+                    rotacaoEsquerda(x, pai, relatorio);
                 }
 
             } else {
-
+                relatorio.incrementaInteracao();
                 if (x == pai.getEsq()) {
-
+                    relatorio.incrementaInteracao();
                     if (pai == avo.getEsq()) {
+                        relatorio.incrementaInteracao();
+                        rotacaoDireita(pai, avo, relatorio);
 
-                        rotacaoDireita(pai, avo);
-
-                        rotacaoDireita(x, pai);
+                        rotacaoDireita(x, pai, relatorio);
 
                     } else {
+                        relatorio.incrementaInteracao();
+                        rotacaoDireita(x, x.getPai(), relatorio);
 
-                        rotacaoDireita(x, x.getPai());
-
-                        rotacaoEsquerda(x, x.getPai());
+                        rotacaoEsquerda(x, x.getPai(), relatorio);
 
                     }
 
                 } else {
-
+                    relatorio.incrementaInteracao();
                     if (pai == avo.getEsq()) {
+                        relatorio.incrementaInteracao();
+                        rotacaoEsquerda(x, x.getPai(), relatorio);
 
-                        rotacaoEsquerda(x, x.getPai());
-
-                        rotacaoDireita(x, x.getPai());
+                        rotacaoDireita(x, x.getPai(), relatorio);
 
                     } else {
+                        relatorio.incrementaInteracao();
+                        rotacaoEsquerda(pai, avo, relatorio);
 
-                        rotacaoEsquerda(pai, avo);
-
-                        rotacaoEsquerda(x, pai);
+                        rotacaoEsquerda(x, pai, relatorio);
 
                     }
 
@@ -188,30 +193,33 @@ public class ArvoreSplay {
     /**
      * function to remove getId() *
      */
-    public void remove(int id) {
+    public void remove(int id, Relatorio relatorio) {
 
-        No no = encontarNo(id);
+        No no = encontarNo(id, relatorio);
 
-        remove(no);
+        remove(no, relatorio);
 
     }
 
     /**
      * function to remove no *
      */
-    private void remove(No no) {
+    private void remove(No no, Relatorio relatorio) {
 
         if (no == null) {
+            relatorio.incrementaInteracao();
             return;
         }
 
-        Splay(no);
+        Splay(no, relatorio);
 
         if ((no.getEsq() != null) && (no.getDir() != null)) {
+            relatorio.incrementaInteracao();
 
             No min = no.getEsq();
 
             while (min.getDir() != null) {
+                relatorio.incrementaInteracao();
                 min = min.getDir();
             }
 
@@ -224,19 +232,21 @@ public class ArvoreSplay {
             raiz = no.getEsq();
 
         } else if (no.getDir() != null) {
+            relatorio.incrementaInteracao();
 
             no.getDir().setPai(null);
 
             raiz = no.getDir();
 
         } else if (no.getEsq() != null) {
+            relatorio.incrementaInteracao();
 
             no.getEsq().setPai(null);
 
             raiz = no.getEsq();
 
         } else {
-
+            relatorio.incrementaInteracao();
             raiz = null;
 
         }
@@ -256,7 +266,7 @@ public class ArvoreSplay {
     /**
      * Functions to cont number of nodes *
      */
-    public int quantidadeNos() {
+    public int quantidadeNos(Relatorio relatorio) {
 
         return cont;
 
@@ -265,29 +275,33 @@ public class ArvoreSplay {
     /**
      * Functions to buscarNo for an getId() *
      */
-    public boolean buscarNo(int id) {
+    public boolean buscarNo(int id, Relatorio relatorio) {
 
-        return encontarNo(id) != null;
+        return encontarNo(id, relatorio) != null;
 
     }
 
-    private No encontarNo(int id) {
+    private No encontarNo(int id, Relatorio relatorio) {
 
         No noAnterior = null;
 
         No z = raiz;
 
         while (z != null) {
+            relatorio.incrementaInteracao();
 
             noAnterior = z;
 
             if (id > z.getId()) {
+                relatorio.incrementaInteracao();
                 z = z.getDir();
             } else if (id < z.getId()) {
+                relatorio.incrementaInteracao();
                 z = z.getEsq();
             } else if (id == z.getId()) {
+                relatorio.incrementaInteracao();
 
-                Splay(z);
+                Splay(z, relatorio);
 
                 return z;
 
@@ -297,7 +311,7 @@ public class ArvoreSplay {
 
         if (noAnterior != null) {
 
-            Splay(noAnterior);
+            Splay(noAnterior, relatorio);
 
             return null;
 
@@ -310,21 +324,21 @@ public class ArvoreSplay {
     /**
      * Function for impressaoEmOrdem traversal *
      */
-    public void impressaoEmOrdem() {
+    public void impressaoEmOrdem(Relatorio relatorio) {
 
-        impressaoEmOrdem(raiz);
+        impressaoEmOrdem(raiz, relatorio);
 
     }
 
-    private void impressaoEmOrdem(No r) {
+    private void impressaoEmOrdem(No r, Relatorio relatorio) {
 
         if (r != null) {
-
-            impressaoEmOrdem(r.getEsq());
+            relatorio.incrementaInteracao();
+            impressaoEmOrdem(r.getEsq(), relatorio);
 
             System.out.print(r.getId() + " ");
 
-            impressaoEmOrdem(r.getDir());
+            impressaoEmOrdem(r.getDir(), relatorio);
 
         }
 
@@ -333,21 +347,21 @@ public class ArvoreSplay {
     /**
      * Function for impressaoEmPreOrdem traversal *
      */
-    public void impressaoEmPreOrdem() {
+    public void impressaoEmPreOrdem(Relatorio relatorio) {
 
-        impressaoEmPreOrdem(raiz);
+        impressaoEmPreOrdem(raiz, relatorio);
 
     }
 
-    private void impressaoEmPreOrdem(No r) {
+    private void impressaoEmPreOrdem(No r, Relatorio relatorio) {
 
         if (r != null) {
-
+            relatorio.incrementaInteracao();
             System.out.print(r.getId() + " ");
 
-            impressaoEmPreOrdem(r.getEsq());
+            impressaoEmPreOrdem(r.getEsq(), relatorio);
 
-            impressaoEmPreOrdem(r.getDir());
+            impressaoEmPreOrdem(r.getDir(), relatorio);
 
         }
 
@@ -356,19 +370,19 @@ public class ArvoreSplay {
     /**
      * Function for impressaoEmPosOrdem traversal *
      */
-    public void impressaoEmPosOrdem() {
+    public void impressaoEmPosOrdem(Relatorio relatorio) {
 
-        impressaoEmPosOrdem(raiz);
+        impressaoEmPosOrdem(raiz, relatorio);
 
     }
 
-    private void impressaoEmPosOrdem(No r) {
+    private void impressaoEmPosOrdem(No r, Relatorio relatorio) {
 
         if (r != null) {
+            relatorio.incrementaInteracao();
+            impressaoEmPosOrdem(r.getEsq(), relatorio);
 
-            impressaoEmPosOrdem(r.getEsq());
-
-            impressaoEmPosOrdem(r.getDir());
+            impressaoEmPosOrdem(r.getDir(), relatorio);
 
             System.out.print(r.getId() + " ");
 
