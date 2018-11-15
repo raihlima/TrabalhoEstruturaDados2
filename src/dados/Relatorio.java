@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dados;
 
 import java.io.File;
@@ -14,9 +9,9 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+//import java.util.Date;
 import javax.swing.JOptionPane;
-import org.omg.SendingContext.RunTime;
+//import org.omg.SendingContext.RunTime;
 
 /**
  *
@@ -113,7 +108,7 @@ public class Relatorio implements Serializable {
         // this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
         geraTexto();
     }
-
+    //Imprime o tempo de execucao calculado
     public void retornaTempoExecucao() {
         System.out.println("Data inicio: " + dataInicio.getTime());
         System.out.println("Data inicio: " + dataInicio.getTimeInMillis());
@@ -165,21 +160,22 @@ public class Relatorio implements Serializable {
 
     public void geraTexto() {
         try {
+            //Parametros da criacao do arquivo texto
             new File("Relatorios/" + tipoOrganizacao).mkdirs();
             File arquivo = new File("Relatorios/" + this.tipoOrganizacao + "/" + this.tipoAlgoritmo + this.tipoExecucao + ".txt");
             FileWriter arq = new FileWriter(arquivo, true);
             PrintWriter gravarArq = new PrintWriter(arq);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy;HH:mm:ss");
             
-            //Saber quantidade Linhas
+            //Calvula a quantidade de linhas
             LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
             linhaLeitura.skip(arquivo.length());
             int totalLinhas = linhaLeitura.getLineNumber();
             
-            if(totalLinhas==0){
+            if(totalLinhas==0){//Cria o cabecalho do texto
                 gravarArq.println("Tipo;Data_Inicio;Hora_Inicio;Data_Termino;Hora_Termino;Sistema_Operacional;Tempo(ns);Tempo(ms);Gasto_Memoria(bytes);Linhas_Lidas;Algoritmo;Interacoes;Troca_ou_Colisao_ou_Copia");
             }
-            
+            //parametros da gravacao do texto
             if (this.tipoExecucao.equalsIgnoreCase("Sementes")) {
                 gravarArq.print("Semente " + this.semente + ";");
             } else {
@@ -235,6 +231,5 @@ public class Relatorio implements Serializable {
     public void incrementaTrocaColisaoCopia() {
         this.trocaColisaoCopia = this.trocaColisaoCopia + 1;
     }
-
 
 }
