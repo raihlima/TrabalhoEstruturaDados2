@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package trabalhoed2;
 
 /**
- *
- * @author carcara
+ * Armazena os dados dos Recibos lidos do arquivo de entrada
  */
 public class Recibo {
     private String nomeEmpresa;
@@ -19,14 +13,28 @@ public class Recibo {
 
     public Recibo() {
     }
-
+    /**
+     * Construtor do tipo de dado Recibo
+     * @param nomeEmpresa Nome da empresa onde o gasto foi registrado
+     * @param cnpj Numero CNPJ da empresa
+     * @param tipoGasto Tipo do gasto
+     * @param gasto Registro do valor gasto na empresa
+     */
     public Recibo(String nomeEmpresa, String cnpj, String tipoGasto, float gasto) {
         this.nomeEmpresa = nomeEmpresa;
         this.cnpj = cnpj;
         this.tipoGasto = tipoGasto;
         this.gasto = gasto;
     }
-
+    /**
+     * 
+     * @param nomeEmpresa Nome da empresa onde o gasto foi registrado
+     * @param cnpj Numero CNPJ da empresa
+     * @param tipoGasto Tipo do gasto
+     * @param data Data na qual ocorreu o gasto
+     * @param hora Hora na qual ocorreu o gasto
+     * @param gasto Registro do valor gasto na empresa
+     */
     public Recibo(String nomeEmpresa, String cnpj, String tipoGasto, String data, String hora, float gasto) {
         this.nomeEmpresa = nomeEmpresa;
         this.cnpj = cnpj;
@@ -83,6 +91,4 @@ public class Recibo {
     public void setGasto(float gasto) {
         this.gasto = gasto;
     }
-      
-    
 }

@@ -1,21 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package trabalhoed2;
 
 /**
- *
- * @author carcara
+ * Armazena os dados dos Partidos lidos do arquivo de entrada
  */
 public class Partido {
+
     private String nome;
     private float totalGasto;
 
     public Partido() {
     }
 
+    /**
+     * Construtor do tipo de dado Partido
+     *
+     * @param nome Nome do partido
+     * @param totalGasto Valor total gasto
+     */
     public Partido(String nome, float totalGasto) {
         this.nome = nome;
         this.totalGasto = totalGasto;
@@ -36,6 +37,4 @@ public class Partido {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-    
 }

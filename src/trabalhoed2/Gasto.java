@@ -1,7 +1,7 @@
 package trabalhoed2;
 
 /**
- * Armazena os dados dos gastos lidos do arquivo de entrada
+ * Armazena os dados dos Gastos lidos do arquivo de entrada
  */
 public class Gasto {
     
