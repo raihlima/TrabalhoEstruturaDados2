@@ -14,8 +14,7 @@ import javax.swing.JOptionPane;
 //import org.omg.SendingContext.RunTime;
 
 /**
- *
- * @author carcara
+ * Classe que contem as funcoes dos relatorios do programa
  */
 public class Relatorio implements Serializable {
 
@@ -36,7 +35,9 @@ public class Relatorio implements Serializable {
     private long tempoFim;
     private long interacao;
     private String nomeArq;
-
+    /**
+     * Construtores dos relatorios
+     */
     public Relatorio() {
         this.dataInicio = Calendar.getInstance();
         this.sistemaOperacional = System.getProperty("os.name");
@@ -110,7 +111,7 @@ public class Relatorio implements Serializable {
         geraTexto();
     }
     
-        public void setRelatorioFinal(String algoritmo, String descricao, int semente, String nomeArq) throws IOException {
+    public void setRelatorioFinal(String algoritmo, String descricao, int semente, String nomeArq) throws IOException {
         this.tempoFim = System.nanoTime();
         this.semente = semente;
         this.descricao = descricao;
@@ -122,7 +123,9 @@ public class Relatorio implements Serializable {
         // this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
         geraTexto(nomeArq);
     }
-    
+    /**
+     * Essa funcao imprime no relatorio os tempos registrados
+     */
     //Imprime o tempo de execucao calculado
     public void retornaTempoExecucao() {
         System.out.println("Data inicio: " + dataInicio.getTime());
@@ -172,8 +175,11 @@ public class Relatorio implements Serializable {
     public void setTipoOrganizacao(String tipoOrganizacao) {
         this.tipoOrganizacao = tipoOrganizacao;
     }
-    
-        public void geraTexto(String nomeArq) {
+    /**
+     * Essa funcao gera o texto base para o relatorio com nome predefinido
+     * @param nomeArq Nome do arquivo a ser criado
+     */
+    public void geraTexto(String nomeArq) {
         try {
             //Parametros da criacao do arquivo texto
             new File("Relatorios/").mkdirs();
@@ -214,7 +220,9 @@ public class Relatorio implements Serializable {
             JOptionPane.showMessageDialog(null, "Erro ao salvar o relatório", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    /**
+     * Essa funcao gera o texto base para o relatorio
+     */
     public void geraTexto() {
         try {
             //Parametros da criacao do arquivo texto
@@ -268,9 +276,11 @@ public class Relatorio implements Serializable {
     public long getInteracao() {
         return interacao;
     }
-
+    /**
+     * Incrementa o contador de iteracoes do codigo
+     */
     public void incrementaInteracao() {
-        this.interacao = this.interacao + 1;
+        this.interacao++;
     }
 
     public void setInteracao(long interacao) {
@@ -284,9 +294,11 @@ public class Relatorio implements Serializable {
     public void setTrocaColisao(int trocaColisaoCopia) {
         this.trocaColisaoCopia = trocaColisaoCopia;
     }
-
+    /**
+     * Essa funcao incrementa o contador de colisoes das copias nas trocas
+     */
     public void incrementaTrocaColisaoCopia() {
-        this.trocaColisaoCopia = this.trocaColisaoCopia + 1;
+        this.trocaColisaoCopia++;
     }
 
 }
