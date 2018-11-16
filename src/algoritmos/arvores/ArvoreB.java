@@ -189,6 +189,12 @@ public class ArvoreB {
 
     //MÃ©todo de busca de uma chave, retorna um nÃ³ onde a chave buscada se encontra
     //ParÃ¢metros: X - nÃ³ por onde comeÃ§ar a busca, k - chave a ser buscada
+    public NoB busca(int id, Relatorio relatorio){
+        Chave chave = new Chave();
+        chave.setId(id);
+        return buscaChave(raiz, chave, relatorio);
+    }
+    
     public NoB buscaChave(NoB X, Chave k, Relatorio relatorio) {
         int i = 1;
         //procura ate nao estourar o tamanho e ate o valor nao ser maior q o procurado
@@ -212,7 +218,13 @@ public class ArvoreB {
     }
 
     //MÃ©todo de RemoÃ§Ã£o de uma determinada chave da arvoreB
-    public void Remove(Chave k, Relatorio relatorio) {
+    public void remover(int id, Relatorio relatorio){
+        Chave chave = new Chave();
+        chave.setId(id);
+        remover(chave, relatorio);
+    }
+    
+    private void remover(Chave k, Relatorio relatorio) {
         //verifica se a chave a ser removida existe
         if (buscaChave(this.raiz, k, relatorio) != null) {
             relatorio.incrementaInteracao();
@@ -266,10 +278,10 @@ public class ArvoreB {
                 j++;
             }
 
-            //verifica se o irmÃ£o Ã  esquerda de F nÃ£o tem chaves para emprestar
+            //verifica se o irmÃ£o Ã  esquerda de F nÃ£o tem chaves para emprestar
             if (j == 1 || (P.getFilho()[(j - 2)]).getOrdem() == Math.floor((ordem - 1) / 2)) {
                 relatorio.incrementaInteracao();
-                //verifica se o irmÃ£o Ã  direita de F nÃ£o tem chaves para emprestar
+                //verifica se o irmÃ£o Ã  direita de F nÃ£o tem chaves para emprestar
                 if (j == P.getOrdem() + 1 || (P.getFilho()[j].getOrdem() == Math.floor((ordem - 1) / 2))) {
                     relatorio.incrementaInteracao();
                     Diminui_Altura(F, relatorio); //nenhum irmÃ£o tem chaves para emprestar eh necessario diminuir a altura

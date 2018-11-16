@@ -193,18 +193,18 @@ public class ArvoreSplay {
     /**
      * function to remove getId() *
      */
-    public void remove(int id, Relatorio relatorio) {
+    public void remover(int id, Relatorio relatorio) {
 
         No no = encontarNo(id, relatorio);
 
-        remove(no, relatorio);
+        remover(no, relatorio);
 
     }
 
     /**
      * function to remove no *
      */
-    private void remove(No no, Relatorio relatorio) {
+    private void remover(No no, Relatorio relatorio) {
 
         if (no == null) {
             relatorio.incrementaInteracao();
@@ -275,7 +275,7 @@ public class ArvoreSplay {
     /**
      * Functions to buscarNo for an getId() *
      */
-    public boolean buscarNo(int id, Relatorio relatorio) {
+    public boolean busca(int id, Relatorio relatorio) {
 
         return encontarNo(id, relatorio) != null;
 

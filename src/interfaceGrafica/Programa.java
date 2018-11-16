@@ -9,12 +9,7 @@ import algoritmos.AlgoritmoDeputado;
 import algoritmos.AlgoritmoInteiro;
 import algoritmos.AlgoritmoPartido;
 import algoritmos.ListaEncadeada;
-import algoritmos.arvores.ArvoreAVL;
-import algoritmos.arvores.ArvoreB;
-import algoritmos.arvores.ArvoreSplay;
-import algoritmos.arvores.Chave;
-import algoritmos.arvores.MinhaArvore;
-import algoritmos.arvores.RubroNegro;
+import algoritmos.arvores.*;
 import dados.Relatorio;
 import java.awt.CardLayout;
 import java.io.*;
@@ -2676,12 +2671,17 @@ public class Programa extends javax.swing.JFrame {
 
     private void executarSementesArvores() {
         criarArquivoInsercaoArvores(1000);
+        /*
         criarArquivoInsercaoArvores(5000);
         criarArquivoInsercaoArvores(10000);
+        /*
         criarArquivoInsercaoArvores(50000);
         criarArquivoInsercaoArvores(100000);
         criarArquivoInsercaoArvores(500000);
-
+         */
+        for (int i = 0; i < 5; i++) {
+            executarArvoresSementes(i + 1, 1000);
+        }
         JOptionPane.showMessageDialog(this, "Arquivos Criados com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
 
         cardLayout.show(jPanelPrincipal, "parte2");
@@ -2735,7 +2735,7 @@ public class Programa extends javax.swing.JFrame {
                 criarArquivoBusca(numAleatorios, cont + 1);
                 criarArquivoRemocao(numAleatorios, cont + 1);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Inserção!", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Inserção!\n"+ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -2948,18 +2948,18 @@ public class Programa extends javax.swing.JFrame {
     }
 
     private void executarArvoresSementes(int semente, int linhas) {
-
+        int id;//Id da chave
         Relatorio relatorio;
         //----------Arvore AVL-------------
         try {
-            
-            File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
+
+            File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
             //System.out.println("Tentando ler o arquivo");
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
-            String linha = reader.readLine();
+            String linha;
 
             //Saber a quantidade de linhas          
             LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
@@ -2969,10 +2969,11 @@ public class Programa extends javax.swing.JFrame {
             //String
             String[] partes;
             String aux;
-            
+
             ArvoreAVL arvoreAVL = new ArvoreAVL();
-            
-            for (int i = 0; i < totalLinhas; i++) {
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreAVL");
+            int idArvore = 0;
+            while ((linha = reader.readLine()) != null) {
 
                 String hora;
                 String data;
@@ -2990,20 +2991,954 @@ public class Programa extends javax.swing.JFrame {
                 }
 
                 Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
-                arvoreAVL.inserir(i, chave);
+                arvoreAVL.inserir(idArvore, chave, relatorio);
+                idArvore++;
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreAVL", semente, "saidaInsercao");
+
+            // Busca
+            File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBusca);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBusca));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreAVL");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreAVL.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreAVL", semente, "saidaBusca");
+
+            // Busca Ordenado
+            File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBuscaOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBuscaOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreAVL");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreAVL.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreAVL", semente, "saidaBuscaOrdenado");
+
+            //Remocao
+            File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreAVL");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreAVL.remover(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreAVL", semente, "saidaRemocao");
+
+            //Remocao Ordenado
+            arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            arvoreAVL = new ArvoreAVL();
+            
+
+            while ((linha = reader.readLine()) != null) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                arvoreAVL.inserir(idArvore, chave, relatorio);
+                idArvore++;
             }
             reader.close();
             bis.close();
             fi.close();
 
+            File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocaoOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocaoOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreAVL");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreAVL.remover(id, relatorio);
+            }
+
+            reader.close();
+            bis.close();
+            fi.close();
             //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
-            relatorio.setRelatorioFinal("Arvores", "ArvoreAVL", semente);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreAVL", semente, "saidaRemocaoOrdenado");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro na ArvoreAVL Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
+        /*
+        *----------Arvore Vermelho e Preto-------------
+        */
+        
+         try {
+
+            File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
+            FileInputStream fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha;
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            //String
+            String[] partes;
+            String aux;
+
+            ArvoreVermelhoPreto arvoreVermelhoPreto = new ArvoreVermelhoPreto();
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreVermelhoPreto");
+            int idArvore = 0;
+            while ((linha = reader.readLine()) != null) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                arvoreVermelhoPreto.inserir(idArvore, chave, relatorio);
+                idArvore++;
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreVermelhoPreto", semente, "saidaInsercao");
+
+            // Busca
+            File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBusca);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBusca));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreVermelhoPreto");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreVermelhoPreto.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreVermelhoPreto", semente, "saidaBusca");
+
+            // Busca Ordenado
+            File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBuscaOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBuscaOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreVermelhoPreto");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreVermelhoPreto.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreVermelhoPreto", semente, "saidaBuscaOrdenado");
+
+            //Remocao
+            File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreVermelhoPreto");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreVermelhoPreto.remover(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreVermelhoPreto", semente, "saidaRemocao");
+
+            //Remocao Ordenado
+            arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            arvoreVermelhoPreto = new ArvoreVermelhoPreto();
+            
+
+            while ((linha = reader.readLine()) != null) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                arvoreVermelhoPreto.inserir(idArvore, chave, relatorio);
+                idArvore++;
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+
+            File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocaoOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocaoOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreVermelhoPreto");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreVermelhoPreto.remover(id, relatorio);
+            }
+
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreVermelhoPreto", semente, "saidaRemocaoOrdenado");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro na ArvoreVermelhoPreto Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        //----------Arvore Splay-------------
+        
+        
+         try {
+
+            File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
+            FileInputStream fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha;
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            //String
+            String[] partes;
+            String aux;
+
+            ArvoreSplay arvoreSplay = new ArvoreSplay();
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreSplay");
+            int idArvore = 0;
+            while ((linha = reader.readLine()) != null) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                arvoreSplay.inserir(idArvore, chave, relatorio);
+                idArvore++;
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreSplay", semente, "saidaInsercao");
+
+            // Busca
+            File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBusca);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBusca));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreSplay");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreSplay.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreSplay", semente, "saidaBusca");
+
+            // Busca Ordenado
+            File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBuscaOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBuscaOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreSplay");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreSplay.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreSplay", semente, "saidaBuscaOrdenado");
+
+            //Remocao
+            File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreSplay");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreSplay.remover(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreSplay", semente, "saidaRemocao");
+
+            //Remocao Ordenado
+            arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            arvoreSplay = new ArvoreSplay();
+            
+
+            while ((linha = reader.readLine()) != null) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                arvoreSplay.inserir(idArvore, chave, relatorio);
+                idArvore++;
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+
+            File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocaoOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocaoOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreSplay");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreSplay.remover(id, relatorio);
+            }
+
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreSplay", semente, "saidaRemocaoOrdenado");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro na ArvoreSplay Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+
+        //----------Arvore B-------------
+         
+        
+         try {
+
+            File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
+            FileInputStream fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha;
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            //String
+            String[] partes;
+            String aux;
+            
+            
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreB");
+            ArvoreB arvoreB = new ArvoreB(5, relatorio);
+            
+            int idArvore = 0;
+            while ((linha = reader.readLine()) != null) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                arvoreB.inserir(idArvore, chave, relatorio);
+                idArvore++;
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreB", semente, "saidaInsercao");
+
+            // Busca
+            File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBusca);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBusca));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreB");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreB.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreB", semente, "saidaBusca");
+
+            // Busca Ordenado
+            File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBuscaOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBuscaOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreB");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreB.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreB", semente, "saidaBuscaOrdenado");
+
+            //Remocao
+            File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreB");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreB.remover(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreB", semente, "saidaRemocao");
+
+            //Remocao Ordenado
+            arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            arvoreB = new ArvoreB(5, relatorio);
+            
+
+            while ((linha = reader.readLine()) != null) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                arvoreB.inserir(idArvore, chave, relatorio);
+                idArvore++;
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+
+            File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocaoOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocaoOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreB");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                arvoreB.remover(id, relatorio);
+            }
+
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "ArvoreB", semente, "saidaRemocaoOrdenado");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro na ArvoreB Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+        //----------Arvore Minha Arvore-------------
+  
+                
+        
+         try {
+
+            File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
+            FileInputStream fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha;
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            //String
+            String[] partes;
+            String aux;
+
+            MinhaArvore minhaArvore = new MinhaArvore();
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "MinhaArvore");
+            int idArvore = 0;
+            while ((linha = reader.readLine()) != null) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                minhaArvore.inserir(idArvore, chave, relatorio);
+                idArvore++;
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "MinhaArvore", semente, "saidaInsercao");
+
+            // Busca
+            File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBusca);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBusca));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "MinhaArvore");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                minhaArvore.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "MinhaArvore", semente, "saidaBusca");
+
+            // Busca Ordenado
+            File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoBuscaOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoBuscaOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "MinhaArvore");
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                minhaArvore.busca(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "MinhaArvore", semente, "saidaBuscaOrdenado");
+
+            //Remocao
+            File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "MinhaArvore");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                minhaArvore.remover(id, relatorio);
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "MinhaArvore", semente, "saidaRemocao");
+
+            //Remocao Ordenado
+            arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
+            fi = new FileInputStream(arquivoInsercao);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoInsercao));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            minhaArvore = new MinhaArvore();
+            
+
+            while ((linha = reader.readLine()) != null) {
+
+                String hora;
+                String data;
+                aux = linha;
+
+                partes = aux.split(";");
+                if (partes[0].equals("0")) {
+                    String[] div = partes[1].split(" ");
+                    data = div[0];
+                    hora = div[1];
+
+                } else {
+                    data = partes[1] + "-01-01";
+                    hora = "00:00:00";
+                }
+
+                Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
+                minhaArvore.inserir(idArvore, chave, relatorio);
+                idArvore++;
+            }
+            reader.close();
+            bis.close();
+            fi.close();
+
+            File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
+            fi = new FileInputStream(arquivoRemocaoOrdenado);
+            //System.out.println("Tentando ler o arquivo");
+
+            bis = new BufferedInputStream(fi);
+            reader = new BufferedReader(new InputStreamReader(bis));
+            //linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            linhaLeitura = new LineNumberReader(new FileReader(arquivoRemocaoOrdenado));
+            linhaLeitura.skip(arquivoInsercao.length());
+            totalLinhas = linhaLeitura.getLineNumber();
+
+            relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "MinhaArvore");
+
+            while ((linha = reader.readLine()) != null) {
+                id = Integer.parseInt(linha);
+                minhaArvore.remover(id, relatorio);
+            }
+
+            reader.close();
+            bis.close();
+            fi.close();
+            //AlgoritmoDeputado.bubbleSortDeputados(aux, relatorio);
+            relatorio.setRelatorioFinal("Arvores", "MinhaArvore", semente, "saidaRemocaoOrdenado");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro na MinhaArvore Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+         
     }
 
     private void preencherTabelaASCII(int n) {
@@ -3081,8 +4016,8 @@ public class Programa extends javax.swing.JFrame {
         int ordem = 1;
         ArvoreAVL arvoreAVL = new ArvoreAVL();
         ArvoreSplay arvoreSplay = new ArvoreSplay();
-        RubroNegro arvoreRubroNegro = new RubroNegro();
-        ArvoreB arvoreB = new ArvoreB(ordem);
+        ArvoreVermelhoPreto arvoreRubroNegro = new ArvoreVermelhoPreto();
+        ArvoreB arvoreB = new ArvoreB(ordem, new Relatorio());
         MinhaArvore minhaArvore = new MinhaArvore();
 
         if (radioArvoreB.isSelected()) {
@@ -3094,7 +4029,7 @@ public class Programa extends javax.swing.JFrame {
                     if (ordem <= 1) {
                         throw new NumberFormatException("Número negativo!");
                     } else {
-                        arvoreB = new ArvoreB(ordem);
+                        arvoreB = new ArvoreB(ordem, new Relatorio());
                     }
                     isInteiro = true;
                 } catch (Exception e) {
@@ -3154,15 +4089,15 @@ public class Programa extends javax.swing.JFrame {
 
                         Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
                         if (radioArvoreAVL.isSelected()) {
-                            arvoreAVL.inserir(i, chave);
+                            arvoreAVL.inserir(i, chave, new Relatorio());
                         } else if (radioArvoreVermelhoPreto.isSelected()) {
-                            arvoreRubroNegro.inserir(i, chave);
+                            arvoreRubroNegro.inserir(i, chave, new Relatorio());
                         } else if (radioArvoreSplay.isSelected()) {
-                            arvoreSplay.inserir(i, chave);
+                            arvoreSplay.inserir(i, chave, new Relatorio());
                         } else if (radioArvoreB.isSelected()) {
-                            arvoreB.inserir(i, chave);
+                            arvoreB.inserir(i, chave, new Relatorio());
                         } else if (radioArvoreCustomizado.isSelected()) {
-                            minhaArvore.inserir(i, chave);
+                            minhaArvore.inserir(i, chave, new Relatorio());
                         }
                         i++;
                     }
@@ -3193,15 +4128,15 @@ public class Programa extends javax.swing.JFrame {
                     Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
 
                     if (radioArvoreAVL.isSelected()) {
-                        arvoreAVL.inserir(i, chave);
+                        arvoreAVL.inserir(i, chave, new Relatorio());
                     } else if (radioArvoreVermelhoPreto.isSelected()) {
-                        arvoreRubroNegro.inserir(i, chave);
+                        arvoreRubroNegro.inserir(i, chave, new Relatorio());
                     } else if (radioArvoreSplay.isSelected()) {
-                        arvoreSplay.inserir(i, chave);
+                        arvoreSplay.inserir(i, chave, new Relatorio());
                     } else if (radioArvoreB.isSelected()) {
-                        arvoreB.inserir(i, chave);
+                        arvoreB.inserir(i, chave, new Relatorio());
                     } else if (radioArvoreCustomizado.isSelected()) {
-                        minhaArvore.inserir(i, chave);
+                        minhaArvore.inserir(i, chave, new Relatorio());
                     }
 
                 }

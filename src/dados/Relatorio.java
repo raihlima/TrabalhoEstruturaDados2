@@ -25,7 +25,7 @@ public class Relatorio implements Serializable {
     private long usoMemoria;
     private int quantidadeLinhas;
     private int semente = 1;
-    private String tipoAlgoritmo; //Ordenacao ou Busca
+    private String tipoAlgoritmo; //Ordenacao, Busca ou Arvore
     private String tipoOrganizacao; //Deputado ou Partido
     private String tipoExecucao; //Customizada ou Sementes
     private String tipoLeitura; //Linear ou Aleatória
@@ -35,6 +35,7 @@ public class Relatorio implements Serializable {
     private long tempoIni;
     private long tempoFim;
     private long interacao;
+    private String nomeArq;
 
     public Relatorio() {
         this.dataInicio = Calendar.getInstance();
@@ -108,6 +109,20 @@ public class Relatorio implements Serializable {
         // this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
         geraTexto();
     }
+    
+        public void setRelatorioFinal(String algoritmo, String descricao, int semente, String nomeArq) throws IOException {
+        this.tempoFim = System.nanoTime();
+        this.semente = semente;
+        this.descricao = descricao;
+        this.dataFim = Calendar.getInstance();
+        this.tipoAlgoritmo = algoritmo;
+        this.tempoExecucao = Long.toString((this.tempoFim - this.tempoIni));
+        this.nomeArq = nomeArq;
+
+        // this.tempoExecucao = Long.toString(hora) + " hora(s) " + Long.toString(min) + " min " + Long.toString(seg) + " seg " + Long.toString(miliseg) + " ms";
+        geraTexto(nomeArq);
+    }
+    
     //Imprime o tempo de execucao calculado
     public void retornaTempoExecucao() {
         System.out.println("Data inicio: " + dataInicio.getTime());
@@ -157,6 +172,48 @@ public class Relatorio implements Serializable {
     public void setTipoOrganizacao(String tipoOrganizacao) {
         this.tipoOrganizacao = tipoOrganizacao;
     }
+    
+        public void geraTexto(String nomeArq) {
+        try {
+            //Parametros da criacao do arquivo texto
+            new File("Relatorios/").mkdirs();
+            File arquivo = new File("Relatorios/" + nomeArq + ".txt");
+            FileWriter arq = new FileWriter(arquivo, true);
+            PrintWriter gravarArq = new PrintWriter(arq);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy;HH:mm:ss");
+            
+            //Calcula a quantidade de linhas
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+            
+            if(totalLinhas==0){//Cria o cabecalho do texto
+                gravarArq.println("Tipo;Data_Inicio;Hora_Inicio;Data_Termino;Hora_Termino;Sistema_Operacional;Tempo(ns);Tempo(ms);Gasto_Memoria(bytes);Linhas_Lidas;Algoritmo;Interacoes;Troca_ou_Colisao_ou_Copia");
+            }
+            //parametros da gravacao do texto
+            if (this.tipoExecucao.equalsIgnoreCase("Sementes")) {
+                gravarArq.print("Semente " + this.semente + ";");
+            } else {
+                gravarArq.print(this.getTipoLeitura() + ";");
+            }
+            gravarArq.print(sdf.format(this.getDataInicio().getTime()) + ";");
+            gravarArq.print(sdf.format(this.getDataFim().getTime()) + ";");
+            gravarArq.print(this.getSistemaOperacional() + ";");
+            gravarArq.print(this.getTempoExecucao() + ";" + (this.dataFim.getTimeInMillis() - this.dataInicio.getTimeInMillis()) + ";");
+            Runtime rt = Runtime.getRuntime();
+            this.usoMemoria = rt.maxMemory() - rt.freeMemory();
+            gravarArq.print(this.getUsoMemoria() + ";");
+            gravarArq.print(this.getQuantidadeLinhas() + ";");
+            gravarArq.print(this.getDescricao() + ";");
+            gravarArq.print(getInteracao() + ";");
+            gravarArq.print(getTrocaColisaoCopia());
+            gravarArq.println();
+            arq.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar o relatório", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     public void geraTexto() {
         try {
@@ -167,7 +224,7 @@ public class Relatorio implements Serializable {
             PrintWriter gravarArq = new PrintWriter(arq);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy;HH:mm:ss");
             
-            //Calvula a quantidade de linhas
+            //Calcula a quantidade de linhas
             LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
             linhaLeitura.skip(arquivo.length());
             int totalLinhas = linhaLeitura.getLineNumber();

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 //TODO terminar os comentarios das funcoes
 package algoritmos;
 
@@ -9,11 +14,12 @@ import trabalhoed2.Deputado;
 
 /**
  *
+ * @author ice
  */
 public class AlgoritmoDeputado {
 
     /*
-     *   Algoritmos de ordenação dos gastos dos Deputados
+    *   Algoritmos de ordenação dos gastos dos Deputados
      */
     /**
      * Esta função contém o código para execução do algoritmo de Bubble Sort
@@ -74,7 +80,7 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Esta função contém o código para execução do algoritmo de Merge Sort
+     * Estas funções contém o código para execução do algoritmo de Merge Sort
      *
      * @param deputados
      */
@@ -165,7 +171,7 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Esta função contém o código para execução do algoritmo de Quick Sort
+     * Estas funções contém o código para execução do algoritmo de Quick Sort
      *
      * @param deputados
      */
@@ -212,7 +218,7 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Esta função contém o código para execução do algoritmo de Quick Sort
+     * Estas funções contém o código para execução do algoritmo de Quick Sort
      * Mediana de 3
      *
      * @param deputados
@@ -314,7 +320,7 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Esta função contém o código para execução do algoritmo de Heap Sort
+     * Estas funções contém o código para execução do algoritmo de Heap Sort
      *
      * @param deputados
      */
@@ -560,12 +566,8 @@ public class AlgoritmoDeputado {
         return true;
     }
 
-     // Funcoes de hashing
-    
     /**
-     * Esta funcao contém o código para execução do algoritmo de Sondagem Linear
-     * @param deputados
-     * @param relatorio
+     * Funcoes de hashing
      */
     public static Deputado[] sondagemLinear(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
@@ -589,11 +591,7 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return tabela;
     }
-    /**
-     * Esta funcao contém o código para execução do algoritmo de Sondagem Quadratica
-     * @param deputados
-     * @param relatorio
-     */
+
     public static Deputado[] sondagemQuadratica(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
         int h = primo(deputados.getTamanho());
@@ -623,12 +621,7 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return tabela;
     }
-    /**
-     * Esta funcao contém o código para execução do algoritmo de Re hashing (Duplo hashing)
-     * 
-     * @param deputados
-     * @param relatorio
-     */
+
     public static Deputado[] duploHashing(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos = 0;
         int h = primo(deputados.getTamanho());
@@ -662,11 +655,7 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return null;
     }
-    /**
-     * Esta funcao contém o código para execução do algoritmo de Encadeamento Separado
-     * @param deputados
-     * @param relatorio
-     */
+
     public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
         ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(deputados.getTamanho() / 2);
@@ -682,11 +671,7 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return tabela;
     }
-    /**
-     * Esta funcao contém o código para execução do algoritmo de Encadeamento Coalescido
-     * @param deputados
-     * @param relatorio
-     */
+
     public static Deputado[][] encadeamentoCoalescido(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
         int h = primo(deputados.getTamanho());
@@ -717,13 +702,8 @@ public class AlgoritmoDeputado {
         return tabela;
     }
 
-    // Funcoes de busca de hashing
-    
     /**
-     * Essa funcao busca deputados armazenados usando sondagem linear
-     * @param deputado
-     * @param tabela
-     * @param relatorio
+     * Funcoes de busca de hashing
      */
     private static Deputado buscaSondagemLinear(Deputado deputado, Deputado[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
@@ -751,12 +731,6 @@ public class AlgoritmoDeputado {
         }
     }
 
-    /**
-     * Essa funcao busca deputados armazenados usando sondagem quadratica
-     * @param deputado
-     * @param tabela
-     * @param relatorio
-     */
     private static Deputado buscaSondagemQuadratica(Deputado deputado, Deputado[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
         int pos = (hash(deputado.getId(), h));
@@ -783,13 +757,6 @@ public class AlgoritmoDeputado {
             }
         }
     }
-    
-    /**
-     * Essa funcao busca deputados armazenados usando Duplo Hashing
-     * @param deputado
-     * @param tabela
-     * @param relatorio
-     */
 
     private static Deputado buscaDuploHashing(Deputado deputado, Deputado[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
@@ -818,12 +785,7 @@ public class AlgoritmoDeputado {
             }
         }
     }
-/**
-     * Essa funcao busca deputados armazenados usando encadeamento separado
-     * @param deputado
-     * @param tabela
-     * @param relatorio
-     */
+
     private static Deputado buscaEncadeamentoSeparado(Deputado deputado, ListaEncadeada<Deputado>[] tabela, Relatorio relatorio) {
         int pos = (hash(deputado.getId(), tabela.length));
         for (int j = 0; j < tabela[pos].getTamanho(); j++) {
@@ -836,12 +798,7 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return null;
     }
-/**
-     * Essa funcao busca deputados armazenados usando encadeamento coalescido
-     * @param deputado
-     * @param tabela
-     * @param relatorio
-     */
+
     private static Deputado buscaEncadeamentoCoalescido(Deputado deputado, Deputado[][] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
         int pos = (hash(deputado.getId(), h));
@@ -859,11 +816,6 @@ public class AlgoritmoDeputado {
         return tabela[pos][0];
     }
 
-    /**
-     * Posicao do vetor que guarda string k com codigo ASCII passada por parametro
-     * @param k
-     * @param m
-     */
     private static int hashASCII(String k, int m) {
         int soma = 0;
         try {
@@ -876,14 +828,10 @@ public class AlgoritmoDeputado {
         } catch (java.io.UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+
         return soma % m;
     }
-    
-/**
- * Cria lista com deputados posicionados de acordo com funcao hashASCII e a retorna
- * @param deputados
- * @param relatorio
- */
+
     public static ListaEncadeada[] encadeamentoSeparadoASCII(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
         ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(deputados.getTamanho() / 2);
