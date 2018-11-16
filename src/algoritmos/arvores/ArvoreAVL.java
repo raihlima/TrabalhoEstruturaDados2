@@ -6,11 +6,18 @@ import java.util.ArrayList;
 public class ArvoreAVL {
 
     private No raiz;
-
+    /**
+     * Funcao que contem o construtor
+     */
     public ArvoreAVL() {
         this.raiz = null;
     }
-
+    /**
+     * Esta funcao cria um novo No e tenta inserir usando a funcao insereAVL
+     * @param id Numero da linha do arquivo de entrada onde se encontra o dado
+     * @param chave O dado que sera guardado no no
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
     public void inserir(int id, Chave chave, Relatorio relatorio) {
         if (raiz == null) {
             this.raiz = new No(id, chave);
@@ -21,7 +28,12 @@ public class ArvoreAVL {
             relatorio.incrementaInteracao();
         }
     }
-
+    /**
+     * Esta funcao insere um novo No na arvore
+     * @param aComparar No a ser comparado para analisar onde ocorrera a insercao
+     * @param aInserir No a ser inserido
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
     private void inserirAVL(No aComparar, No aInserir, Relatorio relatorio) {
 
         if (aComparar == null) {
@@ -60,7 +72,12 @@ public class ArvoreAVL {
             }
         }
     }
-
+    /**
+     * Esta funcao verifica se e necessario fazer balanceamento e chama as
+     * funcoes de balanceamento caso seja necessario
+     * @param atual No onde a busca parou anteriormente
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
     public void verificarBalanceamento(No atual, Relatorio relatorio) {
         setBalanceamento(atual, relatorio);
         int balanceamento = atual.getBalanceamento();
@@ -95,11 +112,20 @@ public class ArvoreAVL {
             this.raiz = atual;
         }
     }
-
+    /**
+     * Essa funcao chama a removerAVL para remocao de uma chave da arvore
+     * @param k A chave a ser removida da arvore
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
     public void remover(int k, Relatorio relatorio) {
         removerAVL(this.raiz, k, relatorio);
     }
-
+    /**
+     * Essa funcao auxilia na remocao de um no da arvore
+     * @param atual No onde a busca parou anteriormente
+     * @param k A chave a ser removida da arvore
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
     public void removerAVL(No atual, int k, Relatorio relatorio) {
         if (atual == null) {
             relatorio.incrementaInteracao();
@@ -121,7 +147,11 @@ public class ArvoreAVL {
             }
         }
     }
-
+    /**
+     * Essa funcao remove um no da arvore em questao
+     * @param aRemover No a remover da arvore
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
     public void removerNoEncontrado(No aRemover, Relatorio relatorio) {
         No r;
 
@@ -171,7 +201,12 @@ public class ArvoreAVL {
         }
         r = null;
     }
-
+    /**
+     * Esta funcao faz uma rotacao pela esquerda
+     * @param inicial No onde a rotacao sera iniciada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return No a direita
+     */
     public No rotacaoEsquerda(No inicial, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         No direita = inicial.getDir();
@@ -203,7 +238,12 @@ public class ArvoreAVL {
 
         return direita;
     }
-
+    /**
+     * Esta funcao faz uma rotacao pela direita
+     * @param inicial No onde a rotacao sera iniciada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return No a esquerda
+     */
     public No rotacaoDireita(No inicial, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         No esquerda = inicial.getEsq();
@@ -235,17 +275,32 @@ public class ArvoreAVL {
 
         return esquerda;
     }
-
+    /**
+     * Esta funcao auxilia na rotacao da esquerda para direita
+     * @param inicial No onde a rotacao sera iniciada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Chama a funcao de rotacao pela direita
+     */
     public No duplaRotacaoEsquerdaDireita(No inicial, Relatorio relatorio) {
         inicial.setEsq(rotacaoEsquerda(inicial.getEsq(), relatorio));
         return rotacaoDireita(inicial, relatorio);
     }
-
+    /**
+     * Esta funcao auxilia na rotacao da direita para esquerda
+     * @param inicial o onde a rotacao sera iniciada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return 
+     */
     public No duplaRotacaoDireitaEsquerda(No inicial, Relatorio relatorio) {
         inicial.setDir(rotacaoDireita(inicial.getDir(), relatorio));
         return rotacaoEsquerda(inicial, relatorio);
     }
-
+    /**
+     * Esta funcao retorna o no sucessor de um dado no
+     * @param q No atual
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return No a direita ou esquerda ou pai
+     */
     public No sucessor(No q, Relatorio relatorio) {
         if (q.getDir() != null) {
             relatorio.incrementaInteracao();
@@ -271,7 +326,13 @@ public class ArvoreAVL {
             return p;
         }
     }
-
+    
+    /**
+     * 
+     * @param atual No onde parou a busca
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return //------//
+     */
     private int altura(No atual, Relatorio relatorio) {
         if (atual == null) {
             relatorio.incrementaInteracao();
@@ -295,11 +356,17 @@ public class ArvoreAVL {
             return 1 + Math.max(altura(atual.getEsq(), relatorio), altura(atual.getDir(), relatorio));
         }
     }
+    /**
+     * 
+     * @param no No que sera balanceado
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
 
     private void setBalanceamento(No no, Relatorio relatorio) {
         no.setBalanceamento(altura(no.getDir(), relatorio) - altura(no.getEsq(), relatorio));
-    }
-
+    }    
+    
+    /*
     final protected ArrayList<No> emOrdem(Relatorio relatorio) { // inorder
         ArrayList<No> ret = new ArrayList<No>();
         emOrdem(raiz, ret, relatorio);
@@ -310,37 +377,10 @@ public class ArvoreAVL {
         if (no == null) {
             relatorio.incrementaInteracao();
             return;
-
         }
         emOrdem(no.getEsq(), lista, relatorio);
         lista.add(no);
         emOrdem(no.getDir(), lista, relatorio);
     }
-    
-     public boolean busca(int k,Relatorio relatorio){
-        return buscaAVL(this.raiz,k,relatorio);
-    }
-    
-    public boolean buscaAVL(No atual,int k,Relatorio relatorio){
-        if (atual == null) {
-            relatorio.incrementaInteracao();
-            return false;
-
-        } else {
-            relatorio.incrementaInteracao();
-            if (atual.getId() > k) {
-                relatorio.incrementaInteracao();
-                buscaAVL(atual.getEsq(), k, relatorio);
-
-            } else if (atual.getId() < k) {
-                relatorio.incrementaInteracao();
-                buscaAVL(atual.getDir(), k, relatorio);
-
-            } else if (atual.getId() == k) {
-                relatorio.incrementaInteracao();
-                return true;
-            }
-        }
-        return false;
-    }
+*/
 }
