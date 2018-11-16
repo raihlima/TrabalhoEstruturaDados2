@@ -27,6 +27,7 @@ public class ArvoreAVL {
         if (aComparar == null) {
             relatorio.incrementaInteracao();
             this.raiz = aInserir;
+            relatorio.incrementaTrocaColisaoCopia();
 
         } else {
             relatorio.incrementaInteracao();
@@ -69,10 +70,12 @@ public class ArvoreAVL {
             relatorio.incrementaInteracao();
             if (altura(atual.getEsq().getEsq(), relatorio) >= altura(atual.getEsq().getDir(), relatorio)) {
                 atual = rotacaoDireita(atual, relatorio);
+                relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
 
             } else {
                 atual = duplaRotacaoEsquerdaDireita(atual, relatorio);
+                relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
             }
 
@@ -80,9 +83,11 @@ public class ArvoreAVL {
             relatorio.incrementaInteracao();
             if (altura(atual.getDir().getDir(), relatorio) >= altura(atual.getDir().getEsq(), relatorio)) {
                 atual = rotacaoEsquerda(atual, relatorio);
+                relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
             } else {
                 atual = duplaRotacaoDireitaEsquerda(atual, relatorio);
+                relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
             }
         }
@@ -93,6 +98,7 @@ public class ArvoreAVL {
         } else {
             relatorio.incrementaInteracao();
             this.raiz = atual;
+            relatorio.incrementaTrocaColisaoCopia();
         }
     }
 
@@ -134,10 +140,12 @@ public class ArvoreAVL {
                 return;
             }
             r = aRemover;
+            relatorio.incrementaTrocaColisaoCopia();
 
         } else {
             relatorio.incrementaInteracao();
             r = sucessor(aRemover, relatorio);
+            relatorio.incrementaTrocaColisaoCopia();
             aRemover.setId(r.getId());
         }
 
@@ -145,9 +153,11 @@ public class ArvoreAVL {
         if (r.getEsq() != null) {
             relatorio.incrementaInteracao();
             p = r.getEsq();
+            relatorio.incrementaTrocaColisaoCopia();
         } else {
             relatorio.incrementaInteracao();
             p = r.getDir();
+            relatorio.incrementaTrocaColisaoCopia();
         }
 
         if (p != null) {
@@ -158,6 +168,7 @@ public class ArvoreAVL {
         if (r.getPai() == null) {
             relatorio.incrementaInteracao();
             this.raiz = p;
+            relatorio.incrementaTrocaColisaoCopia();
         } else {
             relatorio.incrementaInteracao();
             if (r == r.getPai().getEsq()) {
@@ -175,6 +186,7 @@ public class ArvoreAVL {
     public No rotacaoEsquerda(No inicial, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         No direita = inicial.getDir();
+        relatorio.incrementaTrocaColisaoCopia();
         direita.setPai(inicial.getPai());
 
         inicial.setDir(direita.getEsq());
@@ -207,6 +219,7 @@ public class ArvoreAVL {
     public No rotacaoDireita(No inicial, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         No esquerda = inicial.getEsq();
+        relatorio.incrementaTrocaColisaoCopia();
         esquerda.setPai(inicial.getPai());
 
         inicial.setEsq(esquerda.getDir());
@@ -263,8 +276,8 @@ public class ArvoreAVL {
             relatorio.incrementaTrocaColisaoCopia();
             while (p != null && q == p.getDir()) {
                 q = p;
-                p = q.getPai();
                 relatorio.incrementaTrocaColisaoCopia();
+                p = q.getPai();               
                 relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
             }

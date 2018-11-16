@@ -27,6 +27,7 @@ public class MinhaArvore {
         if (aComparar == null) {
             relatorio.incrementaInteracao();
             this.raiz = aInserir;
+            relatorio.incrementaTrocaColisaoCopia();
 
         } else {
             relatorio.incrementaInteracao();
@@ -65,24 +66,28 @@ public class MinhaArvore {
         setBalanceamento(atual, relatorio);
         int balanceamento = atual.getBalanceamento();
 
-        if (balanceamento == -2) {
+        if (balanceamento == -5) {
             relatorio.incrementaInteracao();
             if (altura(atual.getEsq().getEsq(), relatorio) >= altura(atual.getEsq().getDir(), relatorio)) {
                 atual = rotacaoDireita(atual, relatorio);
+                relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
 
             } else {
                 atual = duplaRotacaoEsquerdaDireita(atual, relatorio);
+                relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
             }
 
-        } else if (balanceamento == 2) {
+        } else if (balanceamento == 5) {
             relatorio.incrementaInteracao();
             if (altura(atual.getDir().getDir(), relatorio) >= altura(atual.getDir().getEsq(), relatorio)) {
                 atual = rotacaoEsquerda(atual, relatorio);
+                relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
             } else {
                 atual = duplaRotacaoDireitaEsquerda(atual, relatorio);
+                relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
             }
         }
@@ -93,6 +98,7 @@ public class MinhaArvore {
         } else {
             relatorio.incrementaInteracao();
             this.raiz = atual;
+            relatorio.incrementaTrocaColisaoCopia();
         }
     }
 
@@ -134,10 +140,12 @@ public class MinhaArvore {
                 return;
             }
             r = aRemover;
+            relatorio.incrementaTrocaColisaoCopia();
 
         } else {
             relatorio.incrementaInteracao();
             r = sucessor(aRemover, relatorio);
+            relatorio.incrementaTrocaColisaoCopia();
             aRemover.setId(r.getId());
         }
 
@@ -145,9 +153,11 @@ public class MinhaArvore {
         if (r.getEsq() != null) {
             relatorio.incrementaInteracao();
             p = r.getEsq();
+            relatorio.incrementaTrocaColisaoCopia();
         } else {
             relatorio.incrementaInteracao();
             p = r.getDir();
+            relatorio.incrementaTrocaColisaoCopia();
         }
 
         if (p != null) {
@@ -158,6 +168,7 @@ public class MinhaArvore {
         if (r.getPai() == null) {
             relatorio.incrementaInteracao();
             this.raiz = p;
+            relatorio.incrementaTrocaColisaoCopia();
         } else {
             relatorio.incrementaInteracao();
             if (r == r.getPai().getEsq()) {
@@ -175,6 +186,7 @@ public class MinhaArvore {
     public No rotacaoEsquerda(No inicial, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         No direita = inicial.getDir();
+        relatorio.incrementaTrocaColisaoCopia();
         direita.setPai(inicial.getPai());
 
         inicial.setDir(direita.getEsq());
@@ -207,6 +219,7 @@ public class MinhaArvore {
     public No rotacaoDireita(No inicial, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         No esquerda = inicial.getEsq();
+        relatorio.incrementaTrocaColisaoCopia();
         esquerda.setPai(inicial.getPai());
 
         inicial.setEsq(esquerda.getDir());
@@ -263,8 +276,8 @@ public class MinhaArvore {
             relatorio.incrementaTrocaColisaoCopia();
             while (p != null && q == p.getDir()) {
                 q = p;
-                p = q.getPai();
                 relatorio.incrementaTrocaColisaoCopia();
+                p = q.getPai();               
                 relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
             }
@@ -300,7 +313,7 @@ public class MinhaArvore {
         no.setBalanceamento(altura(no.getDir(), relatorio) - altura(no.getEsq(), relatorio));
     }
 
-    final protected ArrayList<No> emOrdem(Relatorio relatorio) {
+    final protected ArrayList<No> emOrdem(Relatorio relatorio) { // inorder
         ArrayList<No> ret = new ArrayList<No>();
         emOrdem(raiz, ret, relatorio);
         return ret;
@@ -317,7 +330,7 @@ public class MinhaArvore {
         emOrdem(no.getDir(), lista, relatorio);
     }
     
-    public boolean busca(int k,Relatorio relatorio){
+     public boolean busca(int k,Relatorio relatorio){
         return buscaAVL(this.raiz,k,relatorio);
     }
     

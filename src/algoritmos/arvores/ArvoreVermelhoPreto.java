@@ -7,10 +7,10 @@ public class ArvoreVermelhoPreto {
     private final int VERMELHO = 0;
     private final int PRETO = 1;
 
-    private final NoRubroNegro nulo = new NoRubroNegro(-1);
-    private NoRubroNegro raiz = nulo;
+    private final NoVermelhoPreto nulo = new NoVermelhoPreto(-1);
+    private NoVermelhoPreto raiz = nulo;
 
-    public void imprimirArvore(NoRubroNegro No, Relatorio relatorio) {
+    public void imprimirArvore(NoVermelhoPreto No, Relatorio relatorio) {
         if (No == nulo) {
             relatorio.incrementaInteracao();
             return;
@@ -25,12 +25,12 @@ public class ArvoreVermelhoPreto {
         imprimirArvore(No.getDir(), relatorio);
     }
     
-    public NoRubroNegro busca (int id, Relatorio relatorio){
-        NoRubroNegro procurar = new NoRubroNegro(id);
+    public NoVermelhoPreto busca (int id, Relatorio relatorio){
+        NoVermelhoPreto procurar = new NoVermelhoPreto(id);
         return procurar(procurar, raiz, relatorio);
     }
 
-    private NoRubroNegro procurar(NoRubroNegro procurar, NoRubroNegro No, Relatorio relatorio) {
+    private NoVermelhoPreto procurar(NoVermelhoPreto procurar, NoVermelhoPreto No, Relatorio relatorio) {
         if (raiz == nulo) {
             relatorio.incrementaInteracao();
             return null;
@@ -56,11 +56,13 @@ public class ArvoreVermelhoPreto {
     }
 
     public void inserir(int id, Chave chave, Relatorio relatorio) {
-        NoRubroNegro no = new NoRubroNegro(id, chave);
-        NoRubroNegro temp = raiz;
+        NoVermelhoPreto no = new NoVermelhoPreto(id, chave);
+        NoVermelhoPreto temp = raiz;
+        relatorio.incrementaTrocaColisaoCopia();
         if (raiz == nulo) {
             relatorio.incrementaInteracao();
             raiz = no;
+            relatorio.incrementaTrocaColisaoCopia();
             no.setCor(PRETO);
             no.setPai(nulo);
             raiz.setEsq(nulo);
@@ -82,6 +84,7 @@ public class ArvoreVermelhoPreto {
                     } else {
                         relatorio.incrementaInteracao();
                         temp = temp.getEsq();
+                        relatorio.incrementaTrocaColisaoCopia();
                     }
                 } else if (no.getId() >= temp.getId()) {
                     relatorio.incrementaInteracao();
@@ -95,6 +98,7 @@ public class ArvoreVermelhoPreto {
                     } else {
                         relatorio.incrementaInteracao();
                         temp = temp.getDir();
+                        relatorio.incrementaTrocaColisaoCopia();
                     }
                 }
             }
@@ -103,13 +107,14 @@ public class ArvoreVermelhoPreto {
     }
 
     //Takes as argument the newly inserted No
-    public void balancear(NoRubroNegro No, Relatorio relatorio) {
+    public void balancear(NoVermelhoPreto No, Relatorio relatorio) {
         while (No.getPai().getCor() == VERMELHO) {
             relatorio.incrementaInteracao();
-            NoRubroNegro tio = nulo;
+            NoVermelhoPreto tio = nulo;
             if (No.getPai() == No.getPai().getPai().getEsq()) {
                 relatorio.incrementaInteracao();
                 tio = No.getPai().getPai().getDir();
+                relatorio.incrementaTrocaColisaoCopia();
 
                 if (tio != nulo && tio.getCor() == VERMELHO) {
                     relatorio.incrementaInteracao();
@@ -117,12 +122,14 @@ public class ArvoreVermelhoPreto {
                     tio.setCor(PRETO);
                     No.getPai().getPai().setCor(VERMELHO);
                     No = No.getPai().getPai();
+                    relatorio.incrementaTrocaColisaoCopia();
                     continue;
                 }
                 if (No == No.getPai().getDir()) {
                     relatorio.incrementaInteracao();
                     //Double rotation needed
                     No = No.getPai();
+                    relatorio.incrementaTrocaColisaoCopia();
                     rotacionarEsquerda(No, relatorio);
                 }
                 No.getPai().setCor(PRETO);
@@ -139,12 +146,14 @@ public class ArvoreVermelhoPreto {
                     tio.setCor(PRETO);
                     No.getPai().getPai().setCor(VERMELHO);
                     No = No.getPai().getPai();
+                    relatorio.incrementaTrocaColisaoCopia();
                     continue;
                 }
                 if (No == No.getPai().getEsq()) {
                     relatorio.incrementaInteracao();
                     //Double rotation needed
                     No = No.getPai();
+                    relatorio.incrementaTrocaColisaoCopia();
                     rotacionarDireita(No, relatorio);
                 }
                 No.getPai().setCor(PRETO);
@@ -157,7 +166,7 @@ public class ArvoreVermelhoPreto {
         raiz.setCor(PRETO);
     }
 
-    void rotacionarEsquerda(NoRubroNegro No, Relatorio relatorio) {
+    void rotacionarEsquerda(NoVermelhoPreto No, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         if (No.getPai() != nulo) {
             relatorio.incrementaInteracao();
@@ -178,17 +187,19 @@ public class ArvoreVermelhoPreto {
             No.getPai().setEsq(No);
         } else {//Need to rotate raiz
             relatorio.incrementaInteracao();
-            NoRubroNegro Direita = raiz.getDir();
+            NoVermelhoPreto Direita = raiz.getDir();
+            relatorio.incrementaTrocaColisaoCopia();
             raiz.setDir(Direita.getEsq());
             Direita.getEsq().setPai(raiz);
             raiz.setPai(Direita);
             Direita.setEsq(raiz);
             Direita.setPai(nulo);
             raiz = Direita;
+            relatorio.incrementaTrocaColisaoCopia();
         }
     }
 
-    void rotacionarDireita(NoRubroNegro No, Relatorio relatorio) {
+    void rotacionarDireita(NoVermelhoPreto No, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         if (No.getPai() != nulo) {
             relatorio.incrementaInteracao();
@@ -210,13 +221,15 @@ public class ArvoreVermelhoPreto {
             No.getPai().setDir(No);
         } else {//Need to rotate raiz
             relatorio.incrementaInteracao();
-            NoRubroNegro Esquerda = raiz.getEsq();
+            NoVermelhoPreto Esquerda = raiz.getEsq();
+            relatorio.incrementaTrocaColisaoCopia();
             raiz.setEsq(raiz.getEsq().getDir());
             Esquerda.getDir().setPai(raiz);
             raiz.setPai(Esquerda);
             Esquerda.setDir(raiz);
             Esquerda.setPai(nulo);
             raiz = Esquerda;
+            relatorio.incrementaTrocaColisaoCopia();
         }
     }
 
@@ -229,10 +242,11 @@ public class ArvoreVermelhoPreto {
     //This operation doesn't care about the new NoRubroNegro's connections
     //no previous No's getEsq() and getDir(). The caller has to take care
     //of that.
-    void transplantar(NoRubroNegro alvo, NoRubroNegro no, Relatorio relatorio) {
+    void transplantar(NoVermelhoPreto alvo, NoVermelhoPreto no, Relatorio relatorio) {
         if (alvo.getPai() == nulo) {
             relatorio.incrementaInteracao();
             raiz = no;
+            relatorio.incrementaTrocaColisaoCopia();
         } else if (alvo == alvo.getPai().getEsq()) {
             relatorio.incrementaInteracao();
             alvo.getPai().setEsq(no);
@@ -244,32 +258,39 @@ public class ArvoreVermelhoPreto {
     }
 
     public boolean remover(int id, Relatorio relatorio){
-        NoRubroNegro no = new NoRubroNegro(id);
+        NoVermelhoPreto no = new NoVermelhoPreto(id);
         return remover(no, relatorio);
     }
     
-    boolean remover(NoRubroNegro z, Relatorio relatorio) {
-        if ((z = procurar(z, raiz, relatorio)) == null) {
+    boolean remover(NoVermelhoPreto z, Relatorio relatorio) {
+       z = procurar(z, raiz, relatorio);
+       relatorio.incrementaTrocaColisaoCopia();
+        if (z == null) {
             relatorio.incrementaInteracao();
             return false;
         }
-        NoRubroNegro x;
-        NoRubroNegro y = z; // temporary reference y
+        NoVermelhoPreto x;
+        NoVermelhoPreto y = z; // temporary reference y
+        relatorio.incrementaTrocaColisaoCopia();
         int corY = y.getCor();
 
         if (z.getEsq() == nulo) {
             relatorio.incrementaInteracao();
             x = z.getDir();
+            relatorio.incrementaTrocaColisaoCopia();
             transplantar(z, z.getDir(), relatorio);
         } else if (z.getDir() == nulo) {
             relatorio.incrementaInteracao();
             x = z.getEsq();
+            relatorio.incrementaTrocaColisaoCopia();
             transplantar(z, z.getEsq(), relatorio);
         } else {
             relatorio.incrementaInteracao();
             y = arvoreMinima(z.getDir(), relatorio);
+            relatorio.incrementaTrocaColisaoCopia();
             corY = y.getCor();
             x = y.getDir();
+            relatorio.incrementaTrocaColisaoCopia();
             if (y.getPai() == z) {
                 relatorio.incrementaInteracao();
                 x.setPai(y);
@@ -291,23 +312,26 @@ public class ArvoreVermelhoPreto {
         return true;
     }
 
-    void arrumarNoRemovido(NoRubroNegro x, Relatorio relatorio) {//deleteFixup
+    void arrumarNoRemovido(NoVermelhoPreto x, Relatorio relatorio) {//deleteFixup
         while (x != raiz && x.getCor() == PRETO) {
             relatorio.incrementaInteracao();
             if (x == x.getPai().getEsq()) {
                 relatorio.incrementaInteracao();
-                NoRubroNegro w = x.getPai().getDir();
+                NoVermelhoPreto w = x.getPai().getDir();
+                relatorio.incrementaTrocaColisaoCopia();
                 if (w.getCor() == VERMELHO) {
                     relatorio.incrementaInteracao();
                     w.setCor(PRETO);
                     x.getPai().setCor(VERMELHO);
                     rotacionarEsquerda(x.getPai(), relatorio);
                     w = x.getPai().getDir();
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
                 if (w.getEsq().getCor() == PRETO && w.getDir().getCor() == PRETO) {
                     relatorio.incrementaInteracao();
                     w.setCor(VERMELHO);
                     x = x.getPai();
+                    relatorio.incrementaTrocaColisaoCopia();
                     continue;
                 } else if (w.getDir().getCor() == PRETO) {
                     relatorio.incrementaInteracao();
@@ -315,6 +339,7 @@ public class ArvoreVermelhoPreto {
                     w.setCor(VERMELHO);
                     rotacionarDireita(w, relatorio);
                     w = x.getPai().getDir();
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
                 if (w.getDir().getCor() == VERMELHO) {
                     relatorio.incrementaInteracao();
@@ -323,21 +348,25 @@ public class ArvoreVermelhoPreto {
                     w.getDir().setCor(PRETO);
                     rotacionarEsquerda(x.getPai(), relatorio);
                     x = raiz;
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
             } else {
                 relatorio.incrementaInteracao();
-                NoRubroNegro w = x.getPai().getEsq();
+                NoVermelhoPreto w = x.getPai().getEsq();
+                relatorio.incrementaTrocaColisaoCopia();
                 if (w.getCor() == VERMELHO) {
                     relatorio.incrementaInteracao();
                     w.setCor(PRETO);
                     x.getPai().setCor(VERMELHO);
                     rotacionarDireita(x.getPai(), relatorio);
                     w = x.getPai().getEsq();
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
                 if (w.getDir().getCor() == PRETO && w.getEsq().getCor() == PRETO) {
                     relatorio.incrementaInteracao();
                     w.setCor(VERMELHO);
                     x = x.getPai();
+                    relatorio.incrementaTrocaColisaoCopia();
                     continue;
                 } else if (w.getEsq().getCor() == PRETO) {
                     relatorio.incrementaInteracao();
@@ -345,6 +374,7 @@ public class ArvoreVermelhoPreto {
                     w.setCor(VERMELHO);
                     rotacionarEsquerda(w, relatorio);
                     w = x.getPai().getEsq();
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
                 if (w.getEsq().getCor() == VERMELHO) {
                     relatorio.incrementaInteracao();
@@ -353,16 +383,18 @@ public class ArvoreVermelhoPreto {
                     w.getEsq().setCor(PRETO);
                     rotacionarDireita(x.getPai(), relatorio);
                     x = raiz;
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
             }
         }
         x.setCor(PRETO);
     }
 
-    NoRubroNegro arvoreMinima(NoRubroNegro subArvore, Relatorio relatorio) {
+    NoVermelhoPreto arvoreMinima(NoVermelhoPreto subArvore, Relatorio relatorio) {
         while (subArvore.getEsq() != nulo) {
             relatorio.incrementaInteracao();
             subArvore = subArvore.getEsq();
+            relatorio.incrementaTrocaColisaoCopia();
         }
         return subArvore;
     }

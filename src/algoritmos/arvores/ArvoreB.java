@@ -46,18 +46,22 @@ public class ArvoreB {
             if (raiz.getOrdem() == 0) {
                 relatorio.incrementaInteracao();
                 raiz.getChave()[0] = k;//seta a chave na primeira posiÃ§Ã£o da raiz
+                relatorio.incrementaTrocaColisaoCopia();
                 raiz.setOrdem(raiz.getOrdem() + 1);
             } else { //caso nao estaja vazia
                 relatorio.incrementaInteracao();
                 NoB r = raiz;
+                relatorio.incrementaTrocaColisaoCopia();
                 //verifica se a raiz estÃ¡ cheia
                 if (r.getOrdem() == ordem - 1) {//hÃ¡ necessidade de dividir a raiz
                     relatorio.incrementaInteracao();
                     NoB s = new NoB(ordem);
                     raiz = s;
+                    relatorio.incrementaTrocaColisaoCopia();
                     s.setFolha(false);
                     s.setOrdem(0);
                     s.getFilho()[0] = r;
+                    relatorio.incrementaTrocaColisaoCopia();
                     divideNo(s, 0, r, relatorio);//divide nÃ³
                     insereNoNaoCheio(s, k, relatorio);//depois de dividir a raiz comeÃ§a inserindo apartir da raiz
 
@@ -84,12 +88,14 @@ public class ArvoreB {
             relatorio.incrementaInteracao();
             if ((ordem - 1) % 2 == 0) {
                 relatorio.incrementaInteracao();
-                //z.getChave().set(j, y.getChave().get(j + t));
+                //z.getChave().set(j, y.getChave().get(j + t));                
                 z.getChave()[j] = y.getChave()[j + t];
+                relatorio.incrementaTrocaColisaoCopia();
             } else {
                 relatorio.incrementaInteracao();
                 //z.getChave().set(j, y.getChave().get(j + t + 1));
                 z.getChave()[j] = y.getChave()[j + t + 1];
+                relatorio.incrementaTrocaColisaoCopia();
             }
             y.setOrdem(y.getOrdem() - 1);
         }
@@ -103,10 +109,12 @@ public class ArvoreB {
                     relatorio.incrementaInteracao();
                     //z.getFilho().set(j, y.getFilho().get(j + t));
                     z.getFilho()[j] = y.getFilho()[j + t];
+                    relatorio.incrementaTrocaColisaoCopia();
                 } else {
                     relatorio.incrementaInteracao();
                     //z.getFilho().set(j, y.getFilho().get(j + t + 1));
                     z.getFilho()[j] = y.getFilho()[j + t + 1];
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
 
             }
@@ -119,27 +127,32 @@ public class ArvoreB {
             relatorio.incrementaInteracao();
             //x.getFilho().set(j + 1, x.getFilho().get(j));
             x.getFilho()[j + 1] = x.getFilho()[j];
+            relatorio.incrementaTrocaColisaoCopia();
         }
 
         //x.getFilho().set(i + 1, z);//seta z como filho de x na posiÃ§Ã£o i+1
         x.getFilho()[i + 1] = z;
+        relatorio.incrementaTrocaColisaoCopia();
 
         //desloca as chaves de x uma posiÃ§Ã£o para a direita, para podermos subir uma chave de y
         for (int j = x.getOrdem(); j > i; j--) {
             relatorio.incrementaInteracao();
             //x.getChave().set(j, x.getChave().get(j - 1));
             x.getChave()[j] = x.getChave()[j - 1];
+            relatorio.incrementaTrocaColisaoCopia();
         }
 
         //"sobe" uma chave de y para z
         if ((ordem - 1) % 2 == 0) {
             relatorio.incrementaInteracao();
             x.getChave()[i] = y.getChave()[t - 1];
+            relatorio.incrementaTrocaColisaoCopia();
             y.setOrdem(y.getOrdem() - 1);
 
         } else {
             relatorio.incrementaInteracao();
             x.getChave()[i] = y.getChave()[t];
+            relatorio.incrementaTrocaColisaoCopia();
         }
 
         //incrementa o numero de chaves de x
@@ -158,10 +171,12 @@ public class ArvoreB {
             while (i >= 0 && k.getId() < x.getChave()[i].getId()) {
                 relatorio.incrementaInteracao();
                 x.getChave()[i + 1] = x.getChave()[i];
+                relatorio.incrementaTrocaColisaoCopia();
                 i--;
             }
             i++;
             x.getChave()[i] = k;//insere a chave na posiÃ§Ã£o i
+            relatorio.incrementaTrocaColisaoCopia();
             x.setOrdem(x.getOrdem() + 1);
 
         } else {//caso x nÃ£o for folha
@@ -189,12 +204,12 @@ public class ArvoreB {
 
     //MÃ©todo de busca de uma chave, retorna um nÃ³ onde a chave buscada se encontra
     //ParÃ¢metros: X - nÃ³ por onde comeÃ§ar a busca, k - chave a ser buscada
-    public NoB busca(int id, Relatorio relatorio){
+    public NoB busca(int id, Relatorio relatorio) {
         Chave chave = new Chave();
         chave.setId(id);
         return buscaChave(raiz, chave, relatorio);
     }
-    
+
     public NoB buscaChave(NoB X, Chave k, Relatorio relatorio) {
         int i = 1;
         //procura ate nao estourar o tamanho e ate o valor nao ser maior q o procurado
@@ -218,18 +233,19 @@ public class ArvoreB {
     }
 
     //MÃ©todo de RemoÃ§Ã£o de uma determinada chave da arvoreB
-    public void remover(int id, Relatorio relatorio){
+    public void remover(int id, Relatorio relatorio) {
         Chave chave = new Chave();
         chave.setId(id);
         remover(chave, relatorio);
     }
-    
+
     private void remover(Chave k, Relatorio relatorio) {
         //verifica se a chave a ser removida existe
         if (buscaChave(this.raiz, k, relatorio) != null) {
             relatorio.incrementaInteracao();
             //N Ã© o nÃ³ onde se encontra k
             NoB N = buscaChave(this.raiz, k, relatorio);
+            relatorio.incrementaTrocaColisaoCopia();
             int i = 1;
 
             //adquire a posiÃ§Ã£o correta da chave em N
@@ -244,6 +260,7 @@ public class ArvoreB {
                 for (int j = i + 1; j <= N.getOrdem(); j++) {
                     relatorio.incrementaInteracao();
                     N.getChave()[j - 2] = N.getChave()[j - 1];//desloca chaves quando tem mais de uma
+                    relatorio.incrementaTrocaColisaoCopia();
                 }
                 N.setOrdem(N.getOrdem() - 1);
                 if (N != this.raiz) {
@@ -253,6 +270,7 @@ public class ArvoreB {
             } else {//caso contrÃ¡rio(N nao Ã© folha), substitui a chave por seu antecessor e balanceia a folha onde se encontrava o ancecessor
                 relatorio.incrementaInteracao();
                 NoB S = Antecessor(this.raiz, k, relatorio);//S eh onde se encontra o antecessor de k
+                relatorio.incrementaTrocaColisaoCopia();
                 //int y = S.getChave().get(S.getOrdem() - 1);//y Ã© o antecessor de k
                 Chave y = S.getChave()[S.getOrdem() - 1];
                 S.setOrdem(S.getOrdem() - 1);
@@ -270,6 +288,7 @@ public class ArvoreB {
         if (F.getOrdem() < Math.floor((ordem - 1) / 2)) {
             relatorio.incrementaInteracao();
             NoB P = getPai(raiz, F, relatorio);//P Ã© o pai de F
+            relatorio.incrementaTrocaColisaoCopia();
             int j = 1;
 
             //adquire a posiÃ§Ã£o de F em P
@@ -309,6 +328,7 @@ public class ArvoreB {
             if (X.getOrdem() == 0) {
                 relatorio.incrementaInteracao();
                 this.raiz = X.getFilho()[0];//o filho o de x passa a ser raiz
+                relatorio.incrementaTrocaColisaoCopia();
                 X.getFilho()[0] = null; // desaloca o filho de x
             }
         } else {//caso contrario(X nao Ã© raiz)
@@ -318,6 +338,7 @@ public class ArvoreB {
             if (X.getOrdem() < t) {
                 relatorio.incrementaInteracao();
                 P = getPai(raiz, X, relatorio);//P Ã© pai de X
+                relatorio.incrementaTrocaColisaoCopia();
                 j = 1;
 
                 //adquire a posicao correta do filho X em P
@@ -347,6 +368,7 @@ public class ArvoreB {
         for (int i = 0; i < Dir.getOrdem(); i++) {
             relatorio.incrementaInteracao();
             Dir.getChave()[i + 1] = Dir.getChave()[i];
+            relatorio.incrementaTrocaColisaoCopia();
         }
 
         //Se Dir nao for folha descola seu filhos uma posicao para a direita
@@ -355,12 +377,16 @@ public class ArvoreB {
             for (int i = 0; i > Dir.getOrdem(); i++) {
                 relatorio.incrementaInteracao();
                 Dir.getFilho()[i + 1] = Dir.getFilho()[i];
+                relatorio.incrementaTrocaColisaoCopia();
             }
         }
         Dir.setOrdem(Dir.getOrdem() + 1);//Incrementa a quantidades de chaves em Dir
         Dir.getChave()[0] = P.getChave()[e];//"desce" uma chave de P para Dir
+        relatorio.incrementaTrocaColisaoCopia();
         P.getChave()[e] = Esq.getChave()[Esq.getOrdem() - 1];//"sobe" uma chave de Esq para P
+        relatorio.incrementaTrocaColisaoCopia();
         Dir.getFilho()[0] = Esq.getFilho()[Esq.getOrdem()];//Seta o ultimo filho de Esq como primeiro filho de Dir
+        relatorio.incrementaTrocaColisaoCopia();
         Esq.setOrdem(Esq.getOrdem() - 1);//Decrementa a quantidade de chaves em Esq
 
     }
@@ -371,13 +397,17 @@ public class ArvoreB {
         relatorio.incrementaTrocaColisaoCopia();
         Esq.setOrdem(Esq.getOrdem() + 1);//Incrementa a quantidade de chaves em Esq
         Esq.getChave()[Esq.getOrdem() - 1] = P.getChave()[e];//"desce" uma chave de P para Esq
+        relatorio.incrementaTrocaColisaoCopia();
         P.getChave()[e] = Dir.getChave()[0];//"sobe" uma chave de Dir para P
+        relatorio.incrementaTrocaColisaoCopia();
         Esq.getFilho()[Esq.getOrdem()] = Dir.getFilho()[0];//Seta o primeiro filho de Dir como Ãºltimo filho de Esq
+        relatorio.incrementaTrocaColisaoCopia();
 
         //descola as chaves de Dir uma posiÃ§Ã£o para a esquerda
         for (int j = 1; j < Dir.getOrdem(); j++) {
             relatorio.incrementaInteracao();
             Dir.getChave()[j - 1] = Dir.getChave()[j];
+            relatorio.incrementaTrocaColisaoCopia();
         }
 
         //se Dir nao for folha, desloca todos os filhos de Dir uma posicao a esquerda
@@ -386,6 +416,7 @@ public class ArvoreB {
             for (int i = 1; i < Dir.getOrdem() + 1; i++) {
                 relatorio.incrementaInteracao();
                 Dir.getFilho()[i - 1] = Dir.getFilho()[i];
+                relatorio.incrementaTrocaColisaoCopia();
             }
         }
 
@@ -398,15 +429,18 @@ public class ArvoreB {
     //ParÃ¢metros: X - NoB pai, i - posicao do filho de X onde vai ser juntado
     private void Juncao_No(NoB X, int i, Relatorio relatorio) {
         NoB Y = X.getFilho()[i - 1]; //cria Y
-        NoB Z = X.getFilho()[i];//cria Z
+        relatorio.incrementaTrocaColisaoCopia();
+        NoB Z = X.getFilho()[i];//cria Z        
         relatorio.incrementaTrocaColisaoCopia();
         int k = Y.getOrdem();
         Y.getChave()[k] = X.getChave()[i - 1];//"desce" uma chave de X para X
+        relatorio.incrementaTrocaColisaoCopia();
 
         //descola as de chaves de Z para Y
         for (int j = 1; j <= Z.getOrdem(); j++) {
             relatorio.incrementaInteracao();
             Y.getChave()[j + k] = Z.getChave()[j - 1];
+            relatorio.incrementaTrocaColisaoCopia();
         }
 
         //se Z nao for folha, descola seus filhos tbm
@@ -415,6 +449,7 @@ public class ArvoreB {
             for (int j = 1; j <= Z.getOrdem(); j++) {
                 relatorio.incrementaInteracao();
                 Y.getFilho()[j + k] = Z.getFilho()[j - 1];
+                relatorio.incrementaTrocaColisaoCopia();
             }
         }
 
@@ -427,7 +462,9 @@ public class ArvoreB {
         for (int j = i; j <= X.getOrdem() - 1; j++) {//ainda nao
             relatorio.incrementaInteracao();
             X.getChave()[j - 1] = X.getChave()[j];
+            relatorio.incrementaTrocaColisaoCopia();
             X.getFilho()[j] = X.getFilho()[j + 1];
+            relatorio.incrementaTrocaColisaoCopia();
         }
 
         //decrementa a quantidade de chaves em X
@@ -467,6 +504,7 @@ public class ArvoreB {
             if (!T.getFilho()[j].isFolha()) {
                 relatorio.incrementaInteracao();
                 NoB X = getPai(T.getFilho()[j], N, relatorio);
+                relatorio.incrementaTrocaColisaoCopia();
                 if (X != null) {
                     relatorio.incrementaInteracao();
                     return X;

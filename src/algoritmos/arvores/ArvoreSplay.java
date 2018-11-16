@@ -22,16 +22,20 @@ public class ArvoreSplay {
 
     public void inserir(int id, Chave chave, Relatorio relatorio) {
         No z = raiz;
+        relatorio.incrementaTrocaColisaoCopia();
         No p = null;
         while (z != null) {
             relatorio.incrementaInteracao();
             p = z;
+            relatorio.incrementaTrocaColisaoCopia();
             if (id > p.getId()) {
                 relatorio.incrementaInteracao();
                 z = z.getDir();
+                relatorio.incrementaTrocaColisaoCopia();
             } else {
                 relatorio.incrementaInteracao();
                 z = z.getEsq();
+                relatorio.incrementaTrocaColisaoCopia();
             }
         }
         z = new No(id, chave);
@@ -40,6 +44,7 @@ public class ArvoreSplay {
         if (p == null) {
             relatorio.incrementaInteracao();
             this.raiz = z;
+            relatorio.incrementaTrocaColisaoCopia();
         } else if (id > p.getId()) {
             relatorio.incrementaInteracao();
             p.setDir(z);
@@ -133,8 +138,10 @@ public class ArvoreSplay {
         while (x.getPai() != null) {
             relatorio.incrementaInteracao();
             No pai = x.getPai();
+            relatorio.incrementaTrocaColisaoCopia();
 
             No avo = pai.getPai();
+            relatorio.incrementaTrocaColisaoCopia();
 
             if (avo == null) {
                 relatorio.incrementaInteracao();
@@ -187,6 +194,7 @@ public class ArvoreSplay {
         }
 
         raiz = x;
+        relatorio.incrementaTrocaColisaoCopia();
 
     }
 
@@ -196,6 +204,7 @@ public class ArvoreSplay {
     public void remover(int id, Relatorio relatorio) {
 
         No no = encontarNo(id, relatorio);
+        relatorio.incrementaTrocaColisaoCopia();
 
         remover(no, relatorio);
 
@@ -217,10 +226,12 @@ public class ArvoreSplay {
             relatorio.incrementaInteracao();
 
             No min = no.getEsq();
+            relatorio.incrementaTrocaColisaoCopia();
 
             while (min.getDir() != null) {
                 relatorio.incrementaInteracao();
                 min = min.getDir();
+                relatorio.incrementaTrocaColisaoCopia();
             }
 
             min.setDir(no.getDir());
@@ -230,6 +241,7 @@ public class ArvoreSplay {
             no.getEsq().setPai(null);
 
             raiz = no.getEsq();
+            relatorio.incrementaTrocaColisaoCopia();
 
         } else if (no.getDir() != null) {
             relatorio.incrementaInteracao();
@@ -237,6 +249,7 @@ public class ArvoreSplay {
             no.getDir().setPai(null);
 
             raiz = no.getDir();
+            relatorio.incrementaTrocaColisaoCopia();
 
         } else if (no.getEsq() != null) {
             relatorio.incrementaInteracao();
@@ -244,6 +257,7 @@ public class ArvoreSplay {
             no.getEsq().setPai(null);
 
             raiz = no.getEsq();
+            relatorio.incrementaTrocaColisaoCopia();
 
         } else {
             relatorio.incrementaInteracao();
@@ -286,18 +300,22 @@ public class ArvoreSplay {
         No noAnterior = null;
 
         No z = raiz;
+        relatorio.incrementaTrocaColisaoCopia();
 
         while (z != null) {
             relatorio.incrementaInteracao();
 
             noAnterior = z;
+            relatorio.incrementaTrocaColisaoCopia();
 
             if (id > z.getId()) {
                 relatorio.incrementaInteracao();
                 z = z.getDir();
+                relatorio.incrementaTrocaColisaoCopia();
             } else if (id < z.getId()) {
                 relatorio.incrementaInteracao();
                 z = z.getEsq();
+                relatorio.incrementaTrocaColisaoCopia();
             } else if (id == z.getId()) {
                 relatorio.incrementaInteracao();
 
