@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package trabalhoed2;
 
 import java.util.ArrayList;
-import java.util.Collections;
+//import java.util.Collections;
 
 /**
- *
- * @author ice
+ * Classe que contem as funcoes do objeto Deputado
  */
 public class Deputado {
+
     private String nome;
     private String partido;
     private String estado;
@@ -20,7 +15,9 @@ public class Deputado {
     private ArrayList<Recibo> recibos;
     private float totalGasto;
 
-
+    /**
+     * Construtores do obejtos que representam os deputados
+     */
     public Deputado() {
         this.recibos = new ArrayList<>();
         this.totalGasto = 0;
@@ -68,6 +65,9 @@ public class Deputado {
         this.estado = estado;
     }
 
+    /**
+     * Essa funcao imprime os dados basicos do Deputado
+     */
     public void imprimeDeputado() {
         System.out.println("Nome: " + getNome() + " Partido: " + this.partido + " " + this.estado + " ID: " + this.id);
     }
@@ -80,10 +80,18 @@ public class Deputado {
         this.recibos = recibos;
     }
 
+    /**
+     * Adiciona um novo Recibo ao Deputado em questao
+     *
+     * @param recibo Recibo do gasto realizado pelo deputado
+     */
     public void addRecibo(Recibo recibo) {
         this.recibos.add(recibo);
     }
 
+    /**
+     * Imprime todos os Recibos de um determinado Deputado
+     */
     public void imprimeRecibos() {
         for (int i = 0; i < recibos.size(); i++) {
             System.out.println(recibos.get(i).getGasto());
@@ -98,5 +106,4 @@ public class Deputado {
         this.totalGasto = totalGasto;
     }
 
-    
 }
