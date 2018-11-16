@@ -316,4 +316,31 @@ public class ArvoreAVL {
         lista.add(no);
         emOrdem(no.getDir(), lista, relatorio);
     }
+    
+     public boolean busca(int k,Relatorio relatorio){
+        return buscaAVL(this.raiz,k,relatorio);
+    }
+    
+    public boolean buscaAVL(No atual,int k,Relatorio relatorio){
+        if (atual == null) {
+            relatorio.incrementaInteracao();
+            return false;
+
+        } else {
+            relatorio.incrementaInteracao();
+            if (atual.getId() > k) {
+                relatorio.incrementaInteracao();
+                buscaAVL(atual.getEsq(), k, relatorio);
+
+            } else if (atual.getId() < k) {
+                relatorio.incrementaInteracao();
+                buscaAVL(atual.getDir(), k, relatorio);
+
+            } else if (atual.getId() == k) {
+                relatorio.incrementaInteracao();
+                return true;
+            }
+        }
+        return false;
+    }
 }
