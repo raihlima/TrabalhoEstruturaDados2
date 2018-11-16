@@ -1,25 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package trabalhoed2;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author ice
+ * Classe que representa os dados das Empresas do programa
  */
 public class Empresa {
+
     private String nome;
     private String cnpj;
     private String tipo;
-    private ArrayList <Gasto> gastos;
+    private ArrayList<Gasto> gastos;
 
     public Empresa() {
-    } 
+    }
 
+    /**
+     * Construtor de Empresa
+     *
+     * @param nome Nome da Empresa
+     * @param cnpj Numero CNPJ
+     * @param tipo Tipo da empresa
+     */
     public Empresa(String nome, String cnpj, String tipo) {
         this.nome = nome;
         this.cnpj = cnpj;
@@ -51,19 +53,20 @@ public class Empresa {
         this.tipo = tipo;
     }
 
-    public ArrayList <Gasto> getGastos() {
+    public ArrayList<Gasto> getGastos() {
         return gastos;
     }
 
-    public void setGastos(ArrayList <Gasto> gastos) {
+    public void setGastos(ArrayList<Gasto> gastos) {
         this.gastos = gastos;
     }
-    
-    public void addGastos(Gasto gasto){
+
+    /**
+     * Adiciona um novo gasto na Empresa
+     *
+     * @param gasto Dados do gasto inseridos a partir do arquivo de entrada
+     */
+    public void addGastos(Gasto gasto) {
         this.gastos.add(gasto);
     }
-    
-    
-    
-    
 }
