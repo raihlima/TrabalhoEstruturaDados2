@@ -1,27 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 //TODO terminar os comentarios das funcoes
 package algoritmos;
 
 import dados.Relatorio;
 
 /**
- *
- * @author ice
+ * Implementacao dos algoritmos de ordenacao usados em Inteiros 
  */
 public class AlgoritmoInteiro {
-
-    /*
-    *   Algoritmos de ordenação dos gastos dos Deputados
-     */
+    // Algoritmos de ordenação dos gastos dos Deputados //
     /**
-     * Esta função contém o código para execução do algoritmo de Bubble Sort
-     *
-     * @param listaInteiros
-     * @param relatorio
+     * Esta funcao contem o codigo para execucao do algoritmo Bubble Sort
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     public static void bubbleSort(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int contIteracao = 0;
@@ -43,17 +33,15 @@ public class AlgoritmoInteiro {
         relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
 
     }
-
     /**
-     * Esta função contém o código para execução do algoritmo de Insertion Sort
-     *
-     * @param listaInteiros
-     * @param relatorio
+     * Esta funcao contem o codigo para execucao do algoritmo Insertion Sort
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     public static void insertionSort(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         insertionSort(listaInteiros, 0, listaInteiros.getTamanho(), relatorio);
     }
-
+    //Funcao auxiliar do Insertion Sort
     private static void insertionSort(ListaEncadeada<Integer> listaInteiros, int min, int max, Relatorio relatorio) {
         int contIteracao = 1;
 
@@ -74,18 +62,15 @@ public class AlgoritmoInteiro {
         contIteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contIteracao));
     }
-
     /**
-     * Estas funções contém o código para execução do algoritmo de Merge Sort
-     *
-     * @param listaInteiros
-     * @param relatorio
+     * Esta funcao contem o codigo para execucao do algoritmo Merge Sort
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
     public static void mergeSort(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         mergeSort(listaInteiros, 0, listaInteiros.getTamanho() - 1, relatorio);
     }
-
     //Funcao de chamada recursiva do algoritmo Merge Sort
     private static void mergeSort(ListaEncadeada<Integer> listaInteiros, int esq, int dir, Relatorio relatorio) {
         int contInteracao = 1;
@@ -166,12 +151,10 @@ public class AlgoritmoInteiro {
         contInteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
-
     /**
-     * Estas funções contém o código para execução do algoritmo de Quick Sort
-     *
-     * @param listaInteiros
-     * @param relatorio
+     * Esta funcao contem o codigo para execucao do algoritmo Quick Sort
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao da recurcao
     public static void quickSortRec(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
@@ -214,13 +197,12 @@ public class AlgoritmoInteiro {
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
         return i + 1;
     }
-
     /**
-     * Estas funções contém o código para execução do algoritmo de Quick Sort
+     * Esta funcao contem o codigo para execucao do algoritmo Quick Sort
      * Mediana de 3
-     *
-     * @param listaInteiros
-     * @param relatorio
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param k Numero inteiro que compoe e algoritmo
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
     public static void quicksortMedianaK(ListaEncadeada<Integer> listaInteiros, int k, Relatorio relatorio) {
@@ -298,7 +280,12 @@ public class AlgoritmoInteiro {
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
 
     }
-
+    /**
+     * Esta funcao contem o codigo para execucao do algoritmo Quick Sort Hibirdo
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param k Numero inteiro que compoe e algoritmo
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
     public static void quickSortHibrido(ListaEncadeada<Integer> listaInteiros, int k, Relatorio relatorio) {
         quickSortHibrido(listaInteiros, 0, listaInteiros.getTamanho() - 1, k, relatorio);
     }
@@ -317,7 +304,6 @@ public class AlgoritmoInteiro {
         contInteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
-
     /**
      * Estas funções contém o código para execução do algoritmo de Heap Sort
      *
@@ -372,12 +358,10 @@ public class AlgoritmoInteiro {
         contInteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
-
     /**
-     * Esta função contém o código para execução do algoritmo de Shell Sort
-     *
-     * @param listaInteiros
-     * @param relatorio
+     * Esta funcao contem o codigo para execucao do algoritmo Shell Sort
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     //Funcao principal do algoritmo de Shell Sort
     public static void shellSort(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
@@ -418,11 +402,7 @@ public class AlgoritmoInteiro {
         contInteracao++;
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
-
-    //TODO Java Doc a partir daqui
-    /*
-    *   Aqui começam os algoritmos de Hashing
-     */
+    // Aqui comecam os algoritmos de Hashing //
     private static Integer[] tabela(int tam) {
         Integer[] tab = new Integer[tam];
         for (int i = 0; i < tam; i++) {
@@ -475,10 +455,12 @@ public class AlgoritmoInteiro {
         }
         return true;
     }
-
+    // Funcoes de hashing //
     /**
-     * Funcoes de hashing
-     *
+     * Esta funcao contem o codigo para execucao da Sondagem Linear
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Inteiros alocados
      */
     public static Integer[] sondagemLinear(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
@@ -499,7 +481,12 @@ public class AlgoritmoInteiro {
         relatorio.incrementaInteracao();
         return tabela;
     }
-
+    /**
+     * Esta funcao contem o codigo para execucao da Sondagem Quadratica
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Inteiros alocados
+     */
     public static Integer[] sondagemQuadratica(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
         int h = primo(listaInteiros.getTamanho());
@@ -531,7 +518,12 @@ public class AlgoritmoInteiro {
         relatorio.incrementaInteracao();
         return tabela;
     }
-
+    /**
+     * Esta funcao contem o codigo para execucao do Duplo Hashing
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Inteiros alocados
+     */
     public static Integer[] duploHashing(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos = 0;
         int h = primo(listaInteiros.getTamanho());
@@ -562,7 +554,12 @@ public class AlgoritmoInteiro {
         relatorio.incrementaInteracao();
         return null;
     }
-
+    /**
+     * Esta funcao contem o codigo para execucao do Encademanto Separado
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Inteiros alocados
+     */
     public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
         ListaEncadeada<Integer>[] tabela = tabelaEncadeada(listaInteiros.getTamanho() / 2);
@@ -578,7 +575,12 @@ public class AlgoritmoInteiro {
         relatorio.incrementaInteracao();
         return tabela;
     }
-
+    /**
+     * Esta funcao contem o codigo para execucao do Encademanto Coalescido
+     * @param listaInteiros Lista com todos os inteiros a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Inteiros alocados
+     */
     public static Integer[][] encadeamentoCoalescido(ListaEncadeada<Integer> listaInteiros, Relatorio relatorio) {
         int pos;
         int h = primo(listaInteiros.getTamanho());
@@ -607,10 +609,7 @@ public class AlgoritmoInteiro {
         relatorio.incrementaInteracao();
         return tabela;
     }
-
-    /**
-     * Funcoes de busca de hashing
-     */
+    // Funcoes de busca de hashing
     private static Integer buscaSondagemLinear(Integer valor, Integer[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
         int pos = (hash(valor, h));

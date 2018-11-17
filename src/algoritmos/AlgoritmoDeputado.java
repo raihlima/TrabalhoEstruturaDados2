@@ -1,31 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-//TODO terminar os comentarios das funcoes
 package algoritmos;
 
 import dados.Relatorio;
 import java.util.ArrayList;
-import java.util.Arrays;
+//import java.util.Arrays;
 import java.util.List;
 import trabalhoed2.Deputado;
 
 /**
- *
- * @author ice
+ * Implementacao dos algoritmos de ordenacao usados nos Deputados 
  */
 public class AlgoritmoDeputado {
 
-    /*
-    *   Algoritmos de ordenação dos gastos dos Deputados
-     */
+    // Algoritmos de ordenação dos gastos dos Deputados
     /**
-     * Esta função contém o código para execução do algoritmo de Bubble Sort
+     * Esta funcao contem o codigo para execucao do algoritmo de Bubble Sort
      *
-     * @param deputados
-     * @param relatorio
+     * @param deputados Lista com os Deputados a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     public static void bubbleSortDeputados(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int contIteracao = 0;
@@ -49,10 +40,10 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Esta função contém o código para execução do algoritmo de Insertion Sort
+     * Esta funcao contem o codigo para execucao do algoritmo do Insertion Sort
      *
-     * @param deputados
-     * @param relatorio
+     * @param deputados Lista com os Deputados a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     public static void insertionSort(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         insertionSort(deputados, 0, deputados.getTamanho(), relatorio);
@@ -80,9 +71,10 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Estas funções contém o código para execução do algoritmo de Merge Sort
+     * Esta funcao contem o codigo para execucao do algoritmo Merge Sort
      *
-     * @param deputados
+     * @param deputados Lista com os Deputados a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
     public static void mergeSort(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
@@ -171,9 +163,10 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Estas funções contém o código para execução do algoritmo de Quick Sort
+     * Esta funcao contem o codigo para execucao do algoritmo de Quick Sort
      *
-     * @param deputados
+     * @param deputados Lista com os Deputados a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao da recurcao
     public static void quickSortRec(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
@@ -218,10 +211,12 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Estas funções contém o código para execução do algoritmo de Quick Sort
+     * Esta funcao contem o codigo para execucao do algoritmo de Quick Sort
      * Mediana de 3
      *
-     * @param deputados
+     * @param deputados Lista com os Deputados a serem ordenados
+     * @param k Numero inteiro que compoe e algoritmo
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     //Chamada da funcao, calcula os parametros necessarios para execucao
     public static void quicksortMedianaK(ListaEncadeada<Deputado> deputados, int k, Relatorio relatorio) {
@@ -299,7 +294,14 @@ public class AlgoritmoDeputado {
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
 
     }
-
+    /**
+     * Esta funcao contem o codigo para execucao do algoritmo de Quick
+     * Sort Hibrido
+     * 
+     * @param deputados Lista com os Deputados a serem ordenados
+     * @param k Numero inteiro que compoe e algoritmo
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
     public static void quickSortHibrido(ListaEncadeada<Deputado> deputados, int k, Relatorio relatorio) {
         quickSortHibrido(deputados, 0, deputados.getTamanho() - 1, k, relatorio);
     }
@@ -320,9 +322,10 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Estas funções contém o código para execução do algoritmo de Heap Sort
+     * Esta funcao contem o codigo para execucao do algoritmo de Heap Sort
      *
-     * @param deputados
+     * @param deputados Lista com os Deputados a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     //Chamada da funcao principal
     public static void heapSort(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
@@ -374,9 +377,10 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Esta função contém o código para execução do algoritmo de Shell Sort
+     * Esta funcao contem o codigo para execucao do algoritmo de Shell Sort
      *
-     * @param deputados
+     * @param deputados Lista com os Deputados a serem ordenados
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     //Funcao principal do algoritmo de Shell Sort
     public static void shellSort(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
@@ -418,13 +422,11 @@ public class AlgoritmoDeputado {
         relatorio.setInteracao((relatorio.getInteracao() + contInteracao));
     }
 
-    /*
-    *   AlgoritmoDeputado para ordenar lista inteira
-     */
+    // AlgoritmoDeputado para ordenar lista inteira
     /**
-     * Esta função contém o código para execução do algoritmo de Bubble Sort
+     * Esta funcao contem o codigo para execucao do algoritmo de Bubble Sort
      *
-     * @param lista
+     * @param lista Lista de elementos a serem ordenados
      */
     public static void bubbleSortArrayListInteiro(List<Integer> lista) {
         for (int i = 0; i < lista.size(); i++) {
@@ -439,12 +441,12 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Esta função contém o código para execução do algoritmo de Merge Sort
+     * Esta funcao contem o codigo para execucao do algoritmo de Merge Sort
      *
-     * @param lista
-     * @param esq
-     * @param meio
-     * @param dir
+     * @param lista Lista de numeros inteiros a serem ordenados
+     * @param esq Inteiro da esquerda
+     * @param meio Inteiro do meio
+     * @param dir Inteiro da direita
      */
     private static void mergeInteiro(List<Integer> lista, int esq, int meio, int dir) {
 
@@ -492,11 +494,11 @@ public class AlgoritmoDeputado {
     }
 
     /**
-     * Esta função contém o código para execução do algoritmo de Merge Sort
+     * Esta funcao contem o codigo para execucao do algoritmo de Merge Sort
      *
-     * @param lista
-     * @param esq
-     * @param dir
+     * @param lista Lista de numeros inteiros a serem ordenados
+     * @param esq Inteiro da esquerda
+     * @param dir Inteiro da direita
      */
     public static void mergeSortInteiro(List<Integer> lista, int esq, int dir) {
         if (esq < dir) {
@@ -510,10 +512,7 @@ public class AlgoritmoDeputado {
         }
     }
 
-    //TODO Java Doc a partir daqui
-    /*
-    *   Aqui começam os algoritmos de Hashing
-     */
+    // Aqui começam os algoritmos de Hashing //
     private static Deputado[] tabela(int tam) {
         Deputado[] tab = new Deputado[tam];
         for (int i = 0; i < tam; i++) {
@@ -566,8 +565,12 @@ public class AlgoritmoDeputado {
         return true;
     }
 
+    // Funcoes de hashing
     /**
-     * Funcoes de hashing
+     * Esta funcao executa o algoritmo de hashing de Sondagem Linear
+     * @param deputados Lista de deputados de entrada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Deputados alocados
      */
     public static Deputado[] sondagemLinear(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
@@ -591,7 +594,12 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return tabela;
     }
-
+    /**
+     * Esta funcao executa o algoritmo de hashing de Sondagem Quadratica
+     * @param deputados Lista de deputados de entrada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Deputados alocados
+     */
     public static Deputado[] sondagemQuadratica(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
         int h = primo(deputados.getTamanho());
@@ -621,7 +629,12 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return tabela;
     }
-
+    /**
+     * Esta funcao executa o algoritmo de hashing de Duplo Hashing (re hasing)
+     * @param deputados Lista de deputados de entrada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return ///////////
+     */
     public static Deputado[] duploHashing(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos = 0;
         int h = primo(deputados.getTamanho());
@@ -655,7 +668,12 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return null;
     }
-
+    /**
+     * Esta funcao executa o algoritmo de hashing de Encadeamento Separado
+     * @param deputados Lista de deputados de entrada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Deputados alocados
+     */
     public static ListaEncadeada[] encadeamentoSeparado(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
         ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(deputados.getTamanho() / 2);
@@ -671,7 +689,12 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return tabela;
     }
-
+    /**
+     * Esta funcao executa o algoritmo de hashing de Encadeamento Coalescido
+     * @param deputados Lista de deputados de entrada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Deputados alocados
+     */
     public static Deputado[][] encadeamentoCoalescido(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
         int h = primo(deputados.getTamanho());
@@ -701,10 +724,7 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return tabela;
     }
-
-    /**
-     * Funcoes de busca de hashing
-     */
+     // Funcoes de busca de hashing //
     private static Deputado buscaSondagemLinear(Deputado deputado, Deputado[] tabela, Relatorio relatorio) {
         int h = primo(tabela.length);
         int pos = (hash(deputado.getId(), h));
@@ -773,7 +793,7 @@ public class AlgoritmoDeputado {
                 relatorio.incrementaInteracao();
                 j++;
                 cont++;
-//                pos = hash(hash(deputado.getId(), h) + j * hash2(deputado.getId(), j), tabela.length);
+                //pos = hash(hash(deputado.getId(), h) + j * hash2(deputado.getId(), j), tabela.length);
             }
             relatorio.incrementaInteracao();
             if (cont < tabela.length) {
@@ -831,7 +851,13 @@ public class AlgoritmoDeputado {
 
         return soma % m;
     }
-
+    /**
+     * Esta funcao executa o algoritmo de hashing de Encademento Separado
+     * para texto
+     * @param deputados Lista de deputados de entrada
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     * @return Lista dos Deputados alocados
+     */
     public static ListaEncadeada[] encadeamentoSeparadoASCII(ListaEncadeada<Deputado> deputados, Relatorio relatorio) {
         int pos;
         ListaEncadeada<Deputado>[] tabela = tabelaEncadeada(deputados.getTamanho() / 2);
@@ -847,7 +873,4 @@ public class AlgoritmoDeputado {
         relatorio.incrementaInteracao();
         return tabela;
     }
-
-    //Arvores
-    
 }

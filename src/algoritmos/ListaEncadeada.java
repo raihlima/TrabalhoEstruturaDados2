@@ -1,25 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos;
 
 import dados.Relatorio;
 import java.io.Serializable;
-import trabalhoed2.Deputado;
-
+//import trabalhoed2.Deputado;
 /**
- *
- * @author carcara
- * @param <Class>
+ * Implementacao da classe da Lista Encadeada
  */
 public class ListaEncadeada<Class> implements Serializable {
 
     private No inicio;
     private No fim;
     private int tamanho;
-
+    /**
+     * Construtor da Lista Encadeada
+     */
     public ListaEncadeada() {
         this.inicio = null;
         this.fim = null;
@@ -50,7 +44,11 @@ public class ListaEncadeada<Class> implements Serializable {
         this.tamanho = tamanho;
     }
 
-    //Métodos
+    // Metodos //
+    /**
+     * Insere um objeto no inicio de uma Lista Encadeada
+     * @param objeto Objeto a ser inserido na Lista
+     */
     public void insereInicio(Class objeto) {
         No no = new No(objeto, this.inicio, null);
 
@@ -62,7 +60,9 @@ public class ListaEncadeada<Class> implements Serializable {
         this.inicio = no;
         this.tamanho += 1;
     }
-
+    /**
+     * Remove um elemento do inicio de uma Lista Encadeada
+     */
     public void removeInicio() {
         No no;
         if (this.inicio != null) {
@@ -80,7 +80,10 @@ public class ListaEncadeada<Class> implements Serializable {
         }
 
     }
-
+    /**
+     * Insere um objeto no fim de uma Lista Encadeada
+     * @param objeto Objeto a ser inserido na Lista
+     */
     public void insereFinal(Class objeto) {
         No no = new No(objeto, null, this.fim);
 
@@ -93,7 +96,9 @@ public class ListaEncadeada<Class> implements Serializable {
         this.tamanho += 1;
 
     }
-
+    /**
+     * Remove um elemento no fim de uma Lista Encadeada
+     */
     public void removeFinal() {
         No no;
         if (this.fim != null) {
@@ -111,16 +116,18 @@ public class ListaEncadeada<Class> implements Serializable {
 
         }
     }
-
+    /**
+     * Obtem o ultimo elemento de uma Lista
+     * @return O ultimo elemento 
+     */
     public Class retornaFim() {
         return (Class) fim.getObjeto();
     }
 
     /**
-     * Esta função retorna o objeto guardado na Lista Encadeada
-     *
-     * @param index (inteiro para selecionar a posição da lista)
-     * @return objeto
+     * Esta funcao retorna uma chave de um objeto guardado na Lista Encadeada
+     * @param index Inteiro para selecionar a posição da chave na lista
+     * @return O objeto do elemento da posicao index
      */
     public Class retornaInfo(int index) {
         if (index == 0) {
@@ -147,7 +154,12 @@ public class ListaEncadeada<Class> implements Serializable {
             return (Class) aux.getObjeto();
         }
     }
-
+    /**
+     * Insere um objeto numa determidada posicao
+     * @param index Posicao onde deve ocorrer a insercao
+     * @param objeto O elemento a ser inserido
+     * @throws NullPointerException 
+     */
     public void insere(int index, Class objeto) throws NullPointerException {
         if (index == 0) {
             insereInicio(objeto);
@@ -187,7 +199,12 @@ public class ListaEncadeada<Class> implements Serializable {
         }
 
     }
-
+    /**
+     * Altera um objeto numa determidada posicao
+     * @param index Posicao onde deve ocorrer a alteracao
+     * @param objeto O elemento a ser inserido
+     * @throws NullPointerException 
+     */
     public void altera(int index, Class objeto) throws NullPointerException {
         if (index < 0 || index >= this.tamanho) {
             throw new NullPointerException("Index "+index +"está fora do escopo");
@@ -211,7 +228,10 @@ public class ListaEncadeada<Class> implements Serializable {
             }
         }
     }
-
+    /**
+     * Remove um objeto numa determidada posicao
+     * @param index Posicao onde deve ocorrer a remocao
+     */
     public void remove(int index) {
         if (index == 0) {
             removeInicio();
@@ -251,7 +271,11 @@ public class ListaEncadeada<Class> implements Serializable {
             throw new NullPointerException("Index "+index +"está fora do escopo");
         }
     }
-
+    /**
+     * Troca dois objetos em determidadas posicoes
+     * @param index1 Posicao onde deve ocorrer a troca
+     * @param index2 Outra posicao onde deve ocorrer a troca
+     */
     public void troca(int index1, int index2) {
         Class aux;
         No no1;
@@ -300,12 +324,15 @@ public class ListaEncadeada<Class> implements Serializable {
                 }
             }
         }
-
         no1.setObjeto((Class) no2.getObjeto());
         no2.setObjeto(aux);
-
     }
-    
+    /**
+     * Troca dois objetos em determidadas posicoes
+     * @param index1 Posicao onde deve ocorrer a troca
+     * @param index2 Outra posicao onde deve ocorrer a troca
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise
+     */
     public void troca(int index1, int index2, Relatorio relatorio) {
         Class aux;
         No no1;
@@ -359,7 +386,9 @@ public class ListaEncadeada<Class> implements Serializable {
         no2.setObjeto(aux);
         relatorio.incrementaTrocaColisaoCopia();
     }
-    
+    /**
+     * Remove todos os itens da Lista
+     */
     public void deletarLista(){
         No aux = this.inicio;
         while(aux!=null){
@@ -367,5 +396,4 @@ public class ListaEncadeada<Class> implements Serializable {
             this.removeInicio();
         }
     }
-
 }

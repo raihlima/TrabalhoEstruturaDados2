@@ -1,42 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos;
 
 import java.io.Serializable;
 
 /**
- *
- * @author carcara
+ * Implementacao da classe de No
  */
-class No<Class> implements Serializable {
-
+public class No<Class> implements Serializable {
     private Class objeto;
     private No proximo;
     private No anterior;
 
-    No() {
+    // Construtores //
+    protected No() {
     }
     
-    No (Class objeto){
+    protected No (Class objeto){
         this.objeto = objeto;
     }
     
-    No(Class objeto, No anterior) {
+    protected No(Class objeto, No anterior) {
         this.objeto = objeto;
         this.proximo = null;
     }
 
-    No(Class objeto, No proximo, No anterior) {
+    protected No(Class objeto, No proximo, No anterior) {
         this.objeto = objeto;
         this.proximo = proximo;
         this.anterior = anterior;
     }
-    
-    
-
+    // Gets e Sets //
     public Class getObjeto() {
         return this.objeto;
     }
@@ -60,6 +52,4 @@ class No<Class> implements Serializable {
     public void setAnterior(No anterior) {
         this.anterior = anterior;
     }
-    
-    
 }

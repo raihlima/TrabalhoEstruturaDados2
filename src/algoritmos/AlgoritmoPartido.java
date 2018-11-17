@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos;
 
 import trabalhoed2.Partido;
 
 /**
- *
- * @author carcara
+ * Implementacao dos algoritmos de ordenacao usados nos Partidos 
  */
 public class AlgoritmoPartido {
         //Chamada da funcao, calcula os parametros necessarios para execucao
