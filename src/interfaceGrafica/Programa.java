@@ -42,6 +42,7 @@ public class Programa extends javax.swing.JFrame {
     private CardLayout cardLayout;
     private ListaEncadeada<Deputado> listaDeputado = new ListaEncadeada<>();
     private ListaEncadeada<Partido> listaPartido = new ListaEncadeada<>();
+    private ArrayList<String> listaBusca = new ArrayList<>();
 
     /**
      * Creates new form Programa
@@ -225,7 +226,7 @@ public class Programa extends javax.swing.JFrame {
         jPanel36 = new javax.swing.JPanel();
         jButton26 = new javax.swing.JButton();
         jPanel37 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboBoxBusca = new javax.swing.JComboBox<>();
         jPanel38 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
@@ -2039,8 +2040,9 @@ public class Programa extends javax.swing.JFrame {
 
         jPanel37.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisa"));
 
-        jComboBox1.setEditable(true);
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
+        comboBoxBusca.setEditable(true);
+        comboBoxBusca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
+        comboBoxBusca.setSelectedIndex(-1);
 
         javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
         jPanel37.setLayout(jPanel37Layout);
@@ -2048,17 +2050,21 @@ public class Programa extends javax.swing.JFrame {
             jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel37Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(comboBoxBusca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel37Layout.setVerticalGroup(
             jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel37Layout.createSequentialGroup()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboBoxBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel38.setBorder(javax.swing.BorderFactory.createTitledBorder("Gasto"));
+
+        jTextField1.setEditable(false);
+
+        jTextField2.setEditable(false);
 
         jLabel2.setText("Palavra Pesquisada:");
 
@@ -2125,16 +2131,16 @@ public class Programa extends javax.swing.JFrame {
         jPanelBuscaGastoLayout.setHorizontalGroup(
             jPanelBuscaGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscaGastoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelBuscaGastoLayout.setVerticalGroup(
             jPanelBuscaGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscaGastoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelPrincipal.add(jPanelBuscaGasto, "buscaGasto");
@@ -2661,6 +2667,9 @@ public class Programa extends javax.swing.JFrame {
 
     private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Aguarde a execução do arquivo!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        preencherListaBusca();
+        resetaComboBoxBusca();
         cardLayout.show(jPanelPrincipal, "buscaGasto");
     }//GEN-LAST:event_jButton25ActionPerformed
 
@@ -2668,6 +2677,52 @@ public class Programa extends javax.swing.JFrame {
         // TODO add your handling code here:
         cardLayout.show(jPanelPrincipal, "parte2");
     }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void preencherListaBusca() {
+        try (FileInputStream fi = new FileInputStream(arquivo)) {
+            //Leitura
+            BufferedInputStream bis = new BufferedInputStream(fi);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+            String linha = reader.readLine();
+
+            //Saber a quantidade de linhas          
+            LineNumberReader linhaLeitura = new LineNumberReader(new FileReader(arquivo));
+            linhaLeitura.skip(arquivo.length());
+            int totalLinhas = linhaLeitura.getLineNumber();
+
+            //Saber quantidade Linhas
+            LineNumberReader arqLinhaFinal = new LineNumberReader(new FileReader(arquivo));
+            arqLinhaFinal.skip(arquivo.length());
+            String []partes;
+            while((linha = reader.readLine())!=null) {
+                partes = linha.split(";");
+                if(verificaPalavraBusca(partes[7])==-1){
+                    listaBusca.add(partes[7]);
+                }                
+            }
+         JOptionPane.showMessageDialog(this, "Execução terminada!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao executar a busca!\n" + ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public int verificaPalavraBusca(String palavra){
+        int aux =-1;
+        for(int i=0;i<listaBusca.size();i++){
+            if(palavra.equalsIgnoreCase(listaBusca.get(i))){
+                return i;
+            }
+        }
+        return aux;
+    }
+    
+    public void resetaComboBoxBusca(){
+        comboBoxBusca.removeAllItems();
+        for(int i=0;i<listaBusca.size();i++){
+            comboBoxBusca.addItem(listaBusca.get(i));
+        }
+        comboBoxBusca.setSelectedIndex(-1);
+    }
 
     private void executarSementesArvores() {
         criarArquivoInsercaoArvores(1000);
@@ -2735,7 +2790,7 @@ public class Programa extends javax.swing.JFrame {
                 criarArquivoBusca(numAleatorios, cont + 1);
                 criarArquivoRemocao(numAleatorios, cont + 1);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Inserção!\n"+ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao gerar arquivo de Inserção!\n" + ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -3088,7 +3143,6 @@ public class Programa extends javax.swing.JFrame {
             totalLinhas = linhaLeitura.getLineNumber();
 
             arvoreAVL = new ArvoreAVL();
-            
 
             while ((linha = reader.readLine()) != null) {
 
@@ -3147,9 +3201,8 @@ public class Programa extends javax.swing.JFrame {
 
         /*
         *----------Arvore Vermelho e Preto-------------
-        */
-        
-         try {
+         */
+        try {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
@@ -3286,7 +3339,6 @@ public class Programa extends javax.swing.JFrame {
             totalLinhas = linhaLeitura.getLineNumber();
 
             arvoreVermelhoPreto = new ArvoreVermelhoPreto();
-            
 
             while ((linha = reader.readLine()) != null) {
 
@@ -3342,12 +3394,9 @@ public class Programa extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro na ArvoreVermelhoPreto Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
+
         //----------Arvore Splay-------------
-        
-        
-         try {
+        try {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
@@ -3484,7 +3533,6 @@ public class Programa extends javax.swing.JFrame {
             totalLinhas = linhaLeitura.getLineNumber();
 
             arvoreSplay = new ArvoreSplay();
-            
 
             while ((linha = reader.readLine()) != null) {
 
@@ -3540,12 +3588,9 @@ public class Programa extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro na ArvoreSplay Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        
 
         //----------Arvore B-------------
-         
-        
-         try {
+        try {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
@@ -3563,11 +3608,10 @@ public class Programa extends javax.swing.JFrame {
             //String
             String[] partes;
             String aux;
-            
-            
+
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreB");
             ArvoreB arvoreB = new ArvoreB(5, relatorio);
-            
+
             int idArvore = 0;
             while ((linha = reader.readLine()) != null) {
 
@@ -3684,7 +3728,6 @@ public class Programa extends javax.swing.JFrame {
             totalLinhas = linhaLeitura.getLineNumber();
 
             arvoreB = new ArvoreB(5, relatorio);
-            
 
             while ((linha = reader.readLine()) != null) {
 
@@ -3742,10 +3785,7 @@ public class Programa extends javax.swing.JFrame {
         }
 
         //----------Arvore Minha Arvore-------------
-  
-                
-        
-         try {
+        try {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
@@ -3882,7 +3922,6 @@ public class Programa extends javax.swing.JFrame {
             totalLinhas = linhaLeitura.getLineNumber();
 
             minhaArvore = new MinhaArvore();
-            
 
             while ((linha = reader.readLine()) != null) {
 
@@ -3938,7 +3977,7 @@ public class Programa extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro na MinhaArvore Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-         
+
     }
 
     private void preencherTabelaASCII(int n) {
@@ -5101,6 +5140,7 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JButton botaoTudo;
     private javax.swing.JButton botaoTudo1;
     private javax.swing.JButton botaoTudo2;
+    private javax.swing.JComboBox<String> comboBoxBusca;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.ButtonGroup grupoAlgoritmo;
     private javax.swing.ButtonGroup grupoArvoreArvores;
@@ -5141,7 +5181,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
