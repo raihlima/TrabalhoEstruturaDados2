@@ -8,30 +8,46 @@ public class ArvoreTrie {
         raiz = new NoTrie();
     }
 
+    //funcao para tratar os caracteres
+    private int retornaIndice(char c) {
+        int aux = c - 'a';
+        if (aux < 0) {
+            aux = aux + 32;
+        }
+        if (aux < 0) {
+            aux = -1;
+        }
+        return aux;
+    }
+
     // Insere a palavra na trie.
-    public void inserir(String palavra) {
-        NoTrie p = raiz;
+    public void inserir(String palavra, double gasto) {
+        NoTrie no = raiz;
         for (int i = 0; i < palavra.length(); i++) {
             char c = palavra.charAt(i);
-            int indice = c - 'a';
-            if (p.arr[indice] == null) {
-                NoTrie temp = new NoTrie();
-                p.arr[indice] = temp;
-                p = temp;
-            } else {
-                p = p.arr[indice];
+            int indice = retornaIndice(c);
+            if (indice >= 0) {
+                if (no.getVetorLetras()[indice] == null) {
+                    NoTrie temp = new NoTrie();
+                    no.getVetorLetras()[indice] = temp;
+                    no = temp;
+                } else {
+                    no = no.getVetorLetras()[indice];
+                }
             }
         }
-        p.ehFinal = true;
+        no.setIsFinal(true);
+        no.incementarTotalGasto(gasto);
+        no.setPalavra(palavra);
     }
 
     // Retorna se a palavra está na trie
     public boolean procurar(String palavra) {
-        NoTrie p = procurarNo(palavra);
-        if (p == null) {
+        NoTrie no = procurarNo(palavra);
+        if (no == null) {
             return false;
         } else {
-            if (p.ehFinal) {
+            if (no.isIsFinal()) {
                 return true;
             }
         }
@@ -41,8 +57,8 @@ public class ArvoreTrie {
 
     // Retorna se existe alguam palavra na trie que comeca com o prefixo dado
     public boolean comecaCom(String prefixo) {
-        NoTrie p = procurarNo(prefixo);
-        if (p == null) {
+        NoTrie no = procurarNo(prefixo);
+        if (no == null) {
             return false;
         } else {
             return true;
@@ -50,21 +66,24 @@ public class ArvoreTrie {
     }
 
     public NoTrie procurarNo(String s) {
-        NoTrie p = raiz;
+        NoTrie no = raiz;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            int indice = c - 'a';
-            if (p.arr[indice] != null) {
-                p = p.arr[indice];
-            } else {
-                return null;
+            int indice = retornaIndice(c);
+            if (indice >= 0) {
+                if (no.getVetorLetras()[indice] != null) {
+                    no = no.getVetorLetras()[indice];
+                } else {
+                    return null;
+                }
             }
         }
 
-        if (p == raiz) {
+        if (no == raiz) {
             return null;
         }
 
-        return p;
+        return no;
     }
+
 }

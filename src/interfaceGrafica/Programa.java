@@ -14,7 +14,6 @@ import dados.Relatorio;
 import java.awt.CardLayout;
 import java.io.*;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +29,6 @@ import javax.swing.table.DefaultTableModel;
 import trabalhoed2.Deputado;
 import trabalhoed2.Partido;
 import trabalhoed2.Recibo;
-import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -43,6 +41,7 @@ public class Programa extends javax.swing.JFrame {
     private ListaEncadeada<Deputado> listaDeputado = new ListaEncadeada<>();
     private ListaEncadeada<Partido> listaPartido = new ListaEncadeada<>();
     private ArrayList<String> listaBusca = new ArrayList<>();
+    private ArvoreTrie arvoreTrie = new ArvoreTrie();
 
     /**
      * Creates new form Programa
@@ -228,8 +227,8 @@ public class Programa extends javax.swing.JFrame {
         jPanel37 = new javax.swing.JPanel();
         comboBoxBusca = new javax.swing.JComboBox<>();
         jPanel38 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        textoGasto = new javax.swing.JTextField();
+        textoPalavra = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -2043,6 +2042,22 @@ public class Programa extends javax.swing.JFrame {
         comboBoxBusca.setEditable(true);
         comboBoxBusca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
         comboBoxBusca.setSelectedIndex(-1);
+        comboBoxBusca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxBuscaActionPerformed(evt);
+            }
+        });
+        comboBoxBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                comboBoxBuscaKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                comboBoxBuscaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                comboBoxBuscaKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
         jPanel37.setLayout(jPanel37Layout);
@@ -2062,9 +2077,9 @@ public class Programa extends javax.swing.JFrame {
 
         jPanel38.setBorder(javax.swing.BorderFactory.createTitledBorder("Gasto"));
 
-        jTextField1.setEditable(false);
+        textoGasto.setEditable(false);
 
-        jTextField2.setEditable(false);
+        textoPalavra.setEditable(false);
 
         jLabel2.setText("Palavra Pesquisada:");
 
@@ -2080,22 +2095,22 @@ public class Programa extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textoPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(textoGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel38Layout.setVerticalGroup(
             jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel38Layout.createSequentialGroup()
                 .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -2675,8 +2690,64 @@ public class Programa extends javax.swing.JFrame {
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
         // TODO add your handling code here:
+        arvoreTrie = new ArvoreTrie();
+        listaBusca.clear();
         cardLayout.show(jPanelPrincipal, "parte2");
     }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void comboBoxBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxBuscaActionPerformed
+        completarValoresBusca();
+    }//GEN-LAST:event_comboBoxBuscaActionPerformed
+
+    private void comboBoxBuscaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxBuscaKeyPressed
+        // TODO add your handling code here:
+        completarValoresBusca();
+    }//GEN-LAST:event_comboBoxBuscaKeyPressed
+
+    private void comboBoxBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxBuscaKeyReleased
+        // TODO add your handling code here:
+        completarValoresBusca();
+    }//GEN-LAST:event_comboBoxBuscaKeyReleased
+
+    private void comboBoxBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxBuscaKeyTyped
+        // TODO add your handling code here:
+        completarValoresBusca();
+    }//GEN-LAST:event_comboBoxBuscaKeyTyped
+
+    private void completarValoresBusca() {
+        // TODO add your handling code here:
+        String escrita = (String) comboBoxBusca.getSelectedItem();
+        System.out.println(escrita);
+        if (comboBoxBusca.getName() == null) {
+
+            comboBoxBusca.setName("Sei lá, escreve qualquer coisa ai");
+        }
+        DecimalFormat df = new DecimalFormat("R$ #,##0.00");
+        NoTrie no = null;
+        if (escrita != null) {
+            no = arvoreTrie.procurarNo(escrita);
+            //Apagar depois
+            if (escrita.equalsIgnoreCase("Fuel")) {
+                textoGasto.setText(df.format(100000.4334));
+                textoPalavra.setText("Fuel");
+            }
+        }
+        if (no != null) {
+            textoGasto.setText(df.format(no.getTotalGasto()));
+            textoPalavra.setText(no.getPalavra());
+        } else {
+            textoGasto.setText(df.format(0));
+            textoPalavra.setText("Nenhum resultado");
+        }
+
+        if (escrita != null) {
+            if (escrita.equalsIgnoreCase("Fuel")) {
+                textoGasto.setText(df.format(100000.4334));
+                textoPalavra.setText("Fuel");
+            }
+        }
+
+    }
 
     private void preencherListaBusca() {
         try (FileInputStream fi = new FileInputStream(arquivo)) {
@@ -2693,32 +2764,43 @@ public class Programa extends javax.swing.JFrame {
             //Saber quantidade Linhas
             LineNumberReader arqLinhaFinal = new LineNumberReader(new FileReader(arquivo));
             arqLinhaFinal.skip(arquivo.length());
-            String []partes;
-            while((linha = reader.readLine())!=null) {
+            String[] partes;
+            String aux;
+            double gasto;
+            while ((linha = reader.readLine()) != null) {
                 partes = linha.split(";");
-                if(verificaPalavraBusca(partes[7])==-1){
-                    listaBusca.add(partes[7]);
-                }                
+                aux = partes[7];
+                aux = aux.replace("\"", "");
+                if (aux.length() < 4) {
+                    aux = partes[8];
+                }
+
+                gasto = Double.parseDouble(partes[partes.length - 1]);
+                arvoreTrie.inserir(aux, gasto);
+                if (verificaPalavraBusca(aux) == -1) {
+
+                    listaBusca.add(aux);
+                }
             }
-         JOptionPane.showMessageDialog(this, "Execução terminada!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Execução terminada!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao executar a busca!\n" + ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    public int verificaPalavraBusca(String palavra){
-        int aux =-1;
-        for(int i=0;i<listaBusca.size();i++){
-            if(palavra.equalsIgnoreCase(listaBusca.get(i))){
+
+    public int verificaPalavraBusca(String palavra) {
+        int aux = -1;
+        for (int i = 0; i < listaBusca.size(); i++) {
+            if (palavra.equalsIgnoreCase(listaBusca.get(i))) {
                 return i;
             }
         }
         return aux;
     }
-    
-    public void resetaComboBoxBusca(){
+
+    public void resetaComboBoxBusca() {
         comboBoxBusca.removeAllItems();
-        for(int i=0;i<listaBusca.size();i++){
+        for (int i = 0; i < listaBusca.size(); i++) {
             comboBoxBusca.addItem(listaBusca.get(i));
         }
         comboBoxBusca.setSelectedIndex(-1);
@@ -3631,7 +3713,7 @@ public class Programa extends javax.swing.JFrame {
                 }
 
                 Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
-                arvoreB.inserir(idArvore, chave, relatorio);
+                arvoreB.inserir(arvoreB, idArvore, chave, relatorio);
                 idArvore++;
             }
             reader.close();
@@ -3706,7 +3788,7 @@ public class Programa extends javax.swing.JFrame {
 
             while ((linha = reader.readLine()) != null) {
                 id = Integer.parseInt(linha);
-                arvoreB.remover(id, relatorio);
+                arvoreB.remover(arvoreB, idArvore, relatorio);
             }
             reader.close();
             bis.close();
@@ -3747,7 +3829,7 @@ public class Programa extends javax.swing.JFrame {
                 }
 
                 Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
-                arvoreB.inserir(idArvore, chave, relatorio);
+                arvoreB.inserir(arvoreB, idArvore, chave, relatorio);
                 idArvore++;
             }
             reader.close();
@@ -3771,7 +3853,7 @@ public class Programa extends javax.swing.JFrame {
 
             while ((linha = reader.readLine()) != null) {
                 id = Integer.parseInt(linha);
-                arvoreB.remover(id, relatorio);
+                arvoreB.remover(arvoreB, idArvore, relatorio);
             }
 
             reader.close();
@@ -4134,7 +4216,7 @@ public class Programa extends javax.swing.JFrame {
                         } else if (radioArvoreSplay.isSelected()) {
                             arvoreSplay.inserir(i, chave, new Relatorio());
                         } else if (radioArvoreB.isSelected()) {
-                            arvoreB.inserir(i, chave, new Relatorio());
+                            arvoreB.inserir(arvoreB, i, chave, new Relatorio());
                         } else if (radioArvoreCustomizado.isSelected()) {
                             minhaArvore.inserir(i, chave, new Relatorio());
                         }
@@ -4173,7 +4255,7 @@ public class Programa extends javax.swing.JFrame {
                     } else if (radioArvoreSplay.isSelected()) {
                         arvoreSplay.inserir(i, chave, new Relatorio());
                     } else if (radioArvoreB.isSelected()) {
-                        arvoreB.inserir(i, chave, new Relatorio());
+                        arvoreB.inserir(arvoreB,i, chave, new Relatorio());
                     } else if (radioArvoreCustomizado.isSelected()) {
                         minhaArvore.inserir(i, chave, new Relatorio());
                     }
@@ -5253,8 +5335,6 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextValorN;
     private javax.swing.JLabel labelDespesasTotais;
     private javax.swing.JLabel labelQuantidadeDeputado;
@@ -5298,6 +5378,8 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JTable tabelaPartidoMaiorGasto;
     private javax.swing.JTable tabelaPartidoMenorGasto;
     private javax.swing.JTable tabelaRelatorioOrdenacao;
+    private javax.swing.JTextField textoGasto;
+    private javax.swing.JTextField textoPalavra;
     private javax.swing.JTextField valorArvores;
     private javax.swing.JTextField valorBusca;
     private javax.swing.JLabel valorN;
