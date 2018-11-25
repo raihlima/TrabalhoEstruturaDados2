@@ -1,5 +1,7 @@
 package algoritmos.arvores;
 
+import java.util.ArrayList;
+
 public class ArvoreTrie {
 
     private NoTrie raiz;
@@ -20,7 +22,6 @@ public class ArvoreTrie {
         return aux;
     }
 
-    // Insere a palavra na trie.
     public void inserir(String palavra, double gasto) {
         NoTrie no = raiz;
         for (int i = 0; i < palavra.length(); i++) {
@@ -41,7 +42,6 @@ public class ArvoreTrie {
         no.setPalavra(palavra);
     }
 
-    // Retorna se a palavra está na trie
     public boolean procurar(String palavra) {
         NoTrie no = procurarNo(palavra);
         if (no == null) {
@@ -55,7 +55,6 @@ public class ArvoreTrie {
         return false;
     }
 
-    // Retorna se existe alguam palavra na trie que comeca com o prefixo dado
     public boolean comecaCom(String prefixo) {
         NoTrie no = procurarNo(prefixo);
         if (no == null) {
@@ -86,4 +85,55 @@ public class ArvoreTrie {
         return no;
     }
 
+    public void imprimeArvore() {
+        imprimeArvore(this.raiz);
+    }
+
+    private void imprimeArvore(NoTrie no) {
+        if (no != null) {
+            if (no.isIsFinal()) {
+                System.out.println(no.getPalavra());
+            }
+            for (int i = 0; i < no.getVetorLetras().length; i++) {
+                imprimeArvore(no.getVetorLetras()[i]);
+            }
+        }
+    }
+    
+
+
+    public ArrayList<String> retornaListaPalavras(String palavra) {
+        ArrayList<String> aux = new ArrayList<>();
+        String palavraCortada = "";
+        if (palavra == null) {
+            retornaListaPalavras(this.raiz, aux);
+        } else {
+            for (int i = palavra.length(); i >= 0; i--) {
+                palavraCortada = palavra.substring(0, i);
+                System.err.println(palavraCortada);
+                if (procurar(palavra)) {
+                    break;
+                }
+            }
+            if (palavraCortada.length() == 0) {
+                retornaListaPalavras(this.raiz, aux);
+            } else {
+                NoTrie no = procurarNo(palavraCortada);
+                retornaListaPalavras(no, aux);
+            }          
+        }
+        return aux;
+    }
+
+    private ArrayList<String> retornaListaPalavras(NoTrie no, ArrayList<String> lista) {
+        if (no != null) {
+            if (no.isIsFinal()) {
+                lista.add(no.getPalavra());
+            }
+            for (int i = 0; i < no.getVetorLetras().length; i++) {
+                retornaListaPalavras(no.getVetorLetras()[i], lista);
+            }
+        }
+        return lista;
+    }
 }

@@ -33,10 +33,10 @@ public class ArvoreB {
         return busca(raiz, id, relatorio);
     }
 
-    private NoB busca(NoB raiz, int id, Relatorio relatorio) {
+    private NoB busca(NoB no, int id, Relatorio relatorio) {
         int i = 0;//we always want to start searching the 0th index of node.
 
-        while (i < raiz.contar && id > raiz.vet_chave[i].getId())//keep incrementing
+        while (i < no.contar && id > no.vet_chave[i].getId())//keep incrementing
         //in node while chave >
         //current value.
         {
@@ -44,15 +44,17 @@ public class ArvoreB {
             relatorio.incrementaInteracao();
         }
         relatorio.incrementaInteracao();
-        if (i <= raiz.contar && id == raiz.vet_chave[i].getId())//obviously if chave is in node
+        if (i <= no.contar && no.vet_chave[i]!=null)//obviously if chave is in node
         //we went to return node.
         {
-            relatorio.incrementaInteracao();
+            if (id == no.vet_chave[i].getId()) {
+                relatorio.incrementaInteracao();
+                return no;
+            }
 
-            return raiz;
         }
         relatorio.incrementaInteracao();
-        if (raiz.folha)//since we've already checked raiz
+        if (no.folha)//since we've already checked no
         //if it is folha we don't have anything else to check
         {
             relatorio.incrementaInteracao();
@@ -61,7 +63,7 @@ public class ArvoreB {
         } else//else if it is not leave recurse down through ith filho
         {
             relatorio.incrementaInteracao();
-            return busca(raiz.getFilho(i), id, relatorio);
+            return busca(no.getFilho(i), id, relatorio);
 
         }
     }

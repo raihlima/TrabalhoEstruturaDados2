@@ -12,6 +12,8 @@ import algoritmos.ListaEncadeada;
 import algoritmos.arvores.*;
 import dados.Relatorio;
 import java.awt.CardLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -20,8 +22,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -42,6 +47,7 @@ public class Programa extends javax.swing.JFrame {
     private ListaEncadeada<Partido> listaPartido = new ListaEncadeada<>();
     private ArrayList<String> listaBusca = new ArrayList<>();
     private ArvoreTrie arvoreTrie = new ArvoreTrie();
+    final JTextField campoBusca;
 
     /**
      * Creates new form Programa
@@ -53,6 +59,18 @@ public class Programa extends javax.swing.JFrame {
         initComponents();
         cardLayout = (CardLayout) jPanelPrincipal.getLayout();
         cardLayout.show(jPanelPrincipal, "inicio");
+        campoBusca = (JTextField) comboBoxBusca.getEditor().getEditorComponent();
+
+        campoBusca.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent ke) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        comboBoxSugestao(campoBusca.getText());
+                        completarValoresBusca();
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -2042,20 +2060,19 @@ public class Programa extends javax.swing.JFrame {
         comboBoxBusca.setEditable(true);
         comboBoxBusca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
         comboBoxBusca.setSelectedIndex(-1);
+        comboBoxBusca.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboBoxBuscaItemStateChanged(evt);
+            }
+        });
         comboBoxBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxBuscaActionPerformed(evt);
             }
         });
         comboBoxBusca.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                comboBoxBuscaKeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 comboBoxBuscaKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                comboBoxBuscaKeyTyped(evt);
             }
         });
 
@@ -2684,7 +2701,7 @@ public class Programa extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Aguarde a execução do arquivo!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         preencherListaBusca();
-        resetaComboBoxBusca();
+        //resetaComboBoxBusca();
         cardLayout.show(jPanelPrincipal, "buscaGasto");
     }//GEN-LAST:event_jButton25ActionPerformed
 
@@ -2696,41 +2713,50 @@ public class Programa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void comboBoxBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxBuscaActionPerformed
-        completarValoresBusca();
+        //completarValoresBusca();
     }//GEN-LAST:event_comboBoxBuscaActionPerformed
-
-    private void comboBoxBuscaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxBuscaKeyPressed
-        // TODO add your handling code here:
-        completarValoresBusca();
-    }//GEN-LAST:event_comboBoxBuscaKeyPressed
 
     private void comboBoxBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxBuscaKeyReleased
         // TODO add your handling code here:
-        completarValoresBusca();
     }//GEN-LAST:event_comboBoxBuscaKeyReleased
 
-    private void comboBoxBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxBuscaKeyTyped
+    private void comboBoxBuscaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxBuscaItemStateChanged
         // TODO add your handling code here:
         completarValoresBusca();
-    }//GEN-LAST:event_comboBoxBuscaKeyTyped
+    }//GEN-LAST:event_comboBoxBuscaItemStateChanged
+
+    public void comboBoxSugestao(String enteredText) {
+        if (!comboBoxBusca.isPopupVisible()) {
+            comboBoxBusca.showPopup();
+        }
+
+        List<String> filterArray = new ArrayList<String>();
+        for (int i = 0; i < listaBusca.size(); i++) {
+            if (listaBusca.get(i).toLowerCase().contains(enteredText.toLowerCase())) {
+                filterArray.add(listaBusca.get(i));
+            }
+        }
+        if (filterArray.size() > 0) {
+            DefaultComboBoxModel model = (DefaultComboBoxModel) comboBoxBusca.getModel();
+            model.removeAllElements();
+            for (String s : filterArray) {
+                model.addElement(s);
+            }
+
+            JTextField campoBusca = (JTextField) comboBoxBusca.getEditor().getEditorComponent();
+            campoBusca.setText(enteredText);
+        }
+    }
 
     private void completarValoresBusca() {
         // TODO add your handling code here:
         String escrita = (String) comboBoxBusca.getSelectedItem();
         System.out.println(escrita);
-        if (comboBoxBusca.getName() == null) {
-
-            comboBoxBusca.setName("Sei lá, escreve qualquer coisa ai");
-        }
+        atualizaComboBoxBusca();
         DecimalFormat df = new DecimalFormat("R$ #,##0.00");
         NoTrie no = null;
         if (escrita != null) {
             no = arvoreTrie.procurarNo(escrita);
-            //Apagar depois
-            if (escrita.equalsIgnoreCase("Fuel")) {
-                textoGasto.setText(df.format(100000.4334));
-                textoPalavra.setText("Fuel");
-            }
         }
         if (no != null) {
             textoGasto.setText(df.format(no.getTotalGasto()));
@@ -2739,14 +2765,10 @@ public class Programa extends javax.swing.JFrame {
             textoGasto.setText(df.format(0));
             textoPalavra.setText("Nenhum resultado");
         }
-
-        if (escrita != null) {
-            if (escrita.equalsIgnoreCase("Fuel")) {
-                textoGasto.setText(df.format(100000.4334));
-                textoPalavra.setText("Fuel");
-            }
+        if  (campoBusca.getText().equals("")){
+            textoGasto.setText(df.format(0));
+            textoPalavra.setText("Nenhum resultado");
         }
-
     }
 
     private void preencherListaBusca() {
@@ -2777,11 +2799,17 @@ public class Programa extends javax.swing.JFrame {
 
                 gasto = Double.parseDouble(partes[partes.length - 1]);
                 arvoreTrie.inserir(aux, gasto);
+                /*
                 if (verificaPalavraBusca(aux) == -1) {
 
                     listaBusca.add(aux);
-                }
+                }*/
             }
+
+            listaBusca = arvoreTrie.retornaListaPalavras("");
+            resetaComboBoxBusca();
+            completarValoresBusca();
+            //FilterComboBox.makeUI(listaBusca);
             JOptionPane.showMessageDialog(this, "Execução terminada!", "Informação", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao executar a busca!\n" + ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -2798,16 +2826,31 @@ public class Programa extends javax.swing.JFrame {
         return aux;
     }
 
+    public void atualizaComboBoxBusca() {
+        /*
+        String palavra = (String) comboBoxBusca.getSelectedItem();
+        ArrayList<String> aux = arvoreTrie.retornaListaPalavras(palavra);
+        listaBusca = aux;
+        
+       //comboBoxBusca.removeAllItems();
+        for (int i = 0; i < aux.size(); i++) {
+            comboBoxBusca.addItem(aux.get(i));
+        }
+        comboBoxBusca.setSelectedIndex(-1);
+         */
+    }
+
     public void resetaComboBoxBusca() {
         comboBoxBusca.removeAllItems();
-        for (int i = 0; i < listaBusca.size(); i++) {
-            comboBoxBusca.addItem(listaBusca.get(i));
+        ArrayList<String> aux = arvoreTrie.retornaListaPalavras("");
+        for (int i = 0; i < aux.size(); i++) {
+            comboBoxBusca.addItem(aux.get(i));
         }
         comboBoxBusca.setSelectedIndex(-1);
     }
 
     private void executarSementesArvores() {
-        criarArquivoInsercaoArvores(1000);
+        //criarArquivoInsercaoArvores(1000);
         /*
         criarArquivoInsercaoArvores(5000);
         criarArquivoInsercaoArvores(10000);
@@ -2818,6 +2861,11 @@ public class Programa extends javax.swing.JFrame {
          */
         for (int i = 0; i < 5; i++) {
             executarArvoresSementes(i + 1, 1000);
+            executarArvoresSementes(i + 1, 5000);
+            executarArvoresSementes(i + 1, 10000);
+            executarArvoresSementes(i + 1, 50000);
+            executarArvoresSementes(i + 1, 100000);
+            executarArvoresSementes(i + 1, 500000);
         }
         JOptionPane.showMessageDialog(this, "Arquivos Criados com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
 
@@ -3087,6 +3135,7 @@ public class Programa extends javax.swing.JFrame {
     private void executarArvoresSementes(int semente, int linhas) {
         int id;//Id da chave
         Relatorio relatorio;
+        /*
         //----------Arvore AVL-------------
         try {
 
@@ -3281,9 +3330,9 @@ public class Programa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro na ArvoreAVL Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
-        /*
+        
         *----------Arvore Vermelho e Preto-------------
-         */
+         
         try {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
@@ -3671,6 +3720,7 @@ public class Programa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro na ArvoreSplay Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
+         */
         //----------Arvore B-------------
         try {
 
@@ -3867,6 +3917,7 @@ public class Programa extends javax.swing.JFrame {
         }
 
         //----------Arvore Minha Arvore-------------
+        /*
         try {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
@@ -4059,7 +4110,7 @@ public class Programa extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro na MinhaArvore Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
+         */
     }
 
     private void preencherTabelaASCII(int n) {
@@ -4255,7 +4306,7 @@ public class Programa extends javax.swing.JFrame {
                     } else if (radioArvoreSplay.isSelected()) {
                         arvoreSplay.inserir(i, chave, new Relatorio());
                     } else if (radioArvoreB.isSelected()) {
-                        arvoreB.inserir(arvoreB,i, chave, new Relatorio());
+                        arvoreB.inserir(arvoreB, i, chave, new Relatorio());
                     } else if (radioArvoreCustomizado.isSelected()) {
                         minhaArvore.inserir(i, chave, new Relatorio());
                     }
