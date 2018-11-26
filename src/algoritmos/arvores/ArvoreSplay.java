@@ -1,11 +1,20 @@
+/*
+ * To change this license header, choose License Headers in Project Propediries.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package algoritmos.arvores;
 
+/**
+ *
+ * @author rodri
+ */
 import dados.Relatorio;
 
 public class ArvoreSplay {
 
     private No raiz;
-    private int cont = 0;
+    private int qtdNos = 0;
 
     public ArvoreSplay() {
         raiz = null;
@@ -17,394 +26,231 @@ public class ArvoreSplay {
 
     public void limparArvore() {
         raiz = null;
-        cont = 0;
+        qtdNos = 0;
     }
 
     public void inserir(int id, Chave chave, Relatorio relatorio) {
-        No z = raiz;
+        No no = raiz;
         relatorio.incrementaTrocaColisaoCopia();
-        No p = null;
-        while (z != null) {
+        No aux = null;
+        while (no != null) {
             relatorio.incrementaInteracao();
-            p = z;
+            aux = no;
             relatorio.incrementaTrocaColisaoCopia();
-            if (id > p.getId()) {
+            if (id > aux.getId()) {
                 relatorio.incrementaInteracao();
-                z = z.getDir();
+                no = no.getDir();
                 relatorio.incrementaTrocaColisaoCopia();
             } else {
                 relatorio.incrementaInteracao();
-                z = z.getEsq();
+                no = no.getEsq();
                 relatorio.incrementaTrocaColisaoCopia();
             }
         }
-        z = new No(id, chave);
-        z.setPai(p);
+        no = new No(id, chave);
+        no.setPai(aux);
 
-        if (p == null) {
+        if (aux == null) {
             relatorio.incrementaInteracao();
-            this.raiz = z;
+            this.raiz = no;
             relatorio.incrementaTrocaColisaoCopia();
-        } else if (id > p.getId()) {
+        } else if (id > aux.getId()) {
             relatorio.incrementaInteracao();
-            p.setDir(z);
+            aux.setDir(no);
         } else {
             relatorio.incrementaInteracao();
-            p.setEsq(z);
+            aux.setEsq(no);
         }
-        Splay(z, relatorio);
-        cont++;
+        Splay(no, relatorio);
+        qtdNos++;
     }
 
-    /**
-     * rotate makeLeftChildParent*
-     */
-    public void rotacaoDireita(No c, No p, Relatorio relatorio) {
+    public void rotacaoDireita(No no, No aux, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
-        if ((c == null) || (p == null) || (p.getEsq() != c) || (c.getPai() != p)) {
+        if ((no == null) || (aux == null) || (aux.getEsq() != no) || (no.getPai() != aux)) {
             relatorio.incrementaInteracao();
-            throw new RuntimeException("WRONG");
         }
-
-        if (p.getPai() != null) {
+        if (aux.getPai() != null) {
             relatorio.incrementaInteracao();
-            if (p == p.getPai().getEsq()) {
+            if (aux == aux.getPai().getEsq()) {
                 relatorio.incrementaInteracao();
-                p.getPai().setEsq(c);
+                aux.getPai().setEsq(no);
             } else {
                 relatorio.incrementaInteracao();
-                p.getPai().setDir(c);
+                aux.getPai().setDir(no);
             }
-
         }
-
-        if (c.getDir() != null) {
+        if (no.getDir() != null) {
             relatorio.incrementaInteracao();
-            c.getDir().setPai(p);
+            no.getDir().setPai(aux);
         }
-
-        c.setPai(p.getPai());
-
-        p.setPai(c);
-
-        p.setEsq(c.getDir());
-
-        c.setDir(p);
-
+        no.setPai(aux.getPai());
+        aux.setPai(no);
+        aux.setEsq(no.getDir());
+        no.setDir(aux);
     }
 
-    /**
-     * rotate makeRightChildParent *
-     */
-    public void rotacaoEsquerda(No c, No p, Relatorio relatorio) {
-        relatorio.incrementaTrocaColisaoCopia();
-        if ((c == null) || (p == null) || (p.getDir() != c) || (c.getPai() != p)) {
-            relatorio.incrementaInteracao();
-            throw new RuntimeException("WRONG");
-        }
 
-        if (p.getPai() != null) {
+    public void rotacaoEsquerda(No no, No aux, Relatorio relatorio) {
+        relatorio.incrementaTrocaColisaoCopia();
+        if ((no == null) || (aux == null) || (aux.getDir() != no) || (no.getPai() != aux)) {
             relatorio.incrementaInteracao();
-            if (p == p.getPai().getEsq()) {
+        }
+        if (aux.getPai() != null) {
+            relatorio.incrementaInteracao();
+            if (aux == aux.getPai().getEsq()) {
                 relatorio.incrementaInteracao();
-                p.getPai().setEsq(c);
+                aux.getPai().setEsq(no);
             } else {
                 relatorio.incrementaInteracao();
-                p.getPai().setDir(c);
+                aux.getPai().setDir(no);
             }
-
         }
-
-        if (c.getEsq() != null) {
+        if (no.getEsq() != null) {
             relatorio.incrementaInteracao();
-            c.getEsq().setPai(p);
+            no.getEsq().setPai(aux);
         }
-
-        c.setPai(p.getPai());
-
-        p.setPai(c);
-
-        p.setDir(c.getEsq());
-
-        c.setEsq(p);
-
+        no.setPai(aux.getPai());
+        aux.setPai(no);
+        aux.setDir(no.getEsq());
+        no.setEsq(aux);
     }
 
-    /**
-     * function splay *
-     */
-    private void Splay(No x, Relatorio relatorio) {
-
-        while (x.getPai() != null) {
+    private void Splay(No no, Relatorio relatorio) {
+        while (no.getPai() != null) {
             relatorio.incrementaInteracao();
-            No pai = x.getPai();
+            No pai = no.getPai();
             relatorio.incrementaTrocaColisaoCopia();
-
             No avo = pai.getPai();
             relatorio.incrementaTrocaColisaoCopia();
-
             if (avo == null) {
                 relatorio.incrementaInteracao();
-                if (x == pai.getEsq()) {
+                if (no == pai.getEsq()) {
                     relatorio.incrementaInteracao();
-                    rotacaoDireita(x, pai, relatorio);
+                    rotacaoDireita(no, pai, relatorio);
                 } else {
                     relatorio.incrementaInteracao();
-                    rotacaoEsquerda(x, pai, relatorio);
+                    rotacaoEsquerda(no, pai, relatorio);
                 }
-
             } else {
                 relatorio.incrementaInteracao();
-                if (x == pai.getEsq()) {
+                if (no == pai.getEsq()) {
                     relatorio.incrementaInteracao();
                     if (pai == avo.getEsq()) {
                         relatorio.incrementaInteracao();
                         rotacaoDireita(pai, avo, relatorio);
-
-                        rotacaoDireita(x, pai, relatorio);
-
+                        rotacaoDireita(no, pai, relatorio);
                     } else {
                         relatorio.incrementaInteracao();
-                        rotacaoDireita(x, x.getPai(), relatorio);
-
-                        rotacaoEsquerda(x, x.getPai(), relatorio);
-
+                        rotacaoDireita(no, no.getPai(), relatorio);
+                        rotacaoEsquerda(no, no.getPai(), relatorio);
                     }
-
                 } else {
                     relatorio.incrementaInteracao();
                     if (pai == avo.getEsq()) {
                         relatorio.incrementaInteracao();
-                        rotacaoEsquerda(x, x.getPai(), relatorio);
-
-                        rotacaoDireita(x, x.getPai(), relatorio);
-
+                        rotacaoEsquerda(no, no.getPai(), relatorio);
+                        rotacaoDireita(no, no.getPai(), relatorio);
                     } else {
                         relatorio.incrementaInteracao();
                         rotacaoEsquerda(pai, avo, relatorio);
-
-                        rotacaoEsquerda(x, pai, relatorio);
-
+                        rotacaoEsquerda(no, pai, relatorio);
                     }
-
                 }
-
             }
-
         }
-
-        raiz = x;
+        raiz = no;
         relatorio.incrementaTrocaColisaoCopia();
-
     }
 
-    /**
-     * function to remove getId() *
-     */
     public void remover(int id, Relatorio relatorio) {
-
         No no = encontarNo(id, relatorio);
         relatorio.incrementaTrocaColisaoCopia();
-
         remover(no, relatorio);
-
     }
 
-    /**
-     * function to remove no *
-     */
     private void remover(No no, Relatorio relatorio) {
-
         if (no == null) {
             relatorio.incrementaInteracao();
             return;
         }
-
         Splay(no, relatorio);
-
         if ((no.getEsq() != null) && (no.getDir() != null)) {
             relatorio.incrementaInteracao();
-
             No min = no.getEsq();
             relatorio.incrementaTrocaColisaoCopia();
-
             while (min.getDir() != null) {
                 relatorio.incrementaInteracao();
                 min = min.getDir();
                 relatorio.incrementaTrocaColisaoCopia();
             }
-
             min.setDir(no.getDir());
-
             no.getDir().setPai(min);
-
             no.getEsq().setPai(null);
-
             raiz = no.getEsq();
             relatorio.incrementaTrocaColisaoCopia();
-
+            
         } else if (no.getDir() != null) {
             relatorio.incrementaInteracao();
-
             no.getDir().setPai(null);
-
             raiz = no.getDir();
             relatorio.incrementaTrocaColisaoCopia();
-
+            
         } else if (no.getEsq() != null) {
             relatorio.incrementaInteracao();
-
             no.getEsq().setPai(null);
-
             raiz = no.getEsq();
             relatorio.incrementaTrocaColisaoCopia();
 
         } else {
             relatorio.incrementaInteracao();
             raiz = null;
-
         }
-
         no.setPai(null);
-
         no.setEsq(null);
-
         no.setDir(null);
-
         no = null;
-
-        cont--;
-
+        qtdNos--;
     }
 
-    /**
-     * Functions to cont number of nodes *
-     */
     public int quantidadeNos(Relatorio relatorio) {
-
-        return cont;
-
+        return qtdNos;
     }
 
-    /**
-     * Functions to buscarNo for an getId() *
-     */
     public boolean busca(int id, Relatorio relatorio) {
-
         return encontarNo(id, relatorio) != null;
-
     }
 
     private No encontarNo(int id, Relatorio relatorio) {
-
         No noAnterior = null;
-
-        No z = raiz;
+        No no = raiz;
         relatorio.incrementaTrocaColisaoCopia();
-
-        while (z != null) {
+        
+        while (no != null) {
             relatorio.incrementaInteracao();
-
-            noAnterior = z;
+            noAnterior = no;
             relatorio.incrementaTrocaColisaoCopia();
-
-            if (id > z.getId()) {
+            if (id > no.getId()) {
                 relatorio.incrementaInteracao();
-                z = z.getDir();
+                no = no.getDir();
                 relatorio.incrementaTrocaColisaoCopia();
-            } else if (id < z.getId()) {
+                
+            } else if (id < no.getId()) {
                 relatorio.incrementaInteracao();
-                z = z.getEsq();
+                no = no.getEsq();
                 relatorio.incrementaTrocaColisaoCopia();
-            } else if (id == z.getId()) {
+                
+            } else if (id == no.getId()) {
                 relatorio.incrementaInteracao();
-
-                Splay(z, relatorio);
-
-                return z;
-
+                Splay(no, relatorio);
+                return no;
             }
-
         }
-
         if (noAnterior != null) {
-
             Splay(noAnterior, relatorio);
-
             return null;
-
         }
-
         return null;
-
     }
 
-    /**
-     * Function for impressaoEmOrdem traversal *
-     */
-    public void impressaoEmOrdem(Relatorio relatorio) {
-
-        impressaoEmOrdem(raiz, relatorio);
-
-    }
-
-    private void impressaoEmOrdem(No r, Relatorio relatorio) {
-
-        if (r != null) {
-            relatorio.incrementaInteracao();
-            impressaoEmOrdem(r.getEsq(), relatorio);
-
-            System.out.print(r.getId() + " ");
-
-            impressaoEmOrdem(r.getDir(), relatorio);
-
-        }
-
-    }
-
-    /**
-     * Function for impressaoEmPreOrdem traversal *
-     */
-    public void impressaoEmPreOrdem(Relatorio relatorio) {
-
-        impressaoEmPreOrdem(raiz, relatorio);
-
-    }
-
-    private void impressaoEmPreOrdem(No r, Relatorio relatorio) {
-
-        if (r != null) {
-            relatorio.incrementaInteracao();
-            System.out.print(r.getId() + " ");
-
-            impressaoEmPreOrdem(r.getEsq(), relatorio);
-
-            impressaoEmPreOrdem(r.getDir(), relatorio);
-
-        }
-
-    }
-
-    /**
-     * Function for impressaoEmPosOrdem traversal *
-     */
-    public void impressaoEmPosOrdem(Relatorio relatorio) {
-
-        impressaoEmPosOrdem(raiz, relatorio);
-
-    }
-
-    private void impressaoEmPosOrdem(No r, Relatorio relatorio) {
-
-        if (r != null) {
-            relatorio.incrementaInteracao();
-            impressaoEmPosOrdem(r.getEsq(), relatorio);
-
-            impressaoEmPosOrdem(r.getDir(), relatorio);
-
-            System.out.print(r.getId() + " ");
-
-        }
-
-    }
 }

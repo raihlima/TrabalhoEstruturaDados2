@@ -233,7 +233,7 @@ public class Programa extends javax.swing.JFrame {
         radioArvoreVermelhoPreto = new javax.swing.JRadioButton();
         radioArvoreSplay = new javax.swing.JRadioButton();
         radioArvoreB = new javax.swing.JRadioButton();
-        radioQuick6 = new javax.swing.JRadioButton();
+        radioMinhaArvore = new javax.swing.JRadioButton();
         botaoComecar2 = new javax.swing.JButton();
         jButton28 = new javax.swing.JButton();
         jPanel33 = new javax.swing.JPanel();
@@ -300,8 +300,8 @@ public class Programa extends javax.swing.JFrame {
             .addGroup(barraStatusLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nomeArquivoStatus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nomeArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nomeArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         barraStatusLayout.setVerticalGroup(
@@ -1904,8 +1904,8 @@ public class Programa extends javax.swing.JFrame {
         grupoArvoreArvores.add(radioArvoreB);
         radioArvoreB.setText("Árvore B");
 
-        grupoArvoreArvores.add(radioQuick6);
-        radioQuick6.setText("Minha Árvore");
+        grupoArvoreArvores.add(radioMinhaArvore);
+        radioMinhaArvore.setText("Minha Árvore");
 
         javax.swing.GroupLayout jPanel32Layout = new javax.swing.GroupLayout(jPanel32);
         jPanel32.setLayout(jPanel32Layout);
@@ -1919,7 +1919,7 @@ public class Programa extends javax.swing.JFrame {
                     .addComponent(radioArvoreSplay))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(radioQuick6)
+                    .addComponent(radioMinhaArvore)
                     .addComponent(radioArvoreB))
                 .addGap(47, 47, 47))
         );
@@ -1933,7 +1933,7 @@ public class Programa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioArvoreVermelhoPreto)
-                    .addComponent(radioQuick6))
+                    .addComponent(radioMinhaArvore))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioArvoreSplay)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -2671,10 +2671,12 @@ public class Programa extends javax.swing.JFrame {
 
     private void radioArvoreCustomizadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioArvoreCustomizadoActionPerformed
         // TODO add your handling code here:
+        bloqueiaMenuBusca(true);
     }//GEN-LAST:event_radioArvoreCustomizadoActionPerformed
 
     private void sementesArvoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sementesArvoresActionPerformed
         // TODO add your handling code here:
+        bloqueiaMenuBusca(false);
     }//GEN-LAST:event_sementesArvoresActionPerformed
 
     private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
@@ -2725,6 +2727,18 @@ public class Programa extends javax.swing.JFrame {
         completarValoresBusca();
     }//GEN-LAST:event_comboBoxBuscaItemStateChanged
 
+    public void bloqueiaMenuBusca(boolean x) {
+        botaoLinearArvore.setEnabled(x);
+        botaoAleatorioArvore.setEnabled(x);
+        valorArvores.setEnabled(x);
+        botaoTudo2.setEnabled(x);
+        radioArvoreAVL.setEnabled(x);
+        radioArvoreVermelhoPreto.setEnabled(x);
+        radioArvoreSplay.setEnabled(x);
+        radioArvoreB.setEnabled(x);
+        radioMinhaArvore.setEnabled(x);
+    }
+
     public void comboBoxSugestao(String enteredText) {
         if (!comboBoxBusca.isPopupVisible()) {
             comboBoxBusca.showPopup();
@@ -2765,7 +2779,7 @@ public class Programa extends javax.swing.JFrame {
             textoGasto.setText(df.format(0));
             textoPalavra.setText("Nenhum resultado");
         }
-        if  (campoBusca.getText().equals("")){
+        if (campoBusca.getText().equals("")) {
             textoGasto.setText(df.format(0));
             textoPalavra.setText("Nenhum resultado");
         }
@@ -3763,7 +3777,7 @@ public class Programa extends javax.swing.JFrame {
                 }
 
                 Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
-                arvoreB.inserir(arvoreB, idArvore, chave, relatorio);
+                arvoreB.inserir( idArvore, chave, relatorio);
                 idArvore++;
             }
             reader.close();
@@ -3837,8 +3851,12 @@ public class Programa extends javax.swing.JFrame {
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreB");
 
             while ((linha = reader.readLine()) != null) {
+                try{
                 id = Integer.parseInt(linha);
-                arvoreB.remover(arvoreB, idArvore, relatorio);
+                arvoreB.remover(id, relatorio);
+                } catch (Exception exc){
+                    
+                }
             }
             reader.close();
             bis.close();
@@ -3879,7 +3897,7 @@ public class Programa extends javax.swing.JFrame {
                 }
 
                 Chave chave = new Chave(data, hora, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5], partes[6], partes[7], partes[8], Float.parseFloat(partes[9]));
-                arvoreB.inserir(arvoreB, idArvore, chave, relatorio);
+                arvoreB.inserir(idArvore, chave, relatorio);
                 idArvore++;
             }
             reader.close();
@@ -3902,8 +3920,12 @@ public class Programa extends javax.swing.JFrame {
             relatorio = new Relatorio(linhas, "Sementes", "Aleatoria", "ArvoreB");
 
             while ((linha = reader.readLine()) != null) {
+                try{
                 id = Integer.parseInt(linha);
-                arvoreB.remover(arvoreB, idArvore, relatorio);
+                arvoreB.remover(id, relatorio);
+                } catch (Exception exc){
+                    
+                }
             }
 
             reader.close();
@@ -4267,8 +4289,8 @@ public class Programa extends javax.swing.JFrame {
                         } else if (radioArvoreSplay.isSelected()) {
                             arvoreSplay.inserir(i, chave, new Relatorio());
                         } else if (radioArvoreB.isSelected()) {
-                            arvoreB.inserir(arvoreB, i, chave, new Relatorio());
-                        } else if (radioArvoreCustomizado.isSelected()) {
+                            arvoreB.inserir(i, chave, new Relatorio());
+                        } else if (radioMinhaArvore.isSelected()) {
                             minhaArvore.inserir(i, chave, new Relatorio());
                         }
                         i++;
@@ -4306,8 +4328,8 @@ public class Programa extends javax.swing.JFrame {
                     } else if (radioArvoreSplay.isSelected()) {
                         arvoreSplay.inserir(i, chave, new Relatorio());
                     } else if (radioArvoreB.isSelected()) {
-                        arvoreB.inserir(arvoreB, i, chave, new Relatorio());
-                    } else if (radioArvoreCustomizado.isSelected()) {
+                        arvoreB.inserir(i, chave, new Relatorio());
+                    } else if (radioMinhaArvore.isSelected()) {
                         minhaArvore.inserir(i, chave, new Relatorio());
                     }
 
@@ -5413,10 +5435,10 @@ public class Programa extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioHeap;
     private javax.swing.JRadioButton radioInsertion;
     private javax.swing.JRadioButton radioMerge;
+    private javax.swing.JRadioButton radioMinhaArvore;
     private javax.swing.JRadioButton radioQuick1;
     private javax.swing.JRadioButton radioQuick2;
     private javax.swing.JRadioButton radioQuick3;
-    private javax.swing.JRadioButton radioQuick6;
     private javax.swing.JRadioButton radioRelatorioOrdenacaoDeputadoCustomizado;
     private javax.swing.JRadioButton radioShell;
     private javax.swing.JRadioButton radioSondagemLinear;

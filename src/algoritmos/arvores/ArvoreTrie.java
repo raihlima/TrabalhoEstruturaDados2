@@ -1,5 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Propediries.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package algoritmos.arvores;
 
+/**
+ *
+ * @author rodri
+ */
 import java.util.ArrayList;
 
 public class ArvoreTrie {
@@ -11,8 +20,8 @@ public class ArvoreTrie {
     }
 
     //funcao para tratar os caracteres
-    private int retornaIndice(char c) {
-        int aux = c - 'a';
+    private int retornaIndice(char letra) {
+        int aux = letra - 'a';
         if (aux < 0) {
             aux = aux + 32;
         }
@@ -25,8 +34,8 @@ public class ArvoreTrie {
     public void inserir(String palavra, double gasto) {
         NoTrie no = raiz;
         for (int i = 0; i < palavra.length(); i++) {
-            char c = palavra.charAt(i);
-            int indice = retornaIndice(c);
+            char letra = palavra.charAt(i);
+            int indice = retornaIndice(letra);
             if (indice >= 0) {
                 if (no.getVetorLetras()[indice] == null) {
                     NoTrie temp = new NoTrie();
@@ -64,11 +73,11 @@ public class ArvoreTrie {
         }
     }
 
-    public NoTrie procurarNo(String s) {
+    public NoTrie procurarNo(String palavra) {
         NoTrie no = raiz;
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            int indice = retornaIndice(c);
+        for (int i = 0; i < palavra.length(); i++) {
+            char letra = palavra.charAt(i);
+            int indice = retornaIndice(letra);
             if (indice >= 0) {
                 if (no.getVetorLetras()[indice] != null) {
                     no = no.getVetorLetras()[indice];
@@ -110,7 +119,6 @@ public class ArvoreTrie {
         } else {
             for (int i = palavra.length(); i >= 0; i--) {
                 palavraCortada = palavra.substring(0, i);
-                System.err.println(palavraCortada);
                 if (procurar(palavra)) {
                     break;
                 }

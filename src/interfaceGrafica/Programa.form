@@ -203,8 +203,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="nomeArquivoStatus" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="nomeArquivo" min="-2" pref="154" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="nomeArquivo" min="-2" pref="338" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -2800,7 +2800,7 @@
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="radioQuick6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="radioMinhaArvore" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="radioArvoreB" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
@@ -2818,7 +2818,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="radioArvoreVermelhoPreto" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="radioQuick6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="radioMinhaArvore" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="radioArvoreSplay" min="-2" max="-2" attributes="0"/>
@@ -2861,7 +2861,7 @@
                         <Property name="text" type="java.lang.String" value="&#xc1;rvore B"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="radioQuick6">
+                    <Component class="javax.swing.JRadioButton" name="radioMinhaArvore">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="grupoArvoreArvores"/>

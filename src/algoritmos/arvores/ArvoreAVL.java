@@ -1,5 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Propediries.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package algoritmos.arvores;
 
+/**
+ *
+ * @author rodri
+ */
 import dados.Relatorio;
 import java.util.ArrayList;
 
@@ -26,8 +35,8 @@ public class ArvoreAVL {
             this.raiz = new No(id, chave);
             relatorio.incrementaInteracao();
         } else {
-            No n = new No(id, chave);
-            inserirAVL(this.raiz, n, relatorio);
+            No no = new No(id, chave);
+            inserirAVL(this.raiz, no, relatorio);
             relatorio.incrementaInteracao();
         }
     }
@@ -130,36 +139,36 @@ public class ArvoreAVL {
     /**
      * Essa funcao chama a removerAVL para remocao de uma chave da arvore
      *
-     * @param k A chave a ser removida da arvore
+     * @param id A chave a ser removida da arvore
      * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
-    public void remover(int k, Relatorio relatorio) {
-        removerAVL(this.raiz, k, relatorio);
+    public void remover(int id, Relatorio relatorio) {
+        removerAVL(this.raiz, id, relatorio);
     }
 
     /**
      * Essa funcao auxilia na remocao de um no da arvore
      *
      * @param atual No onde a busca parou anteriormente
-     * @param k A chave a ser removida da arvore
+     * @param id A chave a ser removida da arvore
      * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
-    public void removerAVL(No atual, int k, Relatorio relatorio) {
+    public void removerAVL(No atual, int id, Relatorio relatorio) {
         if (atual == null) {
             relatorio.incrementaInteracao();
             return;
 
         } else {
             relatorio.incrementaInteracao();
-            if (atual.getId() > k) {
+            if (atual.getId() > id) {
                 relatorio.incrementaInteracao();
-                removerAVL(atual.getEsq(), k, relatorio);
+                removerAVL(atual.getEsq(), id, relatorio);
 
-            } else if (atual.getId() < k) {
+            } else if (atual.getId() < id) {
                 relatorio.incrementaInteracao();
-                removerAVL(atual.getDir(), k, relatorio);
+                removerAVL(atual.getDir(), id, relatorio);
 
-            } else if (atual.getId() == k) {
+            } else if (atual.getId() == id) {
                 relatorio.incrementaInteracao();
                 removerNoEncontrado(atual, relatorio);
             }
@@ -173,7 +182,7 @@ public class ArvoreAVL {
      * @param relatorio Acesso ao relatorio para gravar os dados de analise
      */
     public void removerNoEncontrado(No aRemover, Relatorio relatorio) {
-        No r;
+        No no;
 
         if (aRemover.getEsq() == null || aRemover.getDir() == null) {
             relatorio.incrementaInteracao();
@@ -183,48 +192,48 @@ public class ArvoreAVL {
                 aRemover = null;
                 return;
             }
-            r = aRemover;
+            no = aRemover;
             relatorio.incrementaTrocaColisaoCopia();
 
         } else {
             relatorio.incrementaInteracao();
-            r = sucessor(aRemover, relatorio);
+            no = sucessor(aRemover, relatorio);
             relatorio.incrementaTrocaColisaoCopia();
-            aRemover.setId(r.getId());
+            aRemover.setId(no.getId());
         }
 
-        No p;
-        if (r.getEsq() != null) {
+        No aux;
+        if (no.getEsq() != null) {
             relatorio.incrementaInteracao();
-            p = r.getEsq();
+            aux = no.getEsq();
             relatorio.incrementaTrocaColisaoCopia();
         } else {
             relatorio.incrementaInteracao();
-            p = r.getDir();
+            aux = no.getDir();
             relatorio.incrementaTrocaColisaoCopia();
         }
 
-        if (p != null) {
+        if (aux != null) {
             relatorio.incrementaInteracao();
-            p.setPai(r.getPai());
+            aux.setPai(no.getPai());
         }
 
-        if (r.getPai() == null) {
+        if (no.getPai() == null) {
             relatorio.incrementaInteracao();
-            this.raiz = p;
+            this.raiz = aux;
             relatorio.incrementaTrocaColisaoCopia();
         } else {
             relatorio.incrementaInteracao();
-            if (r == r.getPai().getEsq()) {
+            if (no == no.getPai().getEsq()) {
                 relatorio.incrementaInteracao();
-                r.getPai().setEsq(p);
+                no.getPai().setEsq(aux);
             } else {
                 relatorio.incrementaInteracao();
-                r.getPai().setDir(p);
+                no.getPai().setDir(aux);
             }
-            verificarBalanceamento(r.getPai(), relatorio);
+            verificarBalanceamento(no.getPai(), relatorio);
         }
-        r = null;
+        no = null;
     }
 
     /**
@@ -334,33 +343,33 @@ public class ArvoreAVL {
     /**
      * Esta funcao retorna o no sucessor de um dado no
      *
-     * @param q No atual
+     * @param atual No atual
      * @param relatorio Acesso ao relatorio para gravar os dados de analise
      * @return No a direita ou esquerda ou pai
      */
-    public No sucessor(No q, Relatorio relatorio) {
-        if (q.getDir() != null) {
+    public No sucessor(No atual, Relatorio relatorio) {
+        if (atual.getDir() != null) {
             relatorio.incrementaInteracao();
-            No r = q.getDir();
+            No no = atual.getDir();
             relatorio.incrementaTrocaColisaoCopia();
-            while (r.getEsq() != null) {
-                r = r.getEsq();
+            while (no.getEsq() != null) {
+                no = no.getEsq();
                 relatorio.incrementaInteracao();
                 relatorio.incrementaTrocaColisaoCopia();
             }
-            return r;
+            return no;
         } else {
             relatorio.incrementaInteracao();
-            No p = q.getPai();
+            No aux = atual.getPai();
             relatorio.incrementaTrocaColisaoCopia();
-            while (p != null && q == p.getDir()) {
-                q = p;
+            while (aux != null && atual == aux.getDir()) {
+                atual = aux;
                 relatorio.incrementaTrocaColisaoCopia();
-                p = q.getPai();
+                aux = atual.getPai();
                 relatorio.incrementaTrocaColisaoCopia();
                 relatorio.incrementaInteracao();
             }
-            return p;
+            return aux;
         }
     }
 
@@ -435,34 +444,34 @@ public class ArvoreAVL {
         emOrdem(no.getDir(), lista, relatorio);
     }
 
-    public boolean busca(int k, Relatorio relatorio) {
-        return buscaAVL(this.raiz, k, relatorio);
+    public boolean busca(int id, Relatorio relatorio) {
+        return buscaAVL(this.raiz, id, relatorio);
     }
 
     /**
      * Essa funcao faz uma busca por uma chave dentro da arvore
      *
      * @param atual No onde comeca / continua a busca
-     * @param k Chave a ser encontrada
+     * @param id Chave a ser encontrada
      * @param relatorio Acesso ao relatorio para gravar os dados de analise
      * @return Se encontrou a chave ou nao
      */
-    public boolean buscaAVL(No atual, int k, Relatorio relatorio) {
+    public boolean buscaAVL(No atual, int id, Relatorio relatorio) {
         if (atual == null) {
             relatorio.incrementaInteracao();
             return false;
 
         } else {
             relatorio.incrementaInteracao();
-            if (atual.getId() > k) {
+            if (atual.getId() > id) {
                 relatorio.incrementaInteracao();
-                buscaAVL(atual.getEsq(), k, relatorio);
+                buscaAVL(atual.getEsq(), id, relatorio);
 
-            } else if (atual.getId() < k) {
+            } else if (atual.getId() < id) {
                 relatorio.incrementaInteracao();
-                buscaAVL(atual.getDir(), k, relatorio);
+                buscaAVL(atual.getDir(), id, relatorio);
 
-            } else if (atual.getId() == k) {
+            } else if (atual.getId() == id) {
                 relatorio.incrementaInteracao();
                 return true;
             }
