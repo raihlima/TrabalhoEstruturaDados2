@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Propediries.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos.arvores;
 
-/**
- *
- * @author rodri
- */
 import dados.Relatorio;
 import java.util.ArrayList;
 
+/**
+ * Implementacao da arvore AVL
+ */
 public class ArvoreAVL {
-
     private No raiz;
 
     /**
@@ -100,7 +93,7 @@ public class ArvoreAVL {
         setBalanceamento(atual, relatorio);
         int balanceamento = atual.getBalanceamento();
 
-        if (balanceamento == -2) {
+        if (balanceamento < -1) {
             relatorio.incrementaInteracao();
             if (altura(atual.getEsq().getEsq(), relatorio) >= altura(atual.getEsq().getDir(), relatorio)) {
                 atual = rotacaoDireita(atual, relatorio);
@@ -113,7 +106,7 @@ public class ArvoreAVL {
                 relatorio.incrementaInteracao();
             }
 
-        } else if (balanceamento == 2) {
+        } else if (balanceamento > 1) {
             relatorio.incrementaInteracao();
             if (altura(atual.getDir().getDir(), relatorio) >= altura(atual.getDir().getEsq(), relatorio)) {
                 atual = rotacaoEsquerda(atual, relatorio);

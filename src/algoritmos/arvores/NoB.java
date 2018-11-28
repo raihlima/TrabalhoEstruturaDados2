@@ -7,7 +7,7 @@ package algoritmos.arvores;
 
 /**
  *
- * @author rodri
+ * 
  */
 public class NoB {
 

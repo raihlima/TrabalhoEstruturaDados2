@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Propediries.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos.arvores;
 
 /**
  *
- * @author rodri
+ * 
  */
 class NoVermelhoPreto {
 

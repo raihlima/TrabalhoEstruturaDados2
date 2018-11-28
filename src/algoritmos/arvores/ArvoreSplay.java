@@ -1,34 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Propediries.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos.arvores;
 
-/**
- *
- * @author rodri
- */
-import dados.Relatorio;
 
+import dados.Relatorio;
+/**
+ * Implementacao da Arvore de Espalhamento
+ */
 public class ArvoreSplay {
 
     private No raiz;
     private int qtdNos = 0;
-
+    /**
+     * Metodo que contem o construtor
+     */
     public ArvoreSplay() {
         raiz = null;
     }
-
+    /**
+     * Metodo que verifica se a arvore está vazia
+     * @return Verdadeiro ou falso
+     */
     public boolean isVazio() {
         return raiz == null;
     }
-
+    /**
+     * Metodo que deleta a arvore
+     */
     public void limparArvore() {
         raiz = null;
         qtdNos = 0;
     }
-
+    //TO DO JavaDoc aqui
+    /**
+     * Metodo que implementa a insercao de uma chave
+     * @param id
+     * @param chave
+     * @param relatorio 
+     */
     public void inserir(int id, Chave chave, Relatorio relatorio) {
         No no = raiz;
         relatorio.incrementaTrocaColisaoCopia();

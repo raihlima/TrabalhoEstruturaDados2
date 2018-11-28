@@ -7,7 +7,7 @@ package algoritmos.arvores;
 
 /**
  *
- * @author rodri
+ * 
  */
 import java.util.ArrayList;
 

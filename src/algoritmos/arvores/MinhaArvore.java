@@ -7,7 +7,7 @@ package algoritmos.arvores;
 
 /**
  *
- * @author rodri
+ * 
  */
 import dados.Relatorio;
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class MinhaArvore {
         setBalanceamento(atual, relatorio);
         int balanceamento = atual.getBalanceamento();
 
-        if (balanceamento == -5) {
+        if (balanceamento < -4) {
             relatorio.incrementaInteracao();
             if (altura(atual.getEsq().getEsq(), relatorio) >= altura(atual.getEsq().getDir(), relatorio)) {
                 atual = rotacaoDireita(atual, relatorio);
@@ -113,7 +113,7 @@ public class MinhaArvore {
                 relatorio.incrementaInteracao();
             }
 
-        } else if (balanceamento == 5) {
+        } else if (balanceamento > 4) {
             relatorio.incrementaInteracao();
             if (altura(atual.getDir().getDir(), relatorio) >= altura(atual.getDir().getEsq(), relatorio)) {
                 atual = rotacaoEsquerda(atual, relatorio);
