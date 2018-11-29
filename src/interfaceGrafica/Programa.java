@@ -2863,15 +2863,15 @@ public class Programa extends javax.swing.JFrame {
     }
 
     private void executarSementesArvores() {
-        //criarArquivoInsercaoArvores(1000);
-        /*
+        criarArquivoInsercaoArvores(1000);
+        
         criarArquivoInsercaoArvores(5000);
         criarArquivoInsercaoArvores(10000);
-        /*
+        
         criarArquivoInsercaoArvores(50000);
         criarArquivoInsercaoArvores(100000);
         criarArquivoInsercaoArvores(500000);
-         */
+         
         for (int i = 0; i < 5; i++) {
             executarArvoresSementes(i + 1, 1000);
             executarArvoresSementes(i + 1, 5000);
@@ -3148,7 +3148,7 @@ public class Programa extends javax.swing.JFrame {
     private void executarArvoresSementes(int semente, int linhas) {
         int id;//Id da chave
         Relatorio relatorio;
-        /*
+        
         //----------Arvore AVL-------------
         try {
 
@@ -3344,7 +3344,7 @@ public class Programa extends javax.swing.JFrame {
         }
 
         
-        *----------Arvore Vermelho e Preto-------------
+        //----------Arvore Vermelho e Preto-------------
          
         try {
 
@@ -3733,7 +3733,7 @@ public class Programa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro na ArvoreSplay Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
-         */
+         
         //----------Arvore B-------------
         try {
 
@@ -3938,7 +3938,7 @@ public class Programa extends javax.swing.JFrame {
         }
 
         //----------Arvore Minha Arvore-------------
-        /*
+        
         try {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
@@ -4131,7 +4131,7 @@ public class Programa extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro na MinhaArvore Semente" + semente + "\n" + e.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-         */
+         
     }
 
     private void preencherTabelaASCII(int n) {
