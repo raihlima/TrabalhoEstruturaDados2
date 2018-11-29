@@ -1,26 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos.arvores;
 
 /**
- *
- * 
+ * Implementacao do No B
  */
 public class NoB {
 
-    private int ordem; //Atributo que guarda a quantidade de chaves no nÃ³
-    private Chave[] chave; //vetor das chaves
-    private NoB[] filho;//vetor dos filhos
-    private boolean folha;//Atributo que indica se a nÃ³ eh folha ou nao
-    //private int X;//Atributo que guarda a posicao X onde o NÃ³ deve aparecer na tela
-    //private int Y;//Atributo que guarda a posicao Y onde o NÃ³ deve aparecer na tela
+    private int ordem; 
+    private Chave[] chave; 
+    private NoB[] filho;
+    private boolean folha;
     private int larguraFilho;
     final int DIFERENCA_ALTURA = 30;
     final int DIFERENCA_IRMAOS = 5;
 
+    /**
+     * Construtor da classe
+     * @param ordem Valor da Ordem
+     */
     public NoB(int ordem) {
         this.chave = new Chave[(ordem - 1)];
         for (int i = 0; i < ordem - 1; i++) {
@@ -34,51 +30,68 @@ public class NoB {
         this.ordem = 0;
     }
 
+    /**
+     * Retorna o vetor de chaves
+     * @return vetorChaves
+     */
     public Chave[] getChave() {
         return chave;
     }
 
+    /**
+     * Altera o vetor de chaves
+     * @param chave 
+     */
     public void setChave(Chave[] chave) {
         this.chave = chave;
     }
 
+    /**
+     * Retorna os filho
+     * @return vetorFilho
+     */
     public NoB[] getFilho() {
         return filho;
     }
 
+    /**
+     * ALtera o vetor de FIlho
+     * @param filho 
+     */
     public void setFilho(NoB[] filho) {
         this.filho = filho;
     }
 
+    /**
+     * Retorna se o no é folha
+     * @return verdadeiro ou falso
+     */
     public boolean isFolha() {
         return folha;
     }
 
+    /**
+     * Altera se o no e folha
+     * @param folha 
+     */
     public void setFolha(boolean folha) {
         this.folha = folha;
     }
 
+    /**
+     * Retorna o valor de Ordem
+     * @return ordem
+     */
     public int getOrdem() {
         return ordem;
     }
 
+    /**
+     * Altera o valor de Ordem do no
+     * @param ordem 
+     */
     public void setOrdem(int ordem) {
         this.ordem = ordem;
     }
 
-    public int computeSize() {
-        return ordem * 28 + 12;
-    }
-
-    public int UpdateLFilho() {
-        larguraFilho = 0;
-        if (!folha) {
-            for (int i = 0; i < ordem + 1; i++) {
-                larguraFilho += filho[i].UpdateLFilho();
-            }
-        } else {
-            larguraFilho = computeSize() + DIFERENCA_IRMAOS;
-        }
-        return larguraFilho;
-    }
 }

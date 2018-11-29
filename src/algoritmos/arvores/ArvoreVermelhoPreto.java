@@ -1,29 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Propediries.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos.arvores;
 
 /**
- *
- * 
+ * Impementa a Arvore Vermelho e Preto
  */
 import dados.Relatorio;
 
 public class ArvoreVermelhoPreto {
-
     private final int VERMELHO = 0;
     private final int PRETO = 1;
-
     private final NoVermelhoPreto nulo = new NoVermelhoPreto(-1);
-    private NoVermelhoPreto raiz = nulo;
+    private NoVermelhoPreto raiz;
 
+    /**
+     * Construtor da classe
+     */
+    public ArvoreVermelhoPreto() {
+        this.raiz = nulo;
+    }
+
+    /**
+     * Verifica se o id esta na arvore
+     * @param id Identificador do No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     * @return NoVermelhoPreto
+     */
     public NoVermelhoPreto busca(int id, Relatorio relatorio) {
         NoVermelhoPreto procurar = new NoVermelhoPreto(id);
         return procurar(procurar, raiz, relatorio);
     }
 
+    /**
+     * Metodo aulixiar para buscar o id na arvore
+     * @param procurar
+     * @param No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     * @return NoVermelhoPreto
+     */
     private NoVermelhoPreto procurar(NoVermelhoPreto procurar, NoVermelhoPreto No, Relatorio relatorio) {
         if (raiz == nulo) {
             relatorio.incrementaInteracao();
@@ -52,6 +64,12 @@ public class ArvoreVermelhoPreto {
         return null;
     }
 
+    /**
+     * Metodo para inserir na arvore
+     * @param id Identificador do No
+     * @param chave Valor contido no No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise  
+     */
     public void inserir(int id, Chave chave, Relatorio relatorio) {
         NoVermelhoPreto no = new NoVermelhoPreto(id, chave);
         NoVermelhoPreto temp = raiz;
@@ -75,8 +93,8 @@ public class ArvoreVermelhoPreto {
                         relatorio.incrementaInteracao();
                         temp.setEsq(no);
                         no.setPai(temp);
-                        no.setEsq(nulo);  //nulo a esq do nó folha
-                        no.setDir(nulo);  //nulo a dir do nó folha
+                        no.setEsq(nulo);
+                        no.setDir(nulo);
                         break;
                     } else {
                         relatorio.incrementaInteracao();
@@ -89,8 +107,8 @@ public class ArvoreVermelhoPreto {
                         relatorio.incrementaInteracao();
                         temp.setDir(no);
                         no.setPai(temp);
-                        no.setEsq(nulo);  //nulo a esq do nó
-                        no.setDir(nulo);  //nulo a dir do nó
+                        no.setEsq(nulo);
+                        no.setDir(nulo);
                         break;
                     } else {
                         relatorio.incrementaInteracao();
@@ -103,6 +121,11 @@ public class ArvoreVermelhoPreto {
         }
     }
 
+    /**
+     * Metodo para balancear a arvore
+     * @param No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise  
+     */
     private void balancear(NoVermelhoPreto No, Relatorio relatorio) {
         while (No.getPai().getCor() == VERMELHO) {
             relatorio.incrementaInteracao();
@@ -156,6 +179,11 @@ public class ArvoreVermelhoPreto {
         raiz.setCor(PRETO);
     }
 
+    /**
+     * Metodo para rotacionar a arvore para Esquerda
+     * @param No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise  
+     */
     private void rotacionarEsquerda(NoVermelhoPreto No, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         if (No.getPai() != nulo) {
@@ -189,6 +217,11 @@ public class ArvoreVermelhoPreto {
         }
     }
 
+    /**
+     * Metodo para rotacionar a arvore a direita
+     * @param No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise  
+     */
     private void rotacionarDireita(NoVermelhoPreto No, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         if (No.getPai() != nulo) {
@@ -223,10 +256,19 @@ public class ArvoreVermelhoPreto {
         }
     }
 
+    /**
+     * Metodo para deletar a arvore
+     */
     public void removerArvore() {
         raiz = nulo;
     }
 
+    /**
+     * Metodo para transplantar
+     * @param alvo
+     * @param no
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise  
+     */
     private void transplantar(NoVermelhoPreto alvo, NoVermelhoPreto no, Relatorio relatorio) {
         if (alvo.getPai() == nulo) {
             relatorio.incrementaInteracao();
@@ -244,11 +286,23 @@ public class ArvoreVermelhoPreto {
         no.setPai(alvo.getPai());
     }
 
+    /**
+     * Metodo para remover um no
+     * @param id Identificador do No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     * @return 
+     */
     public boolean remover(int id, Relatorio relatorio) {
         NoVermelhoPreto no = new NoVermelhoPreto(id);
         return remover(no, relatorio);
     }
 
+    /**
+     * Metodo auxiliar para remover o no
+     * @param no
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     * @return 
+     */
    private boolean remover(NoVermelhoPreto no, Relatorio relatorio) {
         no = procurar(no, raiz, relatorio);
         relatorio.incrementaTrocaColisaoCopia();
@@ -299,7 +353,12 @@ public class ArvoreVermelhoPreto {
         return true;
     }
 
-    private void arrumarNoRemovido(NoVermelhoPreto no, Relatorio relatorio) {//deleteFixup
+   /**
+    * Metodo para reBalancear depois da remocao
+    * @param no
+    * @param relatorio Acesso ao relatorio para gravar os dados de analise  
+    */
+    private void arrumarNoRemovido(NoVermelhoPreto no, Relatorio relatorio) {
         while (no != raiz && no.getCor() == PRETO) {
             relatorio.incrementaInteracao();
             if (no == no.getPai().getEsq()) {
@@ -377,6 +436,12 @@ public class ArvoreVermelhoPreto {
         no.setCor(PRETO);
     }
 
+    /**
+     * Metodo para retornar a sub arvore minima
+     * @param subArvore
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     * @return subArvore
+     */
     private NoVermelhoPreto arvoreMinima(NoVermelhoPreto subArvore, Relatorio relatorio) {
         while (subArvore.getEsq() != nulo) {
             relatorio.incrementaInteracao();

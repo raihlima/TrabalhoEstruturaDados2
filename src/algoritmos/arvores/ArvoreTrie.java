@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Propediries.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package algoritmos.arvores;
 
 /**
- *
- * 
+ * Implementacao da Arvore Trie
  */
 import java.util.ArrayList;
 
@@ -15,11 +9,18 @@ public class ArvoreTrie {
 
     private NoTrie raiz;
 
+    /**
+     * Contrutor da arvore
+     */
     public ArvoreTrie() {
         raiz = new NoTrie();
     }
 
-    //funcao para tratar os caracteres
+    /**
+     * Metodo para retornar o indice para preeencher a arvore
+     * @param letra letra a ser buscada e inserida na arvore
+     * @return index
+     */
     private int retornaIndice(char letra) {
         int aux = letra - 'a';
         if (aux < 0) {
@@ -30,7 +31,12 @@ public class ArvoreTrie {
         }
         return aux;
     }
-
+    
+    /**
+     * Metodo para inserir na arvore
+     * @param palavra Palavra a ser inserida
+     * @param gasto gasto a ser adicionado
+     */
     public void inserir(String palavra, double gasto) {
         NoTrie no = raiz;
         for (int i = 0; i < palavra.length(); i++) {
@@ -51,6 +57,11 @@ public class ArvoreTrie {
         no.setPalavra(palavra);
     }
 
+    /**
+     * Metodo para procurar uma determinada palavra na arvore
+     * @param palavra Palavra a ser buscada
+     * @return verdadeiro ou falso
+     */
     public boolean procurar(String palavra) {
         NoTrie no = procurarNo(palavra);
         if (no == null) {
@@ -64,15 +75,11 @@ public class ArvoreTrie {
         return false;
     }
 
-    public boolean comecaCom(String prefixo) {
-        NoTrie no = procurarNo(prefixo);
-        if (no == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
+    /**
+     * Metodo para retornar o no de uma determinada palavra
+     * @param palavra Palavra a ser buscada
+     * @return No encontrado
+     */
     public NoTrie procurarNo(String palavra) {
         NoTrie no = raiz;
         for (int i = 0; i < palavra.length(); i++) {
@@ -94,10 +101,17 @@ public class ArvoreTrie {
         return no;
     }
 
+    /**
+     * Metodo para imprimir a arvore
+     */
     public void imprimeArvore() {
         imprimeArvore(this.raiz);
     }
 
+    /**
+     * Metodo auxiliar para imprimir a arvore
+     * @param no No de pesquisa
+     */
     private void imprimeArvore(NoTrie no) {
         if (no != null) {
             if (no.isIsFinal()) {
@@ -108,9 +122,12 @@ public class ArvoreTrie {
             }
         }
     }
-    
 
-
+/**
+ * Metodo para retornar uma lista de palavras a partir da palavra de busca
+ * @param palavra inicio da busca
+ * @return lista de palavras
+ */
     public ArrayList<String> retornaListaPalavras(String palavra) {
         ArrayList<String> aux = new ArrayList<>();
         String palavraCortada = "";
@@ -133,6 +150,12 @@ public class ArvoreTrie {
         return aux;
     }
 
+    /**
+     * Metodo auxiliar para retornar uma lista de palavras a partir da palavra de busca
+     * @param no No de inicio da busca
+     * @param lista lista a ser preenchida
+     * @return lista de palavras
+     */
     private ArrayList<String> retornaListaPalavras(NoTrie no, ArrayList<String> lista) {
         if (no != null) {
             if (no.isIsFinal()) {

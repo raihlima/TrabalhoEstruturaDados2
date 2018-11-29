@@ -84,7 +84,6 @@ public class MinhaArvore {
 
             } else {
                 relatorio.incrementaInteracao();
-                // O nó já existe
             }
         }
     }
@@ -420,7 +419,7 @@ public class MinhaArvore {
      * @param relatorio Acesso ao relatorio para gravar os dados de analise
      * @return A lista depois de ordenada
      */
-    final protected ArrayList<No> emOrdem(Relatorio relatorio) { // em ordem
+    final protected ArrayList<No> emOrdem(Relatorio relatorio) { 
         ArrayList<No> ret = new ArrayList<No>();
         emOrdem(raiz, ret, relatorio);
         return ret;

@@ -2765,7 +2765,6 @@ public class Programa extends javax.swing.JFrame {
     private void completarValoresBusca() {
         // TODO add your handling code here:
         String escrita = (String) comboBoxBusca.getSelectedItem();
-        System.out.println(escrita);
         atualizaComboBoxBusca();
         DecimalFormat df = new DecimalFormat("R$ #,##0.00");
         NoTrie no = null;
@@ -3155,7 +3154,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -3203,7 +3202,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca
             File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
             fi = new FileInputStream(arquivoBusca);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3227,7 +3226,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca Ordenado
             File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoBuscaOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3251,7 +3250,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao
             File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3277,7 +3276,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao Ordenado
             arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3316,7 +3315,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocaoOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3351,7 +3350,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -3399,7 +3398,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca
             File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
             fi = new FileInputStream(arquivoBusca);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3423,7 +3422,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca Ordenado
             File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoBuscaOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3447,7 +3446,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao
             File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3473,7 +3472,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao Ordenado
             arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3512,7 +3511,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocaoOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3545,7 +3544,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -3593,7 +3592,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca
             File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
             fi = new FileInputStream(arquivoBusca);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3617,7 +3616,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca Ordenado
             File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoBuscaOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3641,7 +3640,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao
             File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3667,7 +3666,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao Ordenado
             arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3706,7 +3705,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocaoOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3740,7 +3739,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -3789,7 +3788,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca
             File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
             fi = new FileInputStream(arquivoBusca);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3813,7 +3812,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca Ordenado
             File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoBuscaOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3837,7 +3836,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao
             File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3867,7 +3866,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao Ordenado
             arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3906,7 +3905,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocaoOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -3944,7 +3943,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             FileInputStream fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -3992,7 +3991,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca
             File arquivoBusca = new File("DadosEntrada/Semente" + semente + "/entradaBusca" + linhas + ".txt");
             fi = new FileInputStream(arquivoBusca);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -4016,7 +4015,7 @@ public class Programa extends javax.swing.JFrame {
             // Busca Ordenado
             File arquivoBuscaOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaBuscaOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoBuscaOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -4040,7 +4039,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao
             File arquivoRemocao = new File("DadosEntrada/Semente" + semente + "/entradaRemocao" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -4066,7 +4065,7 @@ public class Programa extends javax.swing.JFrame {
             //Remocao Ordenado
             arquivoInsercao = new File("DadosEntrada/Semente" + semente + "/entradaInsercao" + linhas + ".txt");
             fi = new FileInputStream(arquivoInsercao);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -4105,7 +4104,7 @@ public class Programa extends javax.swing.JFrame {
 
             File arquivoRemocaoOrdenado = new File("DadosEntrada/Semente" + semente + "/entradaRemocaoOrdenado" + linhas + ".txt");
             fi = new FileInputStream(arquivoRemocaoOrdenado);
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             bis = new BufferedInputStream(fi);
             reader = new BufferedReader(new InputStreamReader(bis));
@@ -4179,7 +4178,7 @@ public class Programa extends javax.swing.JFrame {
         // faz o trabalho a ser medido
 
         try (FileInputStream fi = new FileInputStream(arquivo)) {
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -4236,7 +4235,7 @@ public class Programa extends javax.swing.JFrame {
         listaDeputado.deletarLista();
         int cont = 0;
         try (FileInputStream fi = new FileInputStream(arquivo)) {
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -4338,7 +4337,6 @@ public class Programa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Árvore executada com sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             cardLayout.show(jPanelPrincipal, "parte2");
         } catch (Exception e) {
-            //System.out.println(cont);
             JOptionPane.showMessageDialog(this, "Erro inesperado!", "Erro", JOptionPane.ERROR_MESSAGE);
             if (cont == 0) {
                 System.err.println("Erro ao ler o arquivo.");
@@ -4359,7 +4357,7 @@ public class Programa extends javax.swing.JFrame {
         // faz o trabalho a ser medido
 
         try (FileInputStream fi = new FileInputStream(arquivo)) {
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -4416,7 +4414,6 @@ public class Programa extends javax.swing.JFrame {
             cardLayout.show(jPanelPrincipal, "resultadoOrdenacao");
             preencherTabelaOrdenacao();
         } catch (Exception e) {
-            //System.out.println(cont);
             JOptionPane.showMessageDialog(this, "Erro inesperado!", "Erro", JOptionPane.ERROR_MESSAGE);
             if (cont == 0) {
                 System.err.println("Erro ao ler o arquivo.");
@@ -4611,7 +4608,7 @@ public class Programa extends javax.swing.JFrame {
 
         // faz o trabalho a ser medido
         try (FileInputStream fi = new FileInputStream(arquivo)) {
-            //System.out.println("Tentando ler o arquivo");
+            //
 
             BufferedInputStream bis = new BufferedInputStream(fi);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
@@ -4653,7 +4650,7 @@ public class Programa extends javax.swing.JFrame {
             bis.close();
             fi.close();
         } catch (Exception e) {
-            System.out.println("Erro!");
+            JOptionPane.showMessageDialog(this, e.toString(),"Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -4958,7 +4955,6 @@ public class Programa extends javax.swing.JFrame {
             cardLayout.show(jPanelPrincipal, "arquivoAberto");
 
         } catch (Exception e) {
-            //System.out.println(cont);
             JOptionPane.showMessageDialog(null, "Erro inesperado!", "Erro", JOptionPane.ERROR_MESSAGE);
             if (cont == 0) {
                 System.err.println("Erro ao ler o arquivo.");

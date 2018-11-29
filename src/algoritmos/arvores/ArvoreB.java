@@ -235,7 +235,6 @@ public class ArvoreB {
     private void remover(Chave chave, Relatorio relatorio) {
         if (buscaChave(this.raiz, chave, relatorio) != null) {
             relatorio.incrementaInteracao();
-            //aux Ã© o nÃ³ onde se encontra chave
             NoB aux = buscaChave(this.raiz, chave, relatorio);
             relatorio.incrementaTrocaColisaoCopia();
             int i = 1;
@@ -255,7 +254,7 @@ public class ArvoreB {
                 aux.setOrdem(aux.getOrdem() - 1);
                 if (aux != this.raiz) {
                     relatorio.incrementaInteracao();
-                    balanceiaFolha(aux, relatorio);//Balanceia aux
+                    balanceiaFolha(aux, relatorio);
                 }
             } else {
                 relatorio.incrementaInteracao();
@@ -511,8 +510,6 @@ public class ArvoreB {
         return null;
     }
 
-    //MÃ©todo para Limpar a arvoreB.
-    //ParÃ¢metros: no - NÃ³ onde se deve iniciar a varredura, ordem - Nova ordem da arvoreB
     /**
      * Apaga completamente a arvores B
      * @param no Objeto que instancia o No

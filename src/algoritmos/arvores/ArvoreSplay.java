@@ -1,7 +1,7 @@
 package algoritmos.arvores;
 
-
 import dados.Relatorio;
+
 /**
  * Implementacao da Arvore de Espalhamento
  */
@@ -9,19 +9,23 @@ public class ArvoreSplay {
 
     private No raiz;
     private int qtdNos = 0;
+
     /**
      * Metodo que contem o construtor
      */
     public ArvoreSplay() {
         raiz = null;
     }
+
     /**
      * Metodo que verifica se a arvore está vazia
+     *
      * @return Verdadeiro ou falso
      */
     public boolean isVazio() {
         return raiz == null;
     }
+
     /**
      * Metodo que deleta a arvore
      */
@@ -29,12 +33,13 @@ public class ArvoreSplay {
         raiz = null;
         qtdNos = 0;
     }
-    //TO DO JavaDoc aqui
+
     /**
      * Metodo que implementa a insercao de uma chave
-     * @param id
-     * @param chave
-     * @param relatorio 
+     *
+     * @param id Identificador do No
+     * @param chave Valor contido no No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
      */
     public void inserir(int id, Chave chave, Relatorio relatorio) {
         No no = raiz;
@@ -72,7 +77,14 @@ public class ArvoreSplay {
         qtdNos++;
     }
 
-    public void rotacaoDireita(No no, No aux, Relatorio relatorio) {
+    /**
+     * Metodo que rotaciona a arvore para direita
+     *
+     * @param no
+     * @param aux
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     */
+    private void rotacaoDireita(No no, No aux, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         if ((no == null) || (aux == null) || (aux.getEsq() != no) || (no.getPai() != aux)) {
             relatorio.incrementaInteracao();
@@ -97,7 +109,13 @@ public class ArvoreSplay {
         no.setDir(aux);
     }
 
-
+    /**
+     * Metodo que rotaciona a arvore para esquerda
+     *
+     * @param no
+     * @param aux
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     */
     public void rotacaoEsquerda(No no, No aux, Relatorio relatorio) {
         relatorio.incrementaTrocaColisaoCopia();
         if ((no == null) || (aux == null) || (aux.getDir() != no) || (no.getPai() != aux)) {
@@ -123,6 +141,12 @@ public class ArvoreSplay {
         no.setEsq(aux);
     }
 
+    /**
+     * Metodo que ajusta a arvore
+     *
+     * @param no
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     */
     private void Splay(No no, Relatorio relatorio) {
         while (no.getPai() != null) {
             relatorio.incrementaInteracao();
@@ -170,12 +194,22 @@ public class ArvoreSplay {
         relatorio.incrementaTrocaColisaoCopia();
     }
 
+    /**
+     *Metodo que remove um no da arvore
+     * @param id Identificador do No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     */
     public void remover(int id, Relatorio relatorio) {
         No no = encontarNo(id, relatorio);
         relatorio.incrementaTrocaColisaoCopia();
         remover(no, relatorio);
     }
 
+    /**
+     * Metodo auxiliar que remove um no
+     * @param no
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise  
+     */
     private void remover(No no, Relatorio relatorio) {
         if (no == null) {
             relatorio.incrementaInteracao();
@@ -196,13 +230,13 @@ public class ArvoreSplay {
             no.getEsq().setPai(null);
             raiz = no.getEsq();
             relatorio.incrementaTrocaColisaoCopia();
-            
+
         } else if (no.getDir() != null) {
             relatorio.incrementaInteracao();
             no.getDir().setPai(null);
             raiz = no.getDir();
             relatorio.incrementaTrocaColisaoCopia();
-            
+
         } else if (no.getEsq() != null) {
             relatorio.incrementaInteracao();
             no.getEsq().setPai(null);
@@ -220,19 +254,36 @@ public class ArvoreSplay {
         qtdNos--;
     }
 
+    /**
+     * Metodo que retorna a quantidade de nos da arvore
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     * @return quantidade de nos da arvore
+     */
     public int quantidadeNos(Relatorio relatorio) {
         return qtdNos;
     }
 
+    /**
+     * Metodo que busca um determinado valor na arvore
+     * @param id Identificador do No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     * @return No encontrado
+     */
     public boolean busca(int id, Relatorio relatorio) {
         return encontarNo(id, relatorio) != null;
     }
 
+    /**
+     * Metodo auxiliar que busca um determinado valor na arvore
+     * @param id Identificador do No
+     * @param relatorio Acesso ao relatorio para gravar os dados de analise 
+     * @return No encontrado
+     */
     private No encontarNo(int id, Relatorio relatorio) {
         No noAnterior = null;
         No no = raiz;
         relatorio.incrementaTrocaColisaoCopia();
-        
+
         while (no != null) {
             relatorio.incrementaInteracao();
             noAnterior = no;
@@ -241,12 +292,12 @@ public class ArvoreSplay {
                 relatorio.incrementaInteracao();
                 no = no.getDir();
                 relatorio.incrementaTrocaColisaoCopia();
-                
+
             } else if (id < no.getId()) {
                 relatorio.incrementaInteracao();
                 no = no.getEsq();
                 relatorio.incrementaTrocaColisaoCopia();
-                
+
             } else if (id == no.getId()) {
                 relatorio.incrementaInteracao();
                 Splay(no, relatorio);
